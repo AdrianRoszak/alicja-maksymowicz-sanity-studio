@@ -9,7 +9,7 @@ jobs:
   deploy:
     name: Build and Deploy Studio
     runs-on: ubuntu-latest
-    
+
     env:
       SANITY_AUTH_TOKEN: ${{ secrets.SANITY_AUTH_TOKEN }}
       SANITY_STUDIO_PROJECT_ID: ${{ secrets.SANITY_STUDIO_PROJECT_ID }}
@@ -17,30 +17,30 @@ jobs:
       SANITY_STUDIO_API_VERSION: ${{ vars.SANITY_STUDIO_API_VERSION || '2023-10-17' }}
       SANITY_STUDIO_BASE_PATH: ${{ vars.SANITY_STUDIO_BASE_PATH || '/' }}
       NODE_ENV: production
-    
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '22'
-          cache: 'npm'
-      
+          node-version: "22"
+          cache: "npm"
+
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
         with:
-          version: 'latest'
+          version: "latest"
           run_install: false
-      
+
       - name: Get pnpm store directory
         shell: bash
         run: |
           echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
-      
+
       - name: Setup pnpm cache
         uses: actions/cache@v4
         with:
@@ -48,19 +48,19 @@ jobs:
           key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
           restore-keys: |
             ${{ runner.os }}-pnpm-store-
-      
+
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
-      
+
       - name: Lint and format check
         run: pnpm lint
-      
+
       - name: Type check
         run: pnpm tsc --noEmit
-      
+
       - name: Build Studio
         run: pnpm build
-      
+
       - name: Deploy to Sanity
         run: |
           pnpm sanity deploy --source-maps

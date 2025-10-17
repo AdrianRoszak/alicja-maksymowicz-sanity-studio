@@ -3,36 +3,36 @@ name: Update Dependencies
 on:
   schedule:
     # Run every Monday at 9 AM UTC
-    - cron: '0 9 * * 1'
+    - cron: "0 9 * * 1"
   workflow_dispatch: # Allow manual runs
 
 jobs:
   update-deps:
     name: Update Dependencies
     runs-on: ubuntu-latest
-    
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-      
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '22'
-          cache: 'npm'
-      
+          node-version: "22"
+          cache: "npm"
+
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
         with:
-          version: 'latest'
-      
+          version: "latest"
+
       - name: Update dependencies
         run: |
           pnpm update --latest
           pnpm install
-      
+
       - name: Check for changes
         id: verify-changed-files
         run: |
@@ -41,7 +41,7 @@ jobs:
           else
             echo "changed=false" >> $GITHUB_OUTPUT
           fi
-      
+
       - name: Run tests after update
         if: steps.verify-changed-files.outputs.changed == 'true'
         run: |
@@ -52,28 +52,28 @@ jobs:
           SANITY_STUDIO_PROJECT_ID: u1jpe37y
           SANITY_STUDIO_DATASET: production
           SANITY_STUDIO_API_VERSION: 2023-10-17
-      
+
       - name: Create Pull Request
         if: steps.verify-changed-files.outputs.changed == 'true'
         uses: peter-evans/create-pull-request@v6
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          commit-message: 'chore: update dependencies'
-          title: 'chore: automated dependency updates'
+          commit-message: "chore: update dependencies"
+          title: "chore: automated dependency updates"
           body: |
             ## Automated Dependency Updates
-            
+
             This PR contains automated updates to project dependencies.
-            
+
             ### Changes
             - Updated all dependencies to their latest versions
             - Verified that linting, type checking, and build still work
-            
+
             ### Verification
             - ✅ Biome linting passed
             - ✅ TypeScript compilation successful
             - ✅ Studio build successful
-            
+
             Please review the changes and test manually before merging.
           branch: chore/automated-dependency-updates
           delete-branch: true
