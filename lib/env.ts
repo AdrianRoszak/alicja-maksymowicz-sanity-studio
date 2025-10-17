@@ -4,8 +4,9 @@
  */
 
 // Required environment variables
-export const projectId = process.env.SANITY_STUDIO_PROJECT_ID || 'u1jpe37y'
-export const dataset = process.env.SANITY_STUDIO_DATASET || 'production'
+export const projectId = process.env.SANITY_STUDIO_PROJECT_ID
+export const dataset = process.env.SANITY_STUDIO_DATASET
+export const appId = process.env.APP_ID
 
 // API configuration
 export const apiVersion = process.env.SANITY_STUDIO_API_VERSION || '2023-10-17'

@@ -11,8 +11,8 @@ export default defineConfig({
   name: 'default',
   title: 'AlicjaMaksymowicz',
 
-  projectId,
-  dataset,
+  projectId: projectId!,
+  dataset: dataset!,
 
   plugins: [
     structureTool(),
