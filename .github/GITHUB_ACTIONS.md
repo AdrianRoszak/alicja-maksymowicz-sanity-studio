@@ -72,15 +72,19 @@ Recommended branch protection for `main`:
    - Check `SANITY_AUTH_TOKEN` secret is correctly set
    - Verify token has deployment permissions
 
-2. **Build fails in CI:**
+2. **"Dependencies lock file is not found" error:**
+   - This was fixed by removing npm caching and using proper pnpm setup
+   - All workflows now use pnpm store caching instead of npm cache
+
+3. **Build fails in CI:**
    - Check if all environment variables are set
    - Review build logs for specific errors
 
-3. **Type checking fails:**
+4. **Type checking fails:**
    - Ensure all TypeScript files are properly typed
    - Check for missing type definitions
 
-4. **Security scan fails:**
+5. **Security scan fails:**
    - Review vulnerability report in Security tab
    - Update vulnerable dependencies
 
