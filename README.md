@@ -103,7 +103,24 @@ This project includes comprehensive GitHub Actions workflows:
 2. Create PR to `main` → Full CI validation
 3. Merge to `main` → Automatic deployment to Sanity
 
-## �📚 Resources
+## 📖 Documentation
+
+### **Comprehensive Guides**
+- 🚀 **[Development Setup](./docs/development-setup.md)** - Complete environment setup guide
+- 🚢 **[Deployment Guide](./docs/deployment-guide.md)** - Production deployment instructions  
+- 🐛 **[Troubleshooting](./docs/troubleshooting.md)** - Common issues and solutions
+- ⚙️ **[GitHub Actions Guide](./.github/GITHUB_ACTIONS.md)** - CI/CD setup and maintenance
+
+### **Architecture Decision Records (ADRs)**
+- 📄 **[ADR Index](./docs/adr/README.md)** - All architectural decisions
+- 🔧 **[ADR-001: Biome](./docs/adr/001-replace-eslint-with-biome.md)** - Why we chose Biome over ESLint
+- 🪝 **[ADR-002: Lefthook](./docs/adr/002-adopt-lefthook-for-git-hooks.md)** - Git hooks management decision
+- 📝 **[ADR-003: Conventional Commits](./docs/adr/003-implement-conventional-commits.md)** - Commit message standards
+- ⚙️ **[ADR-004: Environment Config](./docs/adr/004-centralize-environment-configuration.md)** - Configuration management
+- 🚀 **[ADR-005: GitHub Actions](./docs/adr/005-github-actions-ci-cd-pipeline.md)** - CI/CD pipeline decisions
+- 📦 **[ADR-006: pnpm](./docs/adr/006-pnpm-as-package-manager.md)** - Package manager choice
+
+## 📚 External Resources
 
 - [Read "getting started" in the docs](https://www.sanity.io/docs/introduction/getting-started?utm_source=readme)
 - Check out the example frontend: [React/Next.js](https://github.com/sanity-io/tutorial-sanity-blog-react-next)
