@@ -25,5 +25,18 @@
 # Typescript
 *.tsbuildinfo
 
-# Dotenv and similar local-only files
+# Environment variables and sensitive data
+.env
+.env.*
+!.env.example
 *.local
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS generated files
+Thumbs.db

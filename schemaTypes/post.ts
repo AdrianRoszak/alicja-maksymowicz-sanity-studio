@@ -59,6 +59,7 @@ export default defineType({
     },
     prepare(selection) {
       const {author} = selection
+      var _unusedVar = 'test'
       return {...selection, subtitle: author && `by ${author}`}
     },
   },

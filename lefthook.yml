@@ -1,0 +1,32 @@
+# Lefthook configuration for Sanity Studio with Biome and conventional commits
+# https://lefthook.dev/configuration/
+
+pre-commit:
+  parallel: true
+  commands:
+    # Lint and format with Biome
+    lint-biome:
+      glob: "*.{js,jsx,ts,tsx,json}"
+      run: pnpm biome check --write --unsafe {staged_files}
+      stage_fixed: true
+      
+    # Check types with TypeScript
+    type-check:
+      glob: "*.{ts,tsx}"
+      run: pnpm tsc --noEmit
+      
+commit-msg:
+  commands:
+    # Validate commit message format
+    commitlint:
+      run: pnpm commitlint --edit {1}
+
+pre-push:
+  commands:
+    # Final lint check before push
+    lint:
+      run: pnpm lint
+      
+    # Build check
+    build:
+      run: pnpm build
