@@ -64,7 +64,46 @@ Pre-commit hooks automatically:
 
 See [COMMIT_CONVENTION.md](./COMMIT_CONVENTION.md) for commit message guidelines.
 
-## 📚 Resources
+## � CI/CD Pipeline
+
+This project includes comprehensive GitHub Actions workflows:
+
+### **Workflows:**
+
+1. **🚢 Deploy** (`.github/workflows/deploy.yml`)
+   - **Triggers:** Push to `main` branch, manual dispatch
+   - **Actions:** Lint → Type check → Build → Deploy to Sanity
+   - **Environment:** Production settings with secrets
+
+2. **🧪 CI** (`.github/workflows/ci.yml`)
+   - **Triggers:** Push to `develop`, PRs to `main`/`develop`
+   - **Actions:** Multi-node testing, linting, security audit
+   - **Matrix:** Node.js 20 & 22 compatibility testing
+
+3. **🔒 Security** (`.github/workflows/security.yml`)
+   - **Triggers:** Push, PRs, daily schedule
+   - **Actions:** CodeQL analysis, npm audit, vulnerability scanning
+
+4. **⬆️ Dependencies** (`.github/workflows/update-deps.yml`)
+   - **Triggers:** Weekly schedule, manual dispatch
+   - **Actions:** Auto-update dependencies with PR creation
+
+### **Required Secrets & Variables:**
+
+**Repository Secrets:**
+- `SANITY_AUTH_TOKEN` - Sanity deployment token
+
+**Repository Variables:**
+- `SANITY_STUDIO_DATASET` - Target dataset (production/staging)
+- `SANITY_STUDIO_API_VERSION` - API version (optional)
+- `SANITY_STUDIO_BASE_PATH` - Deployment path (optional)
+
+### **Deployment Process:**
+1. Push to `develop` → CI runs tests
+2. Create PR to `main` → Full CI validation
+3. Merge to `main` → Automatic deployment to Sanity
+
+## �📚 Resources
 
 - [Read "getting started" in the docs](https://www.sanity.io/docs/introduction/getting-started?utm_source=readme)
 - Check out the example frontend: [React/Next.js](https://github.com/sanity-io/tutorial-sanity-blog-react-next)
