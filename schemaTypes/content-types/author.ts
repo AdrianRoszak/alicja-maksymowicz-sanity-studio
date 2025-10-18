@@ -1,13 +1,13 @@
-import {defineField, defineType} from 'sanity'
+import { defineField, defineType } from 'sanity'
 
 export const author = defineType({
   name: 'author',
-  title: 'Author',
+  title: 'Autor',
   type: 'document',
   fields: [
     defineField({
       name: 'name',
-      title: 'Name',
+      title: 'Imię i nazwisko',
       type: 'string',
     }),
     defineField({
@@ -21,7 +21,7 @@ export const author = defineType({
     }),
     defineField({
       name: 'image',
-      title: 'Image',
+      title: 'Zdjęcie',
       type: 'image',
       options: {
         hotspot: true,
@@ -29,13 +29,13 @@ export const author = defineType({
     }),
     defineField({
       name: 'bio',
-      title: 'Bio',
+      title: 'Biografia',
       type: 'array',
       of: [
         {
           title: 'Block',
           type: 'block',
-          styles: [{title: 'Normal', value: 'normal'}],
+          styles: [{ title: 'Normalny', value: 'normal' }],
           lists: [],
         },
       ],
