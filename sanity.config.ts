@@ -1,5 +1,5 @@
 import {visionTool} from '@sanity/vision'
-import {defineConfig} from 'sanity'
+import {defineConfig, type SchemaTypeDefinition} from 'sanity'
 import {structureTool} from 'sanity/structure'
 import {apiVersion, basePath, dataset, projectId, validateEnvironment} from './lib/env'
 import {schemaTypes} from './schemaTypes'
@@ -22,7 +22,7 @@ export default defineConfig({
   ],
 
   schema: {
-    types: schemaTypes,
+    types: schemaTypes as SchemaTypeDefinition[],
   },
 
   // API configuration
