@@ -95,24 +95,41 @@ export const blogPost = defineType({
       type: 'number',
       description: 'Szacowany czas czytania w minutach',
     }),
-    defineField({name: 'seo', title: 'Ustawienia SEO', type: 'seo_settings'}),
+    defineField({
+      name: 'seo',
+      title: 'Ustawienia SEO',
+      type: 'seo_settings',
+    }),
     defineField({
       name: 'schemaType',
       title: 'Typ schematu',
       type: 'string',
       options: {
         list: [
-          {title: 'BlogPosting', value: 'BlogPosting'},
-          {title: 'Article', value: 'Article'},
+          {
+            title: 'BlogPosting',
+            value: 'BlogPosting',
+          },
+          {
+            title: 'Article',
+            value: 'Article',
+          },
         ],
       },
     }),
   ],
   preview: {
-    select: {title: 'title', author: 'author.name', media: 'mainImage'},
-    prepare(selection: any) {
+    select: {
+      title: 'title',
+      author: 'author.name',
+      media: 'mainImage',
+    },
+    prepare(selection) {
       const {title, author} = selection
-      return {title, subtitle: author ? `by ${author}` : ''}
+      return {
+        title,
+        subtitle: author ? `by ${author}` : '',
+      }
     },
   },
 })
