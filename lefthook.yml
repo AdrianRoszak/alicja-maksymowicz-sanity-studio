@@ -5,6 +5,11 @@ pre-commit:
   parallel: true
   commands:
     # Lint and format with Biome
+    format-biome:
+      glob: "*.{js,jsx,ts,tsx,json}"
+      run: pnpm biome format --write {staged_files}
+      stage_fixed: true
+
     lint-biome:
       glob: "*.{js,jsx,ts,tsx,json}"
       run: pnpm biome check --write --unsafe {staged_files}
