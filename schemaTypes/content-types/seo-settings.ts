@@ -2,30 +2,59 @@ import {defineField, defineType} from 'sanity'
 
 export const seoSettings = defineType({
   name: 'seo_settings',
-  title: 'SEO Settings',
+  title: 'Ustawienia SEO',
   type: 'object',
   fields: [
-    defineField({name: 'metaTitle', title: 'Meta title', type: 'string'}),
-    defineField({name: 'metaDescription', title: 'Meta description', type: 'text'}),
-    defineField({name: 'ogTitle', title: 'Open Graph title', type: 'string'}),
-    defineField({name: 'ogDescription', title: 'Open Graph description', type: 'text'}),
+    defineField({
+      name: 'metaTitle',
+      title: 'Tytuł meta',
+      type: 'string',
+      description: 'Tytuł wyświetlany w wynikach wyszukiwania',
+    }),
+    defineField({
+      name: 'metaDescription',
+      title: 'Opis meta',
+      type: 'text',
+      description: 'Opis wyświetlany w wynikach wyszukiwania (max ~160 znaków)',
+    }),
+    defineField({
+      name: 'ogTitle',
+      title: 'Tytuł Open Graph',
+      type: 'string',
+      description: 'Tytuł używany w udostępnianiu w mediach społecznościowych',
+    }),
+    defineField({
+      name: 'ogDescription',
+      title: 'Opis Open Graph',
+      type: 'text',
+      description: 'Opis używany w udostępnianiu w mediach społecznościowych',
+    }),
     defineField({
       name: 'ogImage',
-      title: 'Open Graph image',
+      title: 'Obraz Open Graph',
       type: 'image',
-      options: {hotspot: true},
+      options: {
+        hotspot: true,
+      },
+      description: 'Obraz używany podczas udostępniania w mediach społecznościowych',
     }),
     defineField({
       name: 'twitterCard',
-      title: 'Twitter Card',
+      title: 'Karta na Twitterze',
       type: 'string',
       options: {
         list: [
-          {title: 'summary', value: 'summary'},
-          {title: 'summary_large_image', value: 'summary_large_image'},
+          {title: 'Podsumowanie', value: 'summary'},
+          {title: 'Duże zdjęcie (podsumowanie)', value: 'summary_large_image'},
         ],
       },
     }),
-    defineField({name: 'noIndex', title: 'No index', type: 'boolean'}),
+    defineField({
+      name: 'noIndex',
+      title: 'Nie indeksować',
+      type: 'boolean',
+      description:
+        'Zaznacz, aby zapobiec indeksowaniu tej strony przez wyszukiwarki. Użyteczne dla stron tymczasowych lub roboczych.',
+    }),
   ],
 })

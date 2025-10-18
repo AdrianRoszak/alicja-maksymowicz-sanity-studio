@@ -2,12 +2,12 @@ import {defineArrayMember, defineField, defineType} from 'sanity'
 
 export const blogPost = defineType({
   name: 'blog_post',
-  title: 'Blog Post',
+  title: 'Wpis na blogu',
   type: 'document',
   fields: [
     defineField({
       name: 'title',
-      title: 'Title',
+      title: 'Tytuł',
       type: 'string',
       validation: (Rule) => Rule.required(),
     }),
@@ -20,40 +20,40 @@ export const blogPost = defineType({
     }),
     defineField({
       name: 'author',
-      title: 'Author',
+      title: 'Autor',
       type: 'reference',
       to: [{type: 'author'}],
       validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: 'publishedAt',
-      title: 'Published at',
+      title: 'Data publikacji',
       type: 'datetime',
     }),
     defineField({
       name: 'excerpt',
-      title: 'Excerpt',
+      title: 'Streszczenie',
       type: 'text',
-      description: 'Short summary for list views and meta description fallback (max ~160 chars)',
+      description: 'Krótki opis do widoków listy i jako zapasowy opis meta (max ~160 znaków)',
       validation: (Rule) => Rule.max(160).warning('Keep excerpt under ~160 characters for SEO'),
     }),
     defineField({
       name: 'mainImage',
-      title: 'Main image',
+      title: 'Zdjęcie główne',
       type: 'image',
       options: {hotspot: true},
       fields: [
         defineField({
           name: 'alt',
-          title: 'Alt text',
+          title: 'Tekst alternatywny',
           type: 'string',
-          description: 'Alternative text for the image for accessibility and SEO',
+          description: 'Tekst alternatywny obrazu dla dostępności i SEO',
         }),
       ],
     }),
     defineField({
       name: 'body',
-      title: 'Body',
+      title: 'Treść',
       type: 'array',
       of: [
         defineArrayMember({
@@ -87,18 +87,18 @@ export const blogPost = defineType({
         defineArrayMember({type: 'image', options: {hotspot: true}}),
       ],
       description:
-        'Portable Text content. Use H2/H3/H4 and lists to structure content for AI-readiness.',
+        'Zawartość Portable Text. Użyj H2/H3/H4 oraz list, aby strukturyzować treść pod kątem czytelności i gotowości dla AI.',
     }),
     defineField({
       name: 'readingTime',
-      title: 'Reading time (minutes)',
+      title: 'Czas czytania (minuty)',
       type: 'number',
-      description: 'Estimated reading time in minutes',
+      description: 'Szacowany czas czytania w minutach',
     }),
-    defineField({name: 'seo', title: 'SEO Settings', type: 'seo_settings'}),
+    defineField({name: 'seo', title: 'Ustawienia SEO', type: 'seo_settings'}),
     defineField({
       name: 'schemaType',
-      title: 'Schema type',
+      title: 'Typ schematu',
       type: 'string',
       options: {
         list: [
