@@ -111,6 +111,7 @@ This project includes comprehensive GitHub Actions workflows:
 - 🐛 **[Troubleshooting](./docs/troubleshooting.md)** - Common issues and solutions
  - ⚙️ **[GitHub Actions Guide](./docs/github-actions.md)** - CI/CD setup and maintenance
  - 🛡️ **[Secrets & CI](./docs/secrets.md)** - Secret names, formats and CI guidance
+ - 🌲 **[Git Flow](./docs/git-flow.md)** - Branching model, release & hotfix process
 
 ### **Architecture Decision Records (ADRs)**
 - 📄 **[ADR Index](./docs/adr/README.md)** - All architectural decisions
