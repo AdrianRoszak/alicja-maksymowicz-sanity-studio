@@ -1,4 +1,4 @@
-import {defineField, defineType} from 'sanity'
+import { defineField, defineType } from 'sanity'
 
 export const author = defineType({
   name: 'author',
@@ -35,7 +35,7 @@ export const author = defineType({
         {
           title: 'Block',
           type: 'block',
-          styles: [{title: 'Normalny', value: 'normal'}],
+          styles: [{ title: 'Normalny', value: 'normal' }],
           lists: [],
         },
       ],

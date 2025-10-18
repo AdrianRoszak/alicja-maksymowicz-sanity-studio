@@ -1,4 +1,4 @@
-import {defineArrayMember, defineField, defineType} from 'sanity'
+import { defineArrayMember, defineField, defineType } from 'sanity'
 
 export const blogPost = defineType({
   name: 'blog_post',
@@ -15,14 +15,14 @@ export const blogPost = defineType({
       name: 'slug',
       title: 'Slug',
       type: 'slug',
-      options: {source: 'title', maxLength: 96},
+      options: { source: 'title', maxLength: 96 },
       validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: 'author',
       title: 'Autor',
       type: 'reference',
-      to: [{type: 'author'}],
+      to: [{ type: 'author' }],
       validation: (Rule) => Rule.required(),
     }),
     defineField({
@@ -41,7 +41,7 @@ export const blogPost = defineType({
       name: 'mainImage',
       title: 'Zdjęcie główne',
       type: 'image',
-      options: {hotspot: true},
+      options: { hotspot: true },
       fields: [
         defineField({
           name: 'alt',
@@ -60,31 +60,31 @@ export const blogPost = defineType({
           title: 'Block',
           type: 'block',
           styles: [
-            {title: 'Normal', value: 'normal'},
-            {title: 'Heading 2', value: 'h2'},
-            {title: 'Heading 3', value: 'h3'},
-            {title: 'Heading 4', value: 'h4'},
+            { title: 'Normal', value: 'normal' },
+            { title: 'Heading 2', value: 'h2' },
+            { title: 'Heading 3', value: 'h3' },
+            { title: 'Heading 4', value: 'h4' },
           ],
           lists: [
-            {title: 'Bullet', value: 'bullet'},
-            {title: 'Number', value: 'number'},
+            { title: 'Bullet', value: 'bullet' },
+            { title: 'Number', value: 'number' },
           ],
           marks: {
             decorators: [
-              {title: 'Strong', value: 'strong'},
-              {title: 'Emphasis', value: 'em'},
+              { title: 'Strong', value: 'strong' },
+              { title: 'Emphasis', value: 'em' },
             ],
             annotations: [
               {
                 name: 'link',
                 type: 'object',
                 title: 'URL',
-                fields: [defineField({name: 'href', type: 'url', title: 'Href'})],
+                fields: [defineField({ name: 'href', type: 'url', title: 'Href' })],
               },
             ],
           },
         }),
-        defineArrayMember({type: 'image', options: {hotspot: true}}),
+        defineArrayMember({ type: 'image', options: { hotspot: true } }),
       ],
       description:
         'Zawartość Portable Text. Użyj H2/H3/H4 oraz list, aby strukturyzować treść pod kątem czytelności i gotowości dla AI.',
@@ -98,7 +98,7 @@ export const blogPost = defineType({
     defineField({
       name: 'seo',
       title: 'Ustawienia SEO',
-      type: 'seo_settings',
+      type: 'seo_block',
     }),
     defineField({
       name: 'schemaType',
@@ -125,7 +125,7 @@ export const blogPost = defineType({
       media: 'mainImage',
     },
     prepare(selection) {
-      const {title, author} = selection
+      const { title, author } = selection
       return {
         title,
         subtitle: author ? `by ${author}` : '',

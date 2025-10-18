@@ -1,7 +1,7 @@
 import { defineField, defineType } from 'sanity'
 
-export const seoSettings = defineType({
-  name: 'seo_settings',
+export const seoBlock = defineType({
+  name: 'seo_block',
   title: 'Ustawienia SEO',
   type: 'object',
   fields: [

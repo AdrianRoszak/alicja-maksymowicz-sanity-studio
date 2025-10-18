@@ -1,4 +1,4 @@
-import {defineArrayMember, defineType} from 'sanity'
+import { defineArrayMember, defineType } from 'sanity'
 
 export const blockContent = defineType({
   title: 'Block Content',
@@ -9,18 +9,18 @@ export const blockContent = defineType({
       title: 'Blok',
       type: 'block',
       styles: [
-        {title: 'Normalny', value: 'normal'},
-        {title: 'Nagłówek 1', value: 'h1'},
-        {title: 'Nagłówek 2', value: 'h2'},
-        {title: 'Nagłówek 3', value: 'h3'},
-        {title: 'Nagłówek 4', value: 'h4'},
-        {title: 'Cytat', value: 'blockquote'},
+        { title: 'Normalny', value: 'normal' },
+        { title: 'Nagłówek 1', value: 'h1' },
+        { title: 'Nagłówek 2', value: 'h2' },
+        { title: 'Nagłówek 3', value: 'h3' },
+        { title: 'Nagłówek 4', value: 'h4' },
+        { title: 'Cytat', value: 'blockquote' },
       ],
-      lists: [{title: 'Wypunktowana', value: 'bullet'}],
+      lists: [{ title: 'Wypunktowana', value: 'bullet' }],
       marks: {
         decorators: [
-          {title: 'Pogrubienie', value: 'strong'},
-          {title: 'Kursywa', value: 'em'},
+          { title: 'Pogrubienie', value: 'strong' },
+          { title: 'Kursywa', value: 'em' },
         ],
         annotations: [
           {
@@ -40,7 +40,7 @@ export const blockContent = defineType({
     }),
     defineArrayMember({
       type: 'image',
-      options: {hotspot: true},
+      options: { hotspot: true },
     }),
   ],
 })
