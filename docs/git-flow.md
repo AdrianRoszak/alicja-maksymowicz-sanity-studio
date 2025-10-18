@@ -55,3 +55,16 @@ Recommended rules for `develop`:
   - `pnpm tsc --noEmit`
   - `pnpm build`
 - Follow Conventional Commits to keep changelog and release automation usable.
+
+## Configured git-flow (this repository)
+
+The repository git-flow settings were initialized with the following values:
+
+- Production branch: `main`
+- Development branch: `develop`
+- Feature prefix: `feature/`
+- Release prefix: `release/`
+- Hotfix prefix: `hotfix/`
+- Support prefix: `support/`
+
+Use these names when running `git flow` commands locally.
