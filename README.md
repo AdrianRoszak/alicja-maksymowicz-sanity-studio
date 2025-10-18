@@ -62,7 +62,7 @@ Pre-commit hooks automatically:
 - ✅ Type check with TypeScript
 - ✅ Validate commit messages
 
-See [COMMIT_CONVENTION.md](./COMMIT_CONVENTION.md) for commit message guidelines.
+See [Conventional Commits](./docs/conventional-commits.md) for commit message guidelines.
 
 ## � CI/CD Pipeline
 
@@ -109,7 +109,8 @@ This project includes comprehensive GitHub Actions workflows:
 - 🚀 **[Development Setup](./docs/development-setup.md)** - Complete environment setup guide
 - 🚢 **[Deployment Guide](./docs/deployment-guide.md)** - Production deployment instructions  
 - 🐛 **[Troubleshooting](./docs/troubleshooting.md)** - Common issues and solutions
-- ⚙️ **[GitHub Actions Guide](./.github/GITHUB_ACTIONS.md)** - CI/CD setup and maintenance
+ - ⚙️ **[GitHub Actions Guide](./docs/github-actions.md)** - CI/CD setup and maintenance
+ - 🛡️ **[Secrets & CI](./docs/secrets.md)** - Secret names, formats and CI guidance
 
 ### **Architecture Decision Records (ADRs)**
 - 📄 **[ADR Index](./docs/adr/README.md)** - All architectural decisions
