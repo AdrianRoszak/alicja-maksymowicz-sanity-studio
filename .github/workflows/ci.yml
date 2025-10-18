@@ -4,13 +4,17 @@ on:
   push:
     branches: [develop]
   pull_request:
-    branches: [main, develop]
+    branches: [develop]
   workflow_dispatch: # Allow manual runs
 
 jobs:
   test:
     name: Test and Lint
     runs-on: ubuntu-latest
+
+    # Only run the CI job for PRs where the source branch starts with `feature/`.
+    # For direct pushes to `develop` (e.g. merges), this condition evaluates to true.
+    if: ${{ github.event_name != 'pull_request' || startsWith(github.head_ref, 'feature/') }}
 
     strategy:
       matrix:
@@ -58,9 +62,9 @@ jobs:
       - name: Build Studio
         run: pnpm build
         env:
-          SANITY_STUDIO_PROJECT_ID: u1jpe37y
-          SANITY_STUDIO_DATASET: production
-          SANITY_STUDIO_API_VERSION: 2023-10-17
+          SANITY_STUDIO_PROJECT_ID: ${{ secrets.SANITY_STUDIO_PROJECT_ID }}
+          SANITY_STUDIO_DATASET: ${{ secrets.SANITY_STUDIO_DATASET }}
+          SANITY_STUDIO_API_VERSION: ${{ secrets.SANITY_STUDIO_API_VERSION }}
 
       - name: Check for security vulnerabilities
         run: pnpm audit --audit-level moderate
