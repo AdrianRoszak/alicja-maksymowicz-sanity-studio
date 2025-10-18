@@ -4,13 +4,17 @@ on:
   push:
     branches: [develop]
   pull_request:
-    branches: [main, develop]
+    branches: [develop]
   workflow_dispatch: # Allow manual runs
 
 jobs:
   test:
     name: Test and Lint
     runs-on: ubuntu-latest
+
+    # Only run the CI job for PRs where the source branch starts with `feature/`.
+    # For direct pushes to `develop` (e.g. merges), this condition evaluates to true.
+    if: ${{ github.event_name != 'pull_request' || startsWith(github.head_ref, 'feature/') }}
 
     strategy:
       matrix:
