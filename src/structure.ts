@@ -4,4 +4,8 @@ export const structure = (S) =>
     .title('PANEL ADMINISTRACYJNY')
     .items([
       S.listItem().id('posts').title('Posty').child(S.documentTypeList('blog_post').title('Posty')),
+      S.listItem()
+        .id('authors')
+        .title('Autorzy')
+        .child(S.documentTypeList('author').title('Autorzy')),
     ])
