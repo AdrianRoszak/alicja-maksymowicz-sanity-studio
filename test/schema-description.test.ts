@@ -1,5 +1,5 @@
 import { describe, it } from 'vitest'
-import { blogPost } from '../schemaTypes/content-types/blog-post'
+import * as schemas from '../schema-types/content-types'
 
 // biome-ignore lint/suspicious/noExplicitAny: TODO - Replace 'any' with proper Sanity field type for stricter type safety
 function checkDescriptionRecursive(fields: any[], path: string[] = []) {
@@ -27,7 +27,11 @@ function checkDescriptionRecursive(fields: any[], path: string[] = []) {
 }
 
 describe('Sanity schema description enforcement', () => {
-  it('all blogPost fields must have non-empty description', () => {
-    checkDescriptionRecursive(blogPost.fields)
-  })
+  for (const [schemaKey, schema] of Object.entries(schemas)) {
+    const fields = (schema as { fields?: unknown }).fields
+    if (!Array.isArray(fields)) continue
+    it(`${schemaKey}: all fields must have non-empty description`, () => {
+      checkDescriptionRecursive(fields)
+    })
+  }
 })

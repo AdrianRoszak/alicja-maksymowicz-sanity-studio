@@ -1,6 +1,6 @@
 import type { FieldDefinition } from 'sanity'
 import { describe, it } from 'vitest'
-import * as schemas from '../schemaTypes/content-types'
+import * as schemas from '../schema-types/content-types'
 
 function isFieldDefinitionArray(fields: unknown): fields is FieldDefinition[] {
   return (

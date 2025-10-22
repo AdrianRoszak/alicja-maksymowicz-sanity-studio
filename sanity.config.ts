@@ -2,7 +2,8 @@ import { visionTool } from '@sanity/vision'
 import { defineConfig, type SchemaTypeDefinition } from 'sanity'
 import { structureTool } from 'sanity/structure'
 import { apiVersion, dataset, projectId, validateEnvironment } from './lib/env'
-import { schemaTypes } from './schemaTypes'
+import { schemaTypes } from './schema-types'
+import { structure } from './src/structure'
 
 // Validate environment variables on startup
 validateEnvironment()
@@ -14,7 +15,7 @@ export default defineConfig({
   projectId: projectId!,
   dataset: dataset!,
   plugins: [
-    structureTool(),
+    structureTool({ structure }),
     visionTool({
       defaultApiVersion: apiVersion,
     }),
