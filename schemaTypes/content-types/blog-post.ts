@@ -1,49 +1,55 @@
-import { defineArrayMember, defineField, defineType } from 'sanity'
+import { defineArrayMember, defineType } from 'sanity'
+import { defineFieldWithDescription } from '../../src/lib/types'
 
 export const blogPost = defineType({
   name: 'blog_post',
   title: 'Wpis na blogu',
   type: 'document',
   fields: [
-    defineField({
+    defineFieldWithDescription({
       name: 'title',
       title: 'Tytuł',
       type: 'string',
       validation: (Rule) => Rule.required(),
+      description: 'Główny tytuł wpisu na blogu.',
     }),
-    defineField({
+    defineFieldWithDescription({
       name: 'slug',
       title: 'Slug',
       type: 'slug',
       options: { source: 'title', maxLength: 96 },
       validation: (Rule) => Rule.required(),
+      description: 'Unikalny identyfikator URL generowany na podstawie tytułu.',
     }),
-    defineField({
+    defineFieldWithDescription({
       name: 'author',
       title: 'Autor',
       type: 'reference',
       to: [{ type: 'author' }],
       validation: (Rule) => Rule.required(),
+      description: 'Autor wpisu na blogu.',
     }),
-    defineField({
+    defineFieldWithDescription({
       name: 'publishedAt',
       title: 'Data publikacji',
       type: 'datetime',
+      description: 'Data publikacji wpisu.',
     }),
-    defineField({
+    defineFieldWithDescription({
       name: 'excerpt',
       title: 'Streszczenie',
       type: 'text',
       description: 'Krótki opis do widoków listy i jako zapasowy opis meta (max ~160 znaków)',
       validation: (Rule) => Rule.max(160).warning('Keep excerpt under ~160 characters for SEO'),
     }),
-    defineField({
+    defineFieldWithDescription({
       name: 'mainImage',
       title: 'Zdjęcie główne',
       type: 'image',
       options: { hotspot: true },
+      description: 'Główne zdjęcie wpisu na blogu, wyświetlane w nagłówku i podglądzie.',
       fields: [
-        defineField({
+        defineFieldWithDescription({
           name: 'alt',
           title: 'Tekst alternatywny',
           type: 'string',
@@ -51,7 +57,7 @@ export const blogPost = defineType({
         }),
       ],
     }),
-    defineField({
+    defineFieldWithDescription({
       name: 'body',
       title: 'Treść',
       type: 'array',
@@ -79,7 +85,14 @@ export const blogPost = defineType({
                 name: 'link',
                 type: 'object',
                 title: 'URL',
-                fields: [defineField({ name: 'href', type: 'url', title: 'Href' })],
+                fields: [
+                  defineFieldWithDescription({
+                    name: 'href',
+                    type: 'url',
+                    title: 'Href',
+                    description: 'Adres URL do linku.',
+                  }),
+                ],
               },
             ],
           },
@@ -89,21 +102,23 @@ export const blogPost = defineType({
       description:
         'Zawartość Portable Text. Użyj H2/H3/H4 oraz list, aby strukturyzować treść pod kątem czytelności i gotowości dla AI.',
     }),
-    defineField({
+    defineFieldWithDescription({
       name: 'readingTime',
       title: 'Czas czytania (minuty)',
       type: 'number',
       description: 'Szacowany czas czytania w minutach',
     }),
-    defineField({
+    defineFieldWithDescription({
       name: 'seo',
       title: 'Ustawienia SEO',
       type: 'seo_block',
+      description: 'Ustawienia SEO specyficzne dla tego wpisu na blogu.',
     }),
-    defineField({
+    defineFieldWithDescription({
       name: 'schemaType',
       title: 'Typ schematu',
       type: 'string',
+      description: 'Typ schematu dla tego wpisu na blogu.',
       options: {
         list: [
           {
