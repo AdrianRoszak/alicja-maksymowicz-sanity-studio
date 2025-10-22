@@ -40,8 +40,9 @@ export const seoBlock = defineType({
     }),
     defineField({
       name: 'seo_block_twitter_card',
-      title: 'Karta na Twitterze',
+      title: 'Twitter Card',
       type: 'string',
+      description: 'Typ karty Twitter (np. summary, summary_large_image)',
       options: {
         list: [
           { title: 'Podsumowanie', value: 'summary' },

@@ -9,11 +9,13 @@ export const author = defineType({
       name: 'author_name',
       title: 'Imię i nazwisko',
       type: 'string',
+      description: 'Pełne imię i nazwisko autora',
     }),
     defineField({
       name: 'author_slug',
       title: 'Slug',
       type: 'slug',
+      description: 'Unikalny identyfikator autora w adresie URL',
       options: {
         source: 'name',
         maxLength: 96,
@@ -23,6 +25,7 @@ export const author = defineType({
       name: 'author_image',
       title: 'Zdjęcie',
       type: 'image',
+      description: 'Portret autora',
       options: {
         hotspot: true,
       },
@@ -31,6 +34,7 @@ export const author = defineType({
       name: 'author_bio',
       title: 'Biografia',
       type: 'array',
+      description: 'Krótka biografia autora',
       of: [
         {
           title: 'Block',

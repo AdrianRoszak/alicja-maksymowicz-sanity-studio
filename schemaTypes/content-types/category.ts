@@ -9,11 +9,13 @@ export const category = defineType({
       name: 'category_title',
       title: 'Tytuł',
       type: 'string',
+      description: 'Nazwa kategorii',
     }),
     defineField({
       name: 'category_description',
       title: 'Opis',
       type: 'text',
+      description: 'Opis kategorii',
     }),
   ],
 })
