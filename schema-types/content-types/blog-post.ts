@@ -42,18 +42,10 @@ export const blogPost = defineType({
     defineFieldWithDescription({
       name: 'blog_post_main_image',
       title: 'Zdjęcie główne',
-      type: 'image',
-      options: { hotspot: true },
+      type: 'image_block',
       description:
         'Główne zdjęcie wpisu na blogu, wyświetlane w nagłówku i podglądzie na stronie jako miniaturka.',
-      fields: [
-        defineFieldWithDescription({
-          name: 'blog_post_main_image_alt',
-          title: 'Tekst alternatywny',
-          type: 'string',
-          description: 'Tekst alternatywny obrazu dla dostępności i SEO',
-        }),
-      ],
+      validation: (Rule) => Rule.required(),
     }),
     defineFieldWithDescription({
       name: 'blog_post_body',

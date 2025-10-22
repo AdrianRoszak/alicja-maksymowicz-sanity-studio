@@ -1,4 +1,3 @@
-export { seoBlock as seoSettings } from '../block-types'
 export { author } from './author'
 export { blockContent } from './block-content'
 export { blogPost } from './blog-post'
