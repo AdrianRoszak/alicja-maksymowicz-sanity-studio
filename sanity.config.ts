@@ -1,6 +1,5 @@
 import { visionTool } from '@sanity/vision'
-import type { SchemaTypeDefinition } from 'sanity'
-import { defineConfig } from 'sanity'
+import { defineConfig, type SchemaTypeDefinition } from 'sanity'
 import { structureTool } from 'sanity/structure'
 import { apiVersion, dataset, projectId, validateEnvironment } from './lib/env'
 import { schemaTypes } from './schemaTypes'
