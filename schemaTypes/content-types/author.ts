@@ -6,12 +6,12 @@ export const author = defineType({
   type: 'document',
   fields: [
     defineField({
-      name: 'name',
+      name: 'author_name',
       title: 'Imię i nazwisko',
       type: 'string',
     }),
     defineField({
-      name: 'slug',
+      name: 'author_slug',
       title: 'Slug',
       type: 'slug',
       options: {
@@ -20,7 +20,7 @@ export const author = defineType({
       },
     }),
     defineField({
-      name: 'image',
+      name: 'author_image',
       title: 'Zdjęcie',
       type: 'image',
       options: {
@@ -28,7 +28,7 @@ export const author = defineType({
       },
     }),
     defineField({
-      name: 'bio',
+      name: 'author_bio',
       title: 'Biografia',
       type: 'array',
       of: [
@@ -43,8 +43,8 @@ export const author = defineType({
   ],
   preview: {
     select: {
-      title: 'name',
-      media: 'image',
+      title: 'author_name',
+      media: 'author_image',
     },
   },
 })

@@ -14,7 +14,8 @@
     "lint:fix": "biome check --write",
     "format": "biome format --write",
     "commitlint": "commitlint",
-    "prepare": "lefthook install"
+    "prepare": "lefthook install",
+    "test": "vitest run"
   },
   "keywords": ["sanity"],
   "dependencies": {

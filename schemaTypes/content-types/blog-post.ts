@@ -7,14 +7,14 @@ export const blogPost = defineType({
   type: 'document',
   fields: [
     defineFieldWithDescription({
-      name: 'title',
+      name: 'blog_post_title',
       title: 'Tytuł',
       type: 'string',
       validation: (Rule) => Rule.required(),
       description: 'Główny tytuł wpisu na blogu.',
     }),
     defineFieldWithDescription({
-      name: 'slug',
+      name: 'blog_post_slug',
       title: 'Slug',
       type: 'slug',
       options: { source: 'title', maxLength: 96 },
@@ -22,7 +22,7 @@ export const blogPost = defineType({
       description: 'Unikalny identyfikator URL generowany na podstawie tytułu.',
     }),
     defineFieldWithDescription({
-      name: 'author',
+      name: 'blog_post_author',
       title: 'Autor',
       type: 'reference',
       to: [{ type: 'author' }],
@@ -30,27 +30,27 @@ export const blogPost = defineType({
       description: 'Autor wpisu na blogu.',
     }),
     defineFieldWithDescription({
-      name: 'publishedAt',
+      name: 'blog_post_published_at',
       title: 'Data publikacji',
       type: 'datetime',
       description: 'Data publikacji wpisu.',
     }),
     defineFieldWithDescription({
-      name: 'excerpt',
+      name: 'blog_post_excerpt',
       title: 'Streszczenie',
       type: 'text',
       description: 'Krótki opis do widoków listy i jako zapasowy opis meta (max ~160 znaków)',
       validation: (Rule) => Rule.max(160).warning('Keep excerpt under ~160 characters for SEO'),
     }),
     defineFieldWithDescription({
-      name: 'mainImage',
+      name: 'blog_post_main_image',
       title: 'Zdjęcie główne',
       type: 'image',
       options: { hotspot: true },
       description: 'Główne zdjęcie wpisu na blogu, wyświetlane w nagłówku i podglądzie.',
       fields: [
         defineFieldWithDescription({
-          name: 'alt',
+          name: 'blog_post_main_image_alt',
           title: 'Tekst alternatywny',
           type: 'string',
           description: 'Tekst alternatywny obrazu dla dostępności i SEO',
@@ -58,7 +58,7 @@ export const blogPost = defineType({
       ],
     }),
     defineFieldWithDescription({
-      name: 'body',
+      name: 'blog_post_body',
       title: 'Treść',
       type: 'array',
       of: [
@@ -87,7 +87,7 @@ export const blogPost = defineType({
                 title: 'URL',
                 fields: [
                   defineFieldWithDescription({
-                    name: 'href',
+                    name: 'link_href',
                     type: 'url',
                     title: 'Href',
                     description: 'Adres URL do linku.',
@@ -103,19 +103,19 @@ export const blogPost = defineType({
         'Zawartość Portable Text. Użyj H2/H3/H4 oraz list, aby strukturyzować treść pod kątem czytelności i gotowości dla AI.',
     }),
     defineFieldWithDescription({
-      name: 'readingTime',
+      name: 'blog_post_reading_time',
       title: 'Czas czytania (minuty)',
       type: 'number',
       description: 'Szacowany czas czytania w minutach',
     }),
     defineFieldWithDescription({
-      name: 'seo',
+      name: 'blog_post_seo',
       title: 'Ustawienia SEO',
       type: 'seo_block',
       description: 'Ustawienia SEO specyficzne dla tego wpisu na blogu.',
     }),
     defineFieldWithDescription({
-      name: 'schemaType',
+      name: 'blog_post_schema_type',
       title: 'Typ schematu',
       type: 'string',
       description: 'Typ schematu dla tego wpisu na blogu.',
@@ -135,9 +135,9 @@ export const blogPost = defineType({
   ],
   preview: {
     select: {
-      title: 'title',
-      author: 'author.name',
-      media: 'mainImage',
+      title: 'blog_post_title',
+      author: 'blog_post_author.name',
+      media: 'blog_post_main_image',
     },
     prepare(selection) {
       const { title, author } = selection
