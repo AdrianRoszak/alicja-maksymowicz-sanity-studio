@@ -1,5 +1,5 @@
+import { defineFieldWithDescription } from '@src/lib/types'
 import { defineType } from 'sanity'
-import { defineFieldWithDescription } from '../../src/lib/types'
 
 export const imageBlock = defineType({
   name: 'image_block',

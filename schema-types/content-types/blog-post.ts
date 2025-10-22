@@ -1,5 +1,5 @@
+import { defineFieldWithDescription } from '@src/lib/types'
 import { defineArrayMember, defineType } from 'sanity'
-import { defineFieldWithDescription } from '../../src/lib/types'
 
 export const blogPost = defineType({
   name: 'blog_post',
