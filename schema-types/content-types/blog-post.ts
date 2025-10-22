@@ -11,15 +11,8 @@ export const blogPost = defineType({
       title: 'Tytuł',
       type: 'string',
       validation: (Rule) => Rule.required(),
-      description: 'Główny tytuł wpisu na blogu.',
-    }),
-    defineFieldWithDescription({
-      name: 'blog_post_slug',
-      title: 'Slug',
-      type: 'slug',
-      options: { source: 'title', maxLength: 96 },
-      validation: (Rule) => Rule.required(),
-      description: 'Unikalny identyfikator URL generowany na podstawie tytułu.',
+      description:
+        'Główny tytuł wpisu na blogu. Pełni także rolę nagłówka H1 na dedykowanej podstronie wpisu.',
     }),
     defineFieldWithDescription({
       name: 'blog_post_author',
@@ -34,20 +27,25 @@ export const blogPost = defineType({
       title: 'Data publikacji',
       type: 'datetime',
       description: 'Data publikacji wpisu.',
+      initialValue: () => new Date().toISOString(),
     }),
     defineFieldWithDescription({
       name: 'blog_post_excerpt',
       title: 'Streszczenie',
       type: 'text',
       description: 'Krótki opis do widoków listy i jako zapasowy opis meta (max ~160 znaków)',
-      validation: (Rule) => Rule.max(160).warning('Keep excerpt under ~160 characters for SEO'),
+      validation: (Rule) =>
+        Rule.max(160).warning(
+          'Zalecane: streszczenie nie powinno przekraczać ~160 znaków ze względu na SEO',
+        ),
     }),
     defineFieldWithDescription({
       name: 'blog_post_main_image',
       title: 'Zdjęcie główne',
       type: 'image',
       options: { hotspot: true },
-      description: 'Główne zdjęcie wpisu na blogu, wyświetlane w nagłówku i podglądzie.',
+      description:
+        'Główne zdjęcie wpisu na blogu, wyświetlane w nagłówku i podglądzie na stronie jako miniaturka.',
       fields: [
         defineFieldWithDescription({
           name: 'blog_post_main_image_alt',
@@ -100,13 +98,22 @@ export const blogPost = defineType({
         defineArrayMember({ type: 'image', options: { hotspot: true } }),
       ],
       description:
-        'Zawartość Portable Text. Użyj H2/H3/H4 oraz list, aby strukturyzować treść pod kątem czytelności i gotowości dla AI.',
+        'Główna treść wpisu na blogu. Użyj H2/H3/H4, aby strukturyzować treść pod kątem czytelności i gotowości dla AI.',
     }),
     defineFieldWithDescription({
       name: 'blog_post_reading_time',
       title: 'Czas czytania (minuty)',
       type: 'number',
-      description: 'Szacowany czas czytania w minutach',
+      description: 'Szacowany czas czytania w minutach.',
+    }),
+    defineFieldWithDescription({
+      name: 'blog_post_slug',
+      title: 'Slug',
+      type: 'slug',
+      options: { source: 'blog_post_title', maxLength: 96 },
+      validation: (Rule) => Rule.required(),
+      description:
+        'Unikalny identyfikator URL generowany na podstawie tytułu. Przykład: https://moja-strona.com/blog/moj-wpis-na-blogu',
     }),
     defineFieldWithDescription({
       name: 'blog_post_seo',
