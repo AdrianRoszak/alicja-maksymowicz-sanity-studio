@@ -1,36 +1,36 @@
 import { defineField, defineType } from 'sanity'
 
-export const seoSettings = defineType({
-  name: 'seo_settings',
+export const seoBlock = defineType({
+  name: 'seo_block',
   title: 'Ustawienia SEO',
   type: 'object',
   fields: [
     defineField({
-      name: 'metaTitle',
+      name: 'seo_block_meta_title',
       title: 'Tytuł meta',
       type: 'string',
       description: 'Tytuł wyświetlany w wynikach wyszukiwania',
     }),
     defineField({
-      name: 'metaDescription',
+      name: 'seo_block_meta_description',
       title: 'Opis meta',
       type: 'text',
       description: 'Opis wyświetlany w wynikach wyszukiwania (max ~160 znaków)',
     }),
     defineField({
-      name: 'ogTitle',
+      name: 'seo_block_og_title',
       title: 'Tytuł Open Graph',
       type: 'string',
       description: 'Tytuł używany w udostępnianiu w mediach społecznościowych',
     }),
     defineField({
-      name: 'ogDescription',
+      name: 'seo_block_og_description',
       title: 'Opis Open Graph',
       type: 'text',
       description: 'Opis używany w udostępnianiu w mediach społecznościowych',
     }),
     defineField({
-      name: 'ogImage',
+      name: 'seo_block_og_image',
       title: 'Obraz Open Graph',
       type: 'image',
       options: {
@@ -39,9 +39,10 @@ export const seoSettings = defineType({
       description: 'Obraz używany podczas udostępniania w mediach społecznościowych',
     }),
     defineField({
-      name: 'twitterCard',
-      title: 'Karta na Twitterze',
+      name: 'seo_block_twitter_card',
+      title: 'Twitter Card',
       type: 'string',
+      description: 'Typ karty Twitter (np. summary, summary_large_image)',
       options: {
         list: [
           { title: 'Podsumowanie', value: 'summary' },
@@ -50,7 +51,7 @@ export const seoSettings = defineType({
       },
     }),
     defineField({
-      name: 'noIndex',
+      name: 'seo_block_no_index',
       title: 'Nie indeksować',
       type: 'boolean',
       description:

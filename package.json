@@ -14,23 +14,26 @@
     "lint:fix": "biome check --write",
     "format": "biome format --write",
     "commitlint": "commitlint",
-    "prepare": "lefthook install"
+    "prepare": "lefthook install",
+    "test": "vitest run"
   },
   "keywords": ["sanity"],
   "dependencies": {
     "@sanity/vision": "^4.10.3",
-    "react": "^19.1",
-    "react-dom": "^19.1",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
     "sanity": "^4.10.3",
-    "styled-components": "^6.1.18"
+    "styled-components": "^6.1.19"
   },
   "devDependencies": {
     "@biomejs/biome": "^2.2.6",
     "@commitlint/cli": "^20.1.0",
     "@commitlint/config-conventional": "^20.0.0",
-    "@types/react": "^19.1",
+    "@types/react": "^19.2.2",
+    "@vitest/ui": "^3.2.4",
     "lefthook": "^1.13.6",
-    "typescript": "^5.8"
+    "typescript": "^5.9.3",
+    "vitest": "^3.2.4"
   },
   "pnpm": {
     "ignoredBuiltDependencies": ["lefthook"]

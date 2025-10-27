@@ -129,3 +129,6 @@ This project includes comprehensive GitHub Actions workflows:
 - [Read the blog post about this template](https://www.sanity.io/blog/build-your-own-blog-with-sanity-and-next-js?utm_source=readme)
 - [Join the Sanity community](https://www.sanity.io/community/join?utm_source=readme)
 - [Extend and build plugins](https://www.sanity.io/docs/content-studio/extending?utm_source=readme)
+
+## 🧪 Testing & Schema Validation
+See [docs/testing.md](./docs/testing.md) for details on test file naming conventions and schema validation tests.

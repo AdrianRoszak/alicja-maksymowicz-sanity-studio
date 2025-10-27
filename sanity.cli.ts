@@ -1,5 +1,5 @@
+import { dataset, projectId, validateEnvironment } from '@lib/env'
 import { defineCliConfig } from 'sanity/cli'
-import { dataset, projectId, validateEnvironment } from './lib/env'
 
 // Validate environment variables on startup
 validateEnvironment()

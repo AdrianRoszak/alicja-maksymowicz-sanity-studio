@@ -67,7 +67,7 @@ jobs:
           SANITY_STUDIO_API_VERSION: ${{ secrets.SANITY_STUDIO_API_VERSION }}
 
       - name: Check for security vulnerabilities
-        run: pnpm audit --audit-level moderate
+        run: pnpm audit --audit-level high
 
       - name: Validate conventional commits
         if: github.event_name == 'pull_request'
