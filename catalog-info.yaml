@@ -1,11 +1,11 @@
 apiVersion: backstage.io/v1alpha1
 kind: Component
 metadata:
-  name: alicja-maksymowicz-sanity-studio
-  description: Panel CMS dla strony alicjamaksymowicz.pl
-  tags:
-    - cms
+  name: sanity-studio
+  title: Alicja Maksymowicz – Sanity Studio
+  description: Panel administracyjny Headless CMS dla projektu Alicja Maksymowicz.
 spec:
-  type: cms
+  type: tool
   owner: Weirdo
   lifecycle: production
+  system: content-platform
