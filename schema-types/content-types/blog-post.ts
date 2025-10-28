@@ -141,14 +141,33 @@ export const blogPost = defineType({
   preview: {
     select: {
       title: 'blog_post_title',
+      language: 'language',
+      publishedAt: 'blog_post_published_at',
       author: 'blog_post_author.name',
       media: 'blog_post_main_image',
     },
     prepare(selection) {
-      const { title, author } = selection
+      const { title, language, publishedAt, author, media } = selection
+      const langPrefix = language ? `[${String(language).toUpperCase()}] ` : ''
+      // Format date in a human-friendly way. If the date is missing, fall back to author only.
+      const formattedDate = publishedAt
+        ? new Date(publishedAt).toLocaleDateString(undefined, {
+            year: 'numeric',
+            month: '2-digit',
+            day: '2-digit',
+          })
+        : null
+
+      const subtitle = formattedDate
+        ? formattedDate + (author ? ` — by ${author}` : '')
+        : author
+          ? `by ${author}`
+          : ''
+
       return {
-        title,
-        subtitle: author ? `by ${author}` : '',
+        title: `${langPrefix}${title || ''}`,
+        subtitle,
+        media,
       }
     },
   },
