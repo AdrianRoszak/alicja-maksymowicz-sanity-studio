@@ -10,7 +10,7 @@ export const blogPost = defineType({
       name: 'language',
       type: 'string',
       readOnly: true,
-      hidden: false,
+      hidden: true,
     }),
     defineFieldWithDescription({
       name: 'blog_post_title',
@@ -119,37 +119,19 @@ export const blogPost = defineType({
       type: 'seo_block',
       description: 'Ustawienia SEO specyficzne dla tego wpisu na blogu.',
     }),
-    defineFieldWithDescription({
-      name: 'blog_post_schema_type',
-      title: 'Typ schematu',
-      type: 'string',
-      description: 'Typ schematu dla tego wpisu na blogu.',
-      options: {
-        list: [
-          {
-            title: 'BlogPosting',
-            value: 'BlogPosting',
-          },
-          {
-            title: 'Article',
-            value: 'Article',
-          },
-        ],
-      },
-    }),
   ],
   preview: {
     select: {
       title: 'blog_post_title',
       language: 'language',
       publishedAt: 'blog_post_published_at',
-      author: 'blog_post_author.name',
-      media: 'blog_post_main_image',
+      author: 'blog_post_author.author_name',
+      media: 'blog_post_main_image.image_block_image',
     },
     prepare(selection) {
       const { title, language, publishedAt, author, media } = selection
+      console.log(media)
       const langPrefix = language ? `[${String(language).toUpperCase()}] ` : ''
-      // Format date in a human-friendly way. If the date is missing, fall back to author only.
       const formattedDate = publishedAt
         ? new Date(publishedAt).toLocaleDateString(undefined, {
             year: 'numeric',
