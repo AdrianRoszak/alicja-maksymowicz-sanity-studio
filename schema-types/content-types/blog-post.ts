@@ -1,11 +1,17 @@
 import { defineFieldWithDescription } from '@src/lib/types'
-import { defineArrayMember, defineType } from 'sanity'
+import { defineArrayMember, defineField, defineType } from 'sanity'
 
 export const blogPost = defineType({
   name: 'blog_post',
   title: 'Wpis na blogu',
   type: 'document',
   fields: [
+    defineField({
+      name: 'language',
+      type: 'string',
+      readOnly: true,
+      hidden: true,
+    }),
     defineFieldWithDescription({
       name: 'blog_post_title',
       title: 'Tytuł',
@@ -113,36 +119,37 @@ export const blogPost = defineType({
       type: 'seo_block',
       description: 'Ustawienia SEO specyficzne dla tego wpisu na blogu.',
     }),
-    defineFieldWithDescription({
-      name: 'blog_post_schema_type',
-      title: 'Typ schematu',
-      type: 'string',
-      description: 'Typ schematu dla tego wpisu na blogu.',
-      options: {
-        list: [
-          {
-            title: 'BlogPosting',
-            value: 'BlogPosting',
-          },
-          {
-            title: 'Article',
-            value: 'Article',
-          },
-        ],
-      },
-    }),
   ],
   preview: {
     select: {
       title: 'blog_post_title',
-      author: 'blog_post_author.name',
-      media: 'blog_post_main_image',
+      language: 'language',
+      publishedAt: 'blog_post_published_at',
+      author: 'blog_post_author.author_name',
+      media: 'blog_post_main_image.image_block_image',
     },
     prepare(selection) {
-      const { title, author } = selection
+      const { title, language, publishedAt, author, media } = selection
+      console.log(media)
+      const langPrefix = language ? `[${String(language).toUpperCase()}] ` : ''
+      const formattedDate = publishedAt
+        ? new Date(publishedAt).toLocaleDateString(undefined, {
+            year: 'numeric',
+            month: '2-digit',
+            day: '2-digit',
+          })
+        : null
+
+      const subtitle = formattedDate
+        ? formattedDate + (author ? ` — by ${author}` : '')
+        : author
+          ? `by ${author}`
+          : ''
+
       return {
-        title,
-        subtitle: author ? `by ${author}` : '',
+        title: `${langPrefix}${title || ''}`,
+        subtitle,
+        media,
       }
     },
   },
