@@ -9,5 +9,5 @@ export const structure = (S) =>
         .child(S.document().schemaType('page_blog').documentId('page_blog')),
       S.divider(),
       S.listItem().id('posts').title('Posty').child(S.documentTypeList('blog_post')),
-      S.listItem().id('authors').title('Autorzy').child(S.documentTypeList('author')),
+      S.listItem().id('authors').title('Autorzy').child(S.documentTypeList('author_block')),
     ])
