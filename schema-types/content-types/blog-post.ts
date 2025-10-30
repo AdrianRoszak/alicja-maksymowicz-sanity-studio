@@ -7,10 +7,11 @@ export const blogPost = defineType({
   type: 'document',
   fields: [
     defineField({
-      name: 'language',
+      name: 'blog_post_language',
       type: 'string',
       readOnly: true,
       hidden: true,
+      description: 'Język tego wpisu na blogu.',
     }),
     defineFieldWithDescription({
       name: 'blog_post_title',
