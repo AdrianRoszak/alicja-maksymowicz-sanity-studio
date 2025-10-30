@@ -39,23 +39,12 @@ export const seoBlock = defineType({
       description: 'Obraz używany podczas udostępniania w mediach społecznościowych',
     }),
     defineField({
-      name: 'seo_block_twitter_card',
-      title: 'Twitter Card',
-      type: 'string',
-      description: 'Typ karty Twitter (np. summary, summary_large_image)',
-      options: {
-        list: [
-          { title: 'Podsumowanie', value: 'summary' },
-          { title: 'Duże zdjęcie (podsumowanie)', value: 'summary_large_image' },
-        ],
-      },
-    }),
-    defineField({
-      name: 'seo_block_no_index',
-      title: 'Nie indeksować',
+      name: 'seo_block_index',
+      title: 'Indeksowanie włączone',
       type: 'boolean',
+      initialValue: true,
       description:
-        'Zaznacz, aby zapobiec indeksowaniu tej strony przez wyszukiwarki. Użyteczne dla stron tymczasowych lub roboczych.',
+        'Odznacz, aby zapobiec indeksowaniu tej strony przez wyszukiwarki. Użyteczne dla stron tymczasowych lub roboczych.',
     }),
   ],
 })
