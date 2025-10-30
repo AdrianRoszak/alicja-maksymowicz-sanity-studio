@@ -1,4 +1,5 @@
 import { apiVersion, dataset, projectId, validateEnvironment } from '@lib/env'
+import { documentInternationalization } from '@sanity/document-internationalization'
 import { visionTool } from '@sanity/vision'
 import { schemaTypes } from '@schema/index'
 import { structure } from '@src/structure'
@@ -18,6 +19,13 @@ export default defineConfig({
     structureTool({ structure }),
     visionTool({
       defaultApiVersion: apiVersion,
+    }),
+    documentInternationalization({
+      supportedLanguages: [
+        { id: 'pl', title: 'Polish' },
+        { id: 'en', title: 'English' },
+      ],
+      schemaTypes: ['blog_post'],
     }),
   ],
   schema: {
