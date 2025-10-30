@@ -1,16 +1,17 @@
 import { defineFieldWithDescription } from '@src/lib/types'
-import { defineArrayMember, defineField, defineType } from 'sanity'
+import { defineArrayMember, defineType } from 'sanity'
 
 export const blogPost = defineType({
   name: 'blog_post',
   title: 'Wpis na blogu',
   type: 'document',
   fields: [
-    defineField({
-      name: 'language',
+    defineFieldWithDescription({
+      name: 'blog_post_language',
       type: 'string',
       readOnly: true,
       hidden: true,
+      description: 'Język tego wpisu na blogu.',
     }),
     defineFieldWithDescription({
       name: 'blog_post_title',
