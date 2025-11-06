@@ -25,7 +25,7 @@ export const blogPost = defineType({
       name: 'blog_post_author',
       title: 'Autor',
       type: 'reference',
-      to: [{ type: 'author' }],
+      to: [{ type: 'author_block' }],
       validation: (Rule) => Rule.required(),
       description: 'Autor wpisu na blogu.',
     }),
@@ -124,9 +124,9 @@ export const blogPost = defineType({
   preview: {
     select: {
       title: 'blog_post_title',
-      language: 'language',
+      language: 'block_post_language',
       publishedAt: 'blog_post_published_at',
-      author: 'blog_post_author.author_name',
+      author: 'blog_post_author.author_block_name',
       media: 'blog_post_main_image.image_block_image',
     },
     prepare(selection) {
