@@ -1,9 +1,9 @@
 import { defineFieldWithDescription } from '@src/lib/types'
 import { defineType } from 'sanity'
 
-export const pageBlog = defineType({
-  name: 'page_blog',
-  title: 'Blog',
+export const pageContact = defineType({
+  name: 'page_contact',
+  title: 'Kontakt',
   type: 'document',
   __experimental_formPreviewTitle: false,
   groups: [
@@ -18,36 +18,36 @@ export const pageBlog = defineType({
   ],
   fields: [
     defineFieldWithDescription({
-      name: 'blog_language',
+      name: 'contact_language',
       type: 'string',
       readOnly: true,
       hidden: true,
-      description: 'Język strony bloga.',
+      description: 'Język strony kontaktowej.',
     }),
     defineFieldWithDescription({
-      name: 'blog_title',
+      name: 'contact_title',
       title: 'Tytuł',
       type: 'string',
       validation: (Rule) => Rule.required(),
-      description: 'Tytuł strony bloga.',
+      description: 'Tytuł strony kontaktowej.',
       group: 'content',
     }),
     defineFieldWithDescription({
-      name: 'blog_seo',
+      name: 'contact_seo',
       title: 'Ustawienia SEO',
       type: 'seo_block',
-      description: 'Ustawienia SEO dla strony bloga.',
+      description: 'Ustawienia SEO dla strony kontaktowej.',
       group: 'seo',
     }),
   ],
   preview: {
     select: {
-      title: 'blog_title',
+      title: 'contact_title',
     },
     prepare(selection) {
       const { title } = selection
       return {
-        title: title || 'Strona bloga',
+        title: title || 'Kontakt',
       }
     },
   },
