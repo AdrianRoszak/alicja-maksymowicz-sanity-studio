@@ -25,7 +25,14 @@ export default defineConfig({
         { id: 'pl', title: 'Polish' },
         { id: 'en', title: 'English' },
       ],
-      schemaTypes: ['blog_post', 'course', 'page_home', 'page_about_me', 'page_contact'],
+      schemaTypes: [
+        'blog_post',
+        'course',
+        'page_home',
+        'page_about_me',
+        'page_contact',
+        'page_blog',
+      ],
     }),
   ],
   schema: {
