@@ -40,4 +40,15 @@ export const pageAboutMe = defineType({
       group: 'seo',
     }),
   ],
+  preview: {
+    select: {
+      title: 'about_me_title',
+    },
+    prepare(selection) {
+      const { title } = selection
+      return {
+        title: title || 'O mnie',
+      }
+    },
+  },
 })

@@ -40,4 +40,15 @@ export const pageHome = defineType({
       group: 'seo',
     }),
   ],
+  preview: {
+    select: {
+      title: 'home_title',
+    },
+    prepare(selection) {
+      const { title } = selection
+      return {
+        title: title || 'Strona główna',
+      }
+    },
+  },
 })

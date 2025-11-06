@@ -40,4 +40,15 @@ export const pageContact = defineType({
       group: 'seo',
     }),
   ],
+  preview: {
+    select: {
+      title: 'contact_title',
+    },
+    prepare(selection) {
+      const { title } = selection
+      return {
+        title: title || 'Kontakt',
+      }
+    },
+  },
 })
