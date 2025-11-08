@@ -10,7 +10,9 @@ function checkDescriptionRecursive(fields: any[], path: string[] = []) {
       typeof field.description !== 'string' ||
       field.description.trim() === ''
     ) {
-      throw new Error(`Missing or empty description at: ${fieldPath.join(' > ')}`)
+      throw new Error(
+        `Missing or empty description at: ${fieldPath.join(' > ')}`,
+      )
     }
     // Check nested fields (e.g., for objects, images, arrays)
     if (Array.isArray(field.fields)) {
@@ -19,7 +21,10 @@ function checkDescriptionRecursive(fields: any[], path: string[] = []) {
     if (Array.isArray(field.of)) {
       for (const ofItem of field.of) {
         if (ofItem.fields) {
-          checkDescriptionRecursive(ofItem.fields, [...fieldPath, ofItem.name || '[unnamed]'])
+          checkDescriptionRecursive(ofItem.fields, [
+            ...fieldPath,
+            ofItem.name || '[unnamed]',
+          ])
         }
       }
     }

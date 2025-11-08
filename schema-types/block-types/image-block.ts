@@ -26,7 +26,9 @@ export const imageBlock = defineType({
         Rule.required()
           .min(5)
           .max(150)
-          .warning('Zalecane: tekst alternatywny powinien mieć od 5 do 150 znaków.'),
+          .warning(
+            'Zalecane: tekst alternatywny powinien mieć od 5 do 150 znaków.',
+          ),
     }),
   ],
 })

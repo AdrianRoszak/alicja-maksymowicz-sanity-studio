@@ -4,18 +4,27 @@ import { describe, it } from 'vitest'
 
 function isFieldDefinitionArray(fields: unknown): fields is FieldDefinition[] {
   return (
-    Array.isArray(fields) && fields.every((f) => typeof f === 'object' && f !== null && 'name' in f)
+    Array.isArray(fields) &&
+    fields.every((f) => typeof f === 'object' && f !== null && 'name' in f)
   )
 }
 
 function checkNameRecursive(fields: FieldDefinition[], path: string[] = []) {
   for (const field of fields) {
     const fieldPath = [...path, field.name || '[unnamed]']
-    if (typeof field.name !== 'string' || !/^([a-z0-9]+_)*[a-z0-9]+$/.test(field.name)) {
-      throw new Error(`Invalid name at: ${fieldPath.join(' > ')}. Name must be snake_case.`)
+    if (
+      typeof field.name !== 'string' ||
+      !/^([a-z0-9]+_)*[a-z0-9]+$/.test(field.name)
+    ) {
+      throw new Error(
+        `Invalid name at: ${fieldPath.join(' > ')}. Name must be snake_case.`,
+      )
     }
     if (isFieldDefinitionArray((field as { fields?: unknown }).fields)) {
-      checkNameRecursive((field as { fields: FieldDefinition[] }).fields, fieldPath)
+      checkNameRecursive(
+        (field as { fields: FieldDefinition[] }).fields,
+        fieldPath,
+      )
     }
     if (isFieldDefinitionArray((field as { of?: unknown }).of)) {
       for (const ofItem of (field as { of: FieldDefinition[] }).of) {
@@ -40,20 +49,32 @@ describe('Sanity schema name enforcement', () => {
   }
 })
 
-function checkPrefix(fields: FieldDefinition[], parentPrefix: string | null, schemaName: string) {
+function checkPrefix(
+  fields: FieldDefinition[],
+  parentPrefix: string | null,
+  schemaName: string,
+) {
   for (const field of fields) {
     if (!field.name) continue
     if (!parentPrefix) {
       if (!field.name.startsWith(`${schemaName}_`)) {
-        throw new Error(`Top-level field '${field.name}' must start with '${schemaName}_'`)
+        throw new Error(
+          `Top-level field '${field.name}' must start with '${schemaName}_'`,
+        )
       }
     } else {
       if (!field.name.startsWith(`${parentPrefix}_`)) {
-        throw new Error(`Nested field '${field.name}' must start with '${parentPrefix}_'`)
+        throw new Error(
+          `Nested field '${field.name}' must start with '${parentPrefix}_'`,
+        )
       }
     }
     if (isFieldDefinitionArray((field as { fields?: unknown }).fields)) {
-      checkPrefix((field as { fields: FieldDefinition[] }).fields, field.name, schemaName)
+      checkPrefix(
+        (field as { fields: FieldDefinition[] }).fields,
+        field.name,
+        schemaName,
+      )
     }
     if (isFieldDefinitionArray((field as { of?: unknown }).of)) {
       for (const ofItem of (field as { of: FieldDefinition[] }).of) {
