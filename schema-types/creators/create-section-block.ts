@@ -1,39 +1,53 @@
 import { defineFieldWithDescription } from '@src/lib'
+import {
+  SECTION_ITEMS,
+  SECTION_REFERENCES,
+  type SectionItemType,
+  type SectionReferenceType,
+} from './section-block-config'
 
 export type CreateSectionBlockOptions = {
+  /** Include excerpt field in the section */
   hasExcerpt?: boolean
+  /** Include description field in the section */
   hasDescription?: boolean
-  referencesType?: ReferencesType
-  itemsType?: ItemsType
+  /** Add an array of embedded items (e.g., values, process points) */
+  itemsType?: SectionItemType
+  /** Add an array of references to documents (e.g., courses, testimonials) */
+  referencesType?: SectionReferenceType
 }
 
-export enum ReferencesType {
-  COURSE = 'COURSE',
-  TESTIMONIAL = 'TESTIMONIAL',
-  GALLERY_BLOCK = 'GALLERY_BLOCK',
-}
-
-export enum ItemsType {
-  VALUE = 'VALUE',
-  PROCESS_POINT = 'PROCESS_POINT',
-}
-
-export enum Titles {
-  VALUE = 'Wartości',
-  COURSE = 'Programy',
-  PROCESS_POINT = 'Punkty procesu',
-  TESTIMONIAL = 'Opinie klientów',
-  GALLERY_BLOCK = 'Galeria zdjęć',
-}
-
+/**
+ * Creates a dynamic section block with configurable fields
+ *
+ * @example
+ * // Basic section with just header
+ * createSectionBlock()
+ *
+ * @example
+ * // Section with excerpt and testimonials
+ * createSectionBlock({
+ *   hasExcerpt: true,
+ *   referencesType: 'TESTIMONIAL'
+ * })
+ *
+ * @example
+ * // Section with description and process points
+ * createSectionBlock({
+ *   hasDescription: true,
+ *   itemsType: 'PROCESS_POINT'
+ * })
+ */
 export function createSectionBlock(options?: CreateSectionBlockOptions) {
   const {
     hasExcerpt = false,
     hasDescription = false,
-    itemsType = null,
-    referencesType = null,
+    itemsType,
+    referencesType,
   } = options || {}
-  const sectionBlock = [
+
+  const fields = [
+    // Always include header
     defineFieldWithDescription({
       name: 'section_block_header',
       title: 'Nagłówek sekcji',
@@ -41,6 +55,8 @@ export function createSectionBlock(options?: CreateSectionBlockOptions) {
       validation: (Rule) => Rule.required(),
       description: 'Nagłówek sekcji (H2).',
     }),
+
+    // Conditionally include excerpt
     ...(hasExcerpt
       ? [
           defineFieldWithDescription({
@@ -52,6 +68,8 @@ export function createSectionBlock(options?: CreateSectionBlockOptions) {
           }),
         ]
       : []),
+
+    // Conditionally include description
     ...(hasDescription
       ? [
           defineFieldWithDescription({
@@ -63,30 +81,36 @@ export function createSectionBlock(options?: CreateSectionBlockOptions) {
           }),
         ]
       : []),
+
+    // Conditionally include items array
     ...(itemsType
       ? [
           defineFieldWithDescription({
             name: 'section_block_items',
-            title: Titles[itemsType],
+            title: SECTION_ITEMS[itemsType].title,
             type: 'array',
-            of: [{ type: itemsType.toLowerCase() }],
-            description: `Dodaj ${Titles[itemsType]}`,
+            of: [{ type: SECTION_ITEMS[itemsType].schemaType }],
+            description: SECTION_ITEMS[itemsType].description,
           }),
         ]
-      : referencesType
-        ? [
-            defineFieldWithDescription({
-              name: 'section_block_references',
-              title: Titles[referencesType],
-              type: 'reference',
-              to: [{ type: referencesType.toLowerCase() }],
-              description: `Dodaj ${Titles[referencesType]}`,
-              options: {
-                disableNew: true,
-              },
-            }),
-          ]
-        : []),
+      : []),
+
+    // Conditionally include references array
+    ...(referencesType
+      ? [
+          defineFieldWithDescription({
+            name: 'section_block_references',
+            title: SECTION_REFERENCES[referencesType].title,
+            type: 'reference',
+            to: [{ type: SECTION_REFERENCES[referencesType].schemaType }],
+            description: SECTION_REFERENCES[referencesType].description,
+            options: {
+              disableNew: true,
+            },
+          }),
+        ]
+      : []),
   ]
-  return [...sectionBlock]
+
+  return fields
 }

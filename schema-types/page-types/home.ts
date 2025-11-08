@@ -1,8 +1,4 @@
 import { createSectionBlock } from '@schema/creators'
-import {
-  ItemsType,
-  ReferencesType,
-} from '@schema/creators/create-section-block'
 import { defineFieldWithDescription } from '@src/lib/types'
 import { defineType } from 'sanity'
 
@@ -52,7 +48,7 @@ export const pageHome = defineType({
       description: 'Sekcja o mnie wyświetlana na stronie głównej.',
       fields: createSectionBlock({
         hasDescription: true,
-        itemsType: ItemsType.VALUE,
+        itemsType: 'VALUE',
       }),
       group: 'content',
     }),
@@ -62,7 +58,7 @@ export const pageHome = defineType({
       type: 'object',
       description: 'Sekcja programów wyświetlana na stronie głównej.',
       fields: createSectionBlock({
-        referencesType: ReferencesType.COURSE,
+        referencesType: 'COURSE',
       }),
       group: 'content',
     }),
@@ -73,7 +69,7 @@ export const pageHome = defineType({
       description: 'Sekcja opisująca proces wyświetlana na stronie głównej.',
       fields: createSectionBlock({
         hasDescription: true,
-        itemsType: ItemsType.PROCESS_POINT,
+        itemsType: 'PROCESS_POINT',
       }),
       group: 'content',
     }),
@@ -84,7 +80,7 @@ export const pageHome = defineType({
       description: 'Sekcja społeczności wyświetlana na stronie głównej.',
       fields: createSectionBlock({
         hasExcerpt: true,
-        referencesType: ReferencesType.GALLERY_BLOCK,
+        referencesType: 'GALLERY_BLOCK',
       }),
       group: 'content',
     }),
@@ -93,7 +89,7 @@ export const pageHome = defineType({
       title: 'Opinie klientów',
       type: 'object',
       fields: createSectionBlock({
-        referencesType: ReferencesType.TESTIMONIAL,
+        referencesType: 'TESTIMONIAL',
       }),
       description: 'Sekcja opinii klientów wyświetlana na stronie głównej.',
       group: 'content',
