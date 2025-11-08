@@ -36,7 +36,8 @@ export const seoBlock = defineType({
       options: {
         hotspot: true,
       },
-      description: 'Obraz używany podczas udostępniania w mediach społecznościowych',
+      description:
+        'Obraz używany podczas udostępniania w mediach społecznościowych',
     }),
     defineField({
       name: 'seo_block_index',

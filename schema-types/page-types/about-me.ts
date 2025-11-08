@@ -33,6 +33,14 @@ export const pageAboutMe = defineType({
       group: 'content',
     }),
     defineFieldWithDescription({
+      name: 'about_me_hero',
+      title: 'Hero',
+      type: 'reference',
+      to: [{ type: 'hero' }],
+      description: 'Hero wyświetlane na stronie o mnie.',
+      group: 'content',
+    }),
+    defineFieldWithDescription({
       name: 'about_me_seo',
       title: 'Ustawienia SEO',
       type: 'seo_block',

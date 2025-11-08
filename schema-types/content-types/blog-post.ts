@@ -40,7 +40,8 @@ export const blogPost = defineType({
       name: 'blog_post_excerpt',
       title: 'Streszczenie',
       type: 'text',
-      description: 'Krótki opis do widoków listy i jako zapasowy opis meta (max ~160 znaków)',
+      description:
+        'Krótki opis do widoków listy i jako zapasowy opis meta (max ~160 znaków)',
       validation: (Rule) =>
         Rule.max(160).warning(
           'Zalecane: streszczenie nie powinno przekraczać ~160 znaków ze względu na SEO',
@@ -131,7 +132,6 @@ export const blogPost = defineType({
     },
     prepare(selection) {
       const { title, language, publishedAt, author, media } = selection
-      console.log(media)
       const langPrefix = language ? `[${String(language).toUpperCase()}] ` : ''
       const formattedDate = publishedAt
         ? new Date(publishedAt).toLocaleDateString(undefined, {

@@ -13,8 +13,8 @@ export default defineConfig({
   name: 'am',
   title: 'AlicjaMaksymowicz',
   studioHost: 'alicja-maksymowicz',
-  projectId: projectId!,
-  dataset: dataset!,
+  projectId: projectId ?? '',
+  dataset: dataset ?? '',
   plugins: [
     structureTool({ structure }),
     visionTool({
@@ -32,6 +32,8 @@ export default defineConfig({
         'page_about_me',
         'page_contact',
         'page_blog',
+        'testimonial',
+        'hero',
       ],
     }),
   ],

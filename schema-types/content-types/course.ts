@@ -18,7 +18,15 @@ export const course = defineType({
       title: 'Nazwa programu',
       type: 'string',
       validation: (Rule) => Rule.required(),
-      description: 'Nazwa programu. Pełni także rolę nagłówka H1 na dedykowanej stronie kursu.',
+      description:
+        'Nazwa programu. Pełni także rolę nagłówka H1 na dedykowanej stronie kursu.',
+    }),
+    defineFieldWithDescription({
+      name: 'course_thumbnail',
+      title: 'Miniatura kursu',
+      type: 'image_block',
+      description: 'Miniatura kursu.',
+      validation: (Rule) => Rule.required(),
     }),
     defineFieldWithDescription({
       name: 'course_features',
@@ -74,7 +82,8 @@ export const course = defineType({
     prepare(selection) {
       const { title, language, price, currency } = selection
       const langPrefix = language ? `[${String(language).toUpperCase()}] ` : ''
-      const formattedPrice = price !== undefined && currency ? `${price} ${currency}` : 'Brak ceny'
+      const formattedPrice =
+        price !== undefined && currency ? `${price} ${currency}` : 'Brak ceny'
 
       return {
         title: `${langPrefix}${title || 'Bez nazwy'}`,

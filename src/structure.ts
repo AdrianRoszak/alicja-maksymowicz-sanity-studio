@@ -10,7 +10,9 @@ export const structure = (S) =>
       S.listItem()
         .id('about-me')
         .title('O mnie')
-        .child(S.document().schemaType('page_about_me').documentId('page_about_me')),
+        .child(
+          S.document().schemaType('page_about_me').documentId('page_about_me'),
+        ),
       S.listItem()
         .id('blog')
         .title('Strona bloga')
@@ -18,19 +20,30 @@ export const structure = (S) =>
       S.listItem()
         .id('contact')
         .title('Kontakt')
-        .child(S.document().schemaType('page_contact').documentId('page_contact')),
+        .child(
+          S.document().schemaType('page_contact').documentId('page_contact'),
+        ),
       S.divider(),
       S.listItem()
         .id('courses')
         .title('Programy')
-        .child(S.document().schemaType('course').documentId('course')),
-      S.divider(),
+        .child(S.documentTypeList('course')),
       S.listItem()
         .id('posts')
         .title('Posty')
-        .child(S.document().schemaType('blog_post').documentId('blog_post')),
+        .child(S.documentTypeList('blog_post')),
+      S.divider(),
+      S.listItem().id('heroes').title('Hero').child(S.documentTypeList('hero')),
+      S.listItem()
+        .id('testimonials')
+        .title('Opinie klientów')
+        .child(S.documentTypeList('testimonial')),
       S.listItem()
         .id('authors')
         .title('Autorzy')
-        .child(S.document().schemaType('author_block').documentId('author_block')),
+        .child(S.documentTypeList('author_block')),
+      S.listItem()
+        .id('gallery-blocks')
+        .title('Galeria zdjęć')
+        .child(S.documentTypeList('gallery_block')),
     ])
