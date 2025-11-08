@@ -32,6 +32,8 @@ export default defineConfig({
         'page_about_me',
         'page_contact',
         'page_blog',
+        'testimonial',
+        'hero',
       ],
     }),
   ],

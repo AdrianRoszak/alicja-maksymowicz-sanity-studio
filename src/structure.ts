@@ -10,7 +10,9 @@ export const structure = (S) =>
       S.listItem()
         .id('about-me')
         .title('O mnie')
-        .child(S.document().schemaType('page_about_me').documentId('page_about_me')),
+        .child(
+          S.document().schemaType('page_about_me').documentId('page_about_me'),
+        ),
       S.listItem()
         .id('blog')
         .title('Strona bloga')
@@ -18,10 +20,27 @@ export const structure = (S) =>
       S.listItem()
         .id('contact')
         .title('Kontakt')
-        .child(S.document().schemaType('page_contact').documentId('page_contact')),
+        .child(
+          S.document().schemaType('page_contact').documentId('page_contact'),
+        ),
       S.divider(),
-      S.listItem().id('courses').title('Programy').child(S.documentTypeList('course')),
+      S.listItem()
+        .id('courses')
+        .title('Programy')
+        .child(S.documentTypeList('course')),
       S.divider(),
-      S.listItem().id('posts').title('Posty').child(S.documentTypeList('blog_post')),
-      S.listItem().id('authors').title('Autorzy').child(S.documentTypeList('author_block')),
+      S.listItem().id('heroes').title('Hero').child(S.documentTypeList('hero')),
+      S.listItem()
+        .id('testimonials')
+        .title('Opinie klientów')
+        .child(S.documentTypeList('testimonial')),
+      S.divider(),
+      S.listItem()
+        .id('posts')
+        .title('Posty')
+        .child(S.documentTypeList('blog_post')),
+      S.listItem()
+        .id('authors')
+        .title('Autorzy')
+        .child(S.documentTypeList('author_block')),
     ])

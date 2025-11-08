@@ -33,6 +33,22 @@ export const pageHome = defineType({
       group: 'content',
     }),
     defineFieldWithDescription({
+      name: 'home_hero',
+      title: 'Hero',
+      type: 'reference',
+      to: [{ type: 'hero' }],
+      description: 'Hero wyświetlane na stronie głównej.',
+      group: 'content',
+    }),
+    defineFieldWithDescription({
+      name: 'home_testimonials',
+      title: 'Opinie klientów',
+      type: 'array',
+      of: [{ type: 'reference', to: [{ type: 'testimonial' }] }],
+      description: 'Lista opinii klientów wyświetlanych na stronie głównej.',
+      group: 'content',
+    }),
+    defineFieldWithDescription({
       name: 'home_seo',
       title: 'Ustawienia SEO',
       type: 'seo_block',
