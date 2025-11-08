@@ -20,17 +20,8 @@ export const structure = (S) =>
         .title('Kontakt')
         .child(S.document().schemaType('page_contact').documentId('page_contact')),
       S.divider(),
-      S.listItem()
-        .id('courses')
-        .title('Programy')
-        .child(S.document().schemaType('course').documentId('course')),
+      S.listItem().id('courses').title('Programy').child(S.documentTypeList('course')),
       S.divider(),
-      S.listItem()
-        .id('posts')
-        .title('Posty')
-        .child(S.document().schemaType('blog_post').documentId('blog_post')),
-      S.listItem()
-        .id('authors')
-        .title('Autorzy')
-        .child(S.document().schemaType('author_block').documentId('author_block')),
+      S.listItem().id('posts').title('Posty').child(S.documentTypeList('blog_post')),
+      S.listItem().id('authors').title('Autorzy').child(S.documentTypeList('author_block')),
     ])
