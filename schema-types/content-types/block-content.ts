@@ -2,7 +2,7 @@ import { defineArrayMember, defineType } from 'sanity'
 
 export const blockContent = defineType({
   title: 'Block Content',
-  name: 'block-content',
+  name: 'block_content',
   type: 'array',
   of: [
     defineArrayMember({

@@ -28,19 +28,22 @@ export const structure = (S) =>
         .id('courses')
         .title('Programy')
         .child(S.documentTypeList('course')),
+      S.listItem()
+        .id('posts')
+        .title('Posty')
+        .child(S.documentTypeList('blog_post')),
       S.divider(),
       S.listItem().id('heroes').title('Hero').child(S.documentTypeList('hero')),
       S.listItem()
         .id('testimonials')
         .title('Opinie klientów')
         .child(S.documentTypeList('testimonial')),
-      S.divider(),
-      S.listItem()
-        .id('posts')
-        .title('Posty')
-        .child(S.documentTypeList('blog_post')),
       S.listItem()
         .id('authors')
         .title('Autorzy')
         .child(S.documentTypeList('author_block')),
+      S.listItem()
+        .id('gallery-blocks')
+        .title('Galeria zdjęć')
+        .child(S.documentTypeList('gallery_block')),
     ])

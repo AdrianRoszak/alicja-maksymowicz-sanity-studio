@@ -1,3 +1,8 @@
+import { createSectionBlock } from '@schema/creators'
+import {
+  ItemsType,
+  ReferencesType,
+} from '@schema/creators/create-section-block'
 import { defineFieldWithDescription } from '@src/lib/types'
 import { defineType } from 'sanity'
 
@@ -41,11 +46,56 @@ export const pageHome = defineType({
       group: 'content',
     }),
     defineFieldWithDescription({
+      name: 'home_about_me_section',
+      title: 'Sekcja o mnie',
+      type: 'object',
+      description: 'Sekcja o mnie wyświetlana na stronie głównej.',
+      fields: createSectionBlock({
+        hasDescription: true,
+        itemsType: ItemsType.VALUE,
+      }),
+      group: 'content',
+    }),
+    defineFieldWithDescription({
+      name: 'home_courses_section',
+      title: 'Sekcja programów',
+      type: 'object',
+      description: 'Sekcja programów wyświetlana na stronie głównej.',
+      fields: createSectionBlock({
+        referencesType: ReferencesType.COURSE,
+      }),
+      group: 'content',
+    }),
+    defineFieldWithDescription({
+      name: 'home_process_section',
+      title: 'Sekcja procesu',
+      type: 'object',
+      description: 'Sekcja opisująca proces wyświetlana na stronie głównej.',
+      fields: createSectionBlock({
+        hasDescription: true,
+        itemsType: ItemsType.PROCESS_POINT,
+      }),
+      group: 'content',
+    }),
+    defineFieldWithDescription({
+      name: 'home_social_proof_section',
+      title: 'Sekcja dowodów społeczności',
+      type: 'object',
+      description: 'Sekcja społeczności wyświetlana na stronie głównej.',
+      fields: createSectionBlock({
+        hasExcerpt: true,
+        referencesType: ReferencesType.GALLERY_BLOCK,
+      }),
+      group: 'content',
+    }),
+    defineFieldWithDescription({
       name: 'home_testimonials',
       title: 'Opinie klientów',
-      type: 'array',
-      of: [{ type: 'reference', to: [{ type: 'testimonial' }] }],
-      description: 'Lista opinii klientów wyświetlanych na stronie głównej.',
+      type: 'object',
+      fields: createSectionBlock({
+        referencesType: ReferencesType.TESTIMONIAL,
+      }),
+      description: 'Sekcja opinii klientów wyświetlana na stronie głównej.',
       group: 'content',
     }),
     defineFieldWithDescription({
