@@ -47,6 +47,11 @@ export const SECTION_REFERENCES = {
     title: 'Opinie klientów',
     description: 'Dodaj opinie klientów',
   },
+  FAQ: {
+    schemaType: 'faq',
+    title: 'FAQ',
+    description: 'Dodaj pytania i odpowiedzi',
+  },
   GALLERY_BLOCK: {
     schemaType: 'gallery_block',
     title: 'Galeria zdjęć',

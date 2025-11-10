@@ -1,3 +1,4 @@
+import { createSectionBlock } from '@schema/creators'
 import { defineFieldWithDescription } from '@src/lib/types'
 import { defineType } from 'sanity'
 
@@ -29,6 +30,22 @@ export const course = defineType({
       validation: (Rule) => Rule.required(),
     }),
     defineFieldWithDescription({
+      name: 'course_hero',
+      title: 'Hero kursu',
+      type: 'reference',
+      to: [{ type: 'hero' }],
+      description: 'Hero wyświetlane na stronie kursu.',
+    }),
+    defineFieldWithDescription({
+      name: 'course_intro_section',
+      title: 'Sekcja wprowadzająca',
+      type: 'object',
+      description: 'Sekcja wprowadzająca kursu z nagłówkiem i treścią.',
+      fields: createSectionBlock({
+        hasDescription: true,
+      }),
+    }),
+    defineFieldWithDescription({
       name: 'course_features',
       title: 'Cechy kursu',
       type: 'array',
@@ -55,6 +72,15 @@ export const course = defineType({
         ],
       },
       description: 'Waluta ceny kursu.',
+    }),
+    defineFieldWithDescription({
+      name: 'course_faq_section',
+      title: 'Sekcja FAQ',
+      type: 'object',
+      description: 'Sekcja z pytaniami i odpowiedziami dotyczącymi kursu.',
+      fields: createSectionBlock({
+        referencesType: 'FAQ',
+      }),
     }),
     defineFieldWithDescription({
       name: 'course_slug',
