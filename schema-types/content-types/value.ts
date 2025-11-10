@@ -4,13 +4,14 @@ import { defineType } from 'sanity'
 export const value = defineType({
   name: 'value',
   title: 'Wartość',
-  type: 'document',
+  type: 'object',
   fields: [
     defineFieldWithDescription({
       name: 'value_name',
       title: 'Nazwa wartości',
       type: 'string',
-      description: 'Nazwa wartości',
+      description:
+        'Wpisz wartość lub zasadę, którą się kierujesz (np. "Uczciwość", "Innowacyjność"). Każda wartość to osobny element.',
     }),
   ],
 })

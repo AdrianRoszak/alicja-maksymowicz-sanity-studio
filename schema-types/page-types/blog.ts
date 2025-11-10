@@ -29,14 +29,16 @@ export const pageBlog = defineType({
       title: 'Tytuł',
       type: 'string',
       validation: (Rule) => Rule.required(),
-      description: 'Tytuł strony bloga.',
+      description:
+        'Wpisz tytuł dla strony z listą wpisów (np. "Blog", "Artykuły"). Będzie widoczny na górze strony.',
       group: 'content',
     }),
     defineFieldWithDescription({
       name: 'blog_seo',
       title: 'Ustawienia SEO',
       type: 'seo_block',
-      description: 'Ustawienia SEO dla strony bloga.',
+      description:
+        'Skonfiguruj jak strona bloga będzie wyglądać w Google i mediach społecznościowych.',
       group: 'seo',
     }),
   ],

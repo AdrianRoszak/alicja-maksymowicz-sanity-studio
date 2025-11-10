@@ -42,8 +42,16 @@ export const structure = (S) =>
         .id('authors')
         .title('Autorzy')
         .child(S.documentTypeList('author_block')),
+      S.listItem().id('faq').title('FAQ').child(S.documentTypeList('faq')),
       S.listItem()
         .id('gallery-blocks')
-        .title('Galeria zdjęć')
+        .title('Galerie zdjęć')
         .child(S.documentTypeList('gallery_block')),
+      S.divider(),
+      S.listItem()
+        .id('company-data')
+        .title('Dane firmy')
+        .child(
+          S.document().schemaType('company_data').documentId('company_data'),
+        ),
     ])

@@ -30,7 +30,8 @@ export const pageHome = defineType({
       title: 'Tytuł',
       type: 'string',
       validation: (Rule) => Rule.required(),
-      description: 'Tytuł strony głównej.',
+      description:
+        'Wpisz tytuł strony głównej. Jest używany wewnętrznie do identyfikacji - odwiedzający go nie zobaczą.',
       group: 'content',
     }),
     defineFieldWithDescription({
@@ -38,14 +39,16 @@ export const pageHome = defineType({
       title: 'Hero',
       type: 'reference',
       to: [{ type: 'hero' }],
-      description: 'Hero wyświetlane na stronie głównej.',
+      description:
+        'Wybierz hero dla strony głównej. To pierwsza sekcja, którą zobaczą odwiedzający.',
       group: 'content',
     }),
     defineFieldWithDescription({
       name: 'home_about_me_section',
       title: 'Sekcja o mnie',
       type: 'object',
-      description: 'Sekcja o mnie wyświetlana na stronie głównej.',
+      description:
+        'Opowiedz o sobie i swoich wartościach. Dodaj nagłówek, opis i listę wartości, którymi się kierujesz.',
       fields: createSectionBlock({
         hasDescription: true,
         itemsType: 'VALUE',
@@ -56,7 +59,8 @@ export const pageHome = defineType({
       name: 'home_courses_section',
       title: 'Sekcja programów',
       type: 'object',
-      description: 'Sekcja programów wyświetlana na stronie głównej.',
+      description:
+        'Pokaż swoją ofertę programów/kursów. Wybierz nagłówek i które programy mają być widoczne na stronie głównej.',
       fields: createSectionBlock({
         referencesType: 'COURSE',
       }),
@@ -66,7 +70,8 @@ export const pageHome = defineType({
       name: 'home_process_section',
       title: 'Sekcja procesu',
       type: 'object',
-      description: 'Sekcja opisująca proces wyświetlana na stronie głównej.',
+      description:
+        'Opisz jak przebiega współpraca z Tobą krok po kroku. Dodaj nagłówek, opis i poszczególne etapy procesu.',
       fields: createSectionBlock({
         hasDescription: true,
         itemsType: 'PROCESS_POINT',
@@ -77,7 +82,8 @@ export const pageHome = defineType({
       name: 'home_social_proof_section',
       title: 'Sekcja dowodów społeczności',
       type: 'object',
-      description: 'Sekcja społeczności wyświetlana na stronie głównej.',
+      description:
+        'Pokaż zdjęcia realizacji lub happy clients. Dodaj nagłówek, krótkie wprowadzenie i wybierz galerie do wyświetlenia.',
       fields: createSectionBlock({
         hasExcerpt: true,
         referencesType: 'GALLERY_BLOCK',
@@ -91,14 +97,16 @@ export const pageHome = defineType({
       fields: createSectionBlock({
         referencesType: 'TESTIMONIAL',
       }),
-      description: 'Sekcja opinii klientów wyświetlana na stronie głównej.',
+      description:
+        'Pokaż opinie zadowolonych klientów. Wybierz nagłówek sekcji i które opinie mają być widoczne.',
       group: 'content',
     }),
     defineFieldWithDescription({
       name: 'home_seo',
       title: 'Ustawienia SEO',
       type: 'seo_block',
-      description: 'Ustawienia SEO dla strony głównej.',
+      description:
+        'Skonfiguruj jak strona główna będzie wyglądać w Google i mediach społecznościowych.',
       group: 'seo',
     }),
   ],

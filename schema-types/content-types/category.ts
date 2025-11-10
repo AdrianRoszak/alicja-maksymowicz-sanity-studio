@@ -9,13 +9,15 @@ export const category = defineType({
       name: 'category_title',
       title: 'Tytuł',
       type: 'string',
-      description: 'Nazwa kategorii',
+      description:
+        'Wpisz nazwę kategorii (np. "Technologia", "Lifestyle"). Będzie ona używana do grupowania treści.',
     }),
     defineField({
       name: 'category_description',
       title: 'Opis',
       type: 'text',
-      description: 'Opis kategorii',
+      description:
+        'Napisz krótki opis kategorii - czego mogą spodziewać się czytelnicy w tej sekcji.',
     }),
   ],
 })

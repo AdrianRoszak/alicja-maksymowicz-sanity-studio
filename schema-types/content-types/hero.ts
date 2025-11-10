@@ -18,21 +18,24 @@ export const hero = defineType({
       title: 'Tytuł',
       type: 'string',
       validation: (Rule) => Rule.required().max(60),
-      description: 'Tytuł sekcji hero (maksymalnie 60 znaków).',
+      description:
+        'Wpisz główny tytuł sekcji hero (max 60 znaków). To pierwsza rzecz, którą zobaczą odwiedzający - powinien być chwytliwy!',
     }),
     defineFieldWithDescription({
       name: 'hero_excerpt',
       title: 'Excerpt',
       type: 'text',
       validation: (Rule) => Rule.required().max(150),
-      description: 'Krótki opis sekcji hero (maksymalnie 150 znaków).',
+      description:
+        'Napisz krótki opis lub podtytuł (max 150 znaków), który uzupełni główny tytuł i zachęci do zapoznania się z ofertą.',
     }),
     defineFieldWithDescription({
       name: 'hero_image',
       title: 'Zdjęcie',
       type: 'image_block',
       validation: (Rule) => Rule.required(),
-      description: 'Główne zdjęcie sekcji hero.',
+      description:
+        'Dodaj główne zdjęcie dla sekcji hero. To duże, widoczne zdjęcie na górze strony - wybierz coś atrakcyjnego wizualnie.',
     }),
   ],
   preview: {

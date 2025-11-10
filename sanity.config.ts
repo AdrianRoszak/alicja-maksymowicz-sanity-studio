@@ -34,6 +34,8 @@ export default defineConfig({
         'page_blog',
         'testimonial',
         'hero',
+        'faq',
+        'company_data',
       ],
     }),
   ],

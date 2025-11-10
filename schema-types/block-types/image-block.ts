@@ -14,14 +14,16 @@ export const imageBlock = defineType({
         hotspot: true,
         accept: 'image/png,image/jpeg,image/webp',
       },
-      description: 'Obraz do wyświetlenia',
+      description:
+        'Dodaj zdjęcie klikając w obszar powyżej lub przeciągnij plik. Akceptowane formaty: PNG, JPEG, WEBP.',
       validation: (Rule) => Rule.required(),
     }),
     defineFieldWithDescription({
       name: 'image_block_alt',
       title: 'Tekst alternatywny',
       type: 'string',
-      description: 'Tekst alternatywny obrazu dla dostępności i SEO',
+      description:
+        'Opisz co znajduje się na zdjęciu w 5-150 znakach. Ten opis pomoże osobom niedowidzącym oraz poprawi SEO strony.',
       validation: (Rule) =>
         Rule.required()
           .min(5)

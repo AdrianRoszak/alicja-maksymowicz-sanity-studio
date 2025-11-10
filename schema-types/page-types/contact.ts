@@ -29,14 +29,16 @@ export const pageContact = defineType({
       title: 'Tytuł',
       type: 'string',
       validation: (Rule) => Rule.required(),
-      description: 'Tytuł strony kontaktowej.',
+      description:
+        'Wpisz tytuł strony kontaktowej (np. "Skontaktuj się ze mną", "Kontakt"). Będzie widoczny na górze strony.',
       group: 'content',
     }),
     defineFieldWithDescription({
       name: 'contact_seo',
       title: 'Ustawienia SEO',
       type: 'seo_block',
-      description: 'Ustawienia SEO dla strony kontaktowej.',
+      description:
+        'Skonfiguruj jak strona kontaktowa będzie wyglądać w Google i mediach społecznościowych.',
       group: 'seo',
     }),
   ],
