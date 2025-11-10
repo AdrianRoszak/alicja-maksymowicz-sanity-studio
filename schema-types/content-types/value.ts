@@ -4,7 +4,7 @@ import { defineType } from 'sanity'
 export const value = defineType({
   name: 'value',
   title: 'Wartość',
-  type: 'document',
+  type: 'object',
   fields: [
     defineFieldWithDescription({
       name: 'value_name',

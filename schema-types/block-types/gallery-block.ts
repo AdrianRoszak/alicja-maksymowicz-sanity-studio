@@ -3,7 +3,7 @@ import { defineField, defineType } from 'sanity'
 export const galleryBlock = defineType({
   name: 'gallery_block',
   title: 'Galeria',
-  type: 'object',
+  type: 'document',
   fields: [
     defineField({
       name: 'gallery_block_images',

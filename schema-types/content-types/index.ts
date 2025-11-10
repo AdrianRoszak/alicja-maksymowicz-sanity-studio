@@ -1,6 +1,7 @@
 export { blockContent } from './block-content'
 export { blogPost } from './blog-post'
 export { category } from './category'
+export { companyData } from './company-data'
 export { course } from './course'
 export { hero } from './hero'
 export { processPoint } from './process-point'

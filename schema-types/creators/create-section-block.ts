@@ -101,12 +101,17 @@ export function createSectionBlock(options?: CreateSectionBlockOptions) {
           defineFieldWithDescription({
             name: 'section_block_references',
             title: SECTION_REFERENCES[referencesType].title,
-            type: 'reference',
-            to: [{ type: SECTION_REFERENCES[referencesType].schemaType }],
+            type: 'array',
+            of: [
+              {
+                type: 'reference',
+                to: [{ type: SECTION_REFERENCES[referencesType].schemaType }],
+                options: {
+                  disableNew: true,
+                },
+              },
+            ],
             description: SECTION_REFERENCES[referencesType].description,
-            options: {
-              disableNew: true,
-            },
           }),
         ]
       : []),
