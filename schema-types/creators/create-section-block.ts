@@ -53,7 +53,8 @@ export function createSectionBlock(options?: CreateSectionBlockOptions) {
       title: 'Nagłówek sekcji',
       type: 'string',
       validation: (Rule) => Rule.required(),
-      description: 'Nagłówek sekcji (H2).',
+      description:
+        'Wpisz nagłówek tej sekcji. To tytuł, który pojawi się nad zawartością sekcji.',
     }),
 
     // Conditionally include excerpt
@@ -64,7 +65,8 @@ export function createSectionBlock(options?: CreateSectionBlockOptions) {
             title: 'Wprowadzenie do sekcji',
             type: 'string',
             validation: (Rule) => Rule.required(),
-            description: 'Wprowadzenie do sekcji.',
+            description:
+              'Napisz krótkie wprowadzenie do sekcji (1-2 zdania). Tekst pojawi się pod nagłówkiem.',
           }),
         ]
       : []),
@@ -77,7 +79,8 @@ export function createSectionBlock(options?: CreateSectionBlockOptions) {
             title: 'Opis sekcji',
             type: 'text',
             validation: (Rule) => Rule.required(),
-            description: 'Opis sekcji.',
+            description:
+              'Napisz dłuższy opis sekcji. Możesz użyć kilku zdań aby szczegółowo opisać tę część strony.',
           }),
         ]
       : []),

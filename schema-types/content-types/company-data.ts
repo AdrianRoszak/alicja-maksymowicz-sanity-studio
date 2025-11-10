@@ -19,7 +19,8 @@ export const companyData = defineType({
       title: 'Nazwa firmy',
       type: 'string',
       validation: (Rule) => Rule.required(),
-      description: 'Pełna nazwa firmy.',
+      description:
+        'Wpisz pełną nazwę Twojej firmy. Będzie ona wyświetlana w stopce strony i dokumentach.',
     }),
     defineFieldWithDescription({
       name: 'company_data_email',
@@ -27,13 +28,15 @@ export const companyData = defineType({
       type: 'string',
       validation: (Rule) =>
         Rule.required().email().error('Proszę podać poprawny adres email'),
-      description: 'Główny adres email firmy.',
+      description:
+        'Wpisz główny adres e-mail kontaktowy firmy. Ten adres będzie widoczny dla odwiedzających.',
     }),
     defineFieldWithDescription({
       name: 'company_data_social_media',
       title: 'Social media',
       type: 'object',
-      description: 'Linki do profili w mediach społecznościowych.',
+      description:
+        'Dodaj linki do profili firmy w mediach społecznościowych. Wszystkie pola są opcjonalne.',
       fields: [
         defineFieldWithDescription({
           name: 'company_data_social_media_facebook',
@@ -43,7 +46,8 @@ export const companyData = defineType({
             Rule.custom((url: string | undefined) =>
               validateSocialMediaUrl(url, 'facebook'),
             ),
-          description: 'Link do profilu Facebook.',
+          description:
+            'Wklej link do profilu na Facebooku (np. https://facebook.com/twoja-firma).',
         }),
         defineFieldWithDescription({
           name: 'company_data_social_media_instagram',
@@ -53,7 +57,8 @@ export const companyData = defineType({
             Rule.custom((url: string | undefined) =>
               validateSocialMediaUrl(url, 'instagram'),
             ),
-          description: 'Link do profilu Instagram.',
+          description:
+            'Wklej link do profilu na Instagramie (np. https://instagram.com/twoja-firma).',
         }),
         defineFieldWithDescription({
           name: 'company_data_social_media_linkedin',
@@ -63,7 +68,8 @@ export const companyData = defineType({
             Rule.custom((url: string | undefined) =>
               validateSocialMediaUrl(url, 'linkedin'),
             ),
-          description: 'Link do profilu LinkedIn.',
+          description:
+            'Wklej link do profilu firmowego na LinkedIn (np. https://linkedin.com/company/twoja-firma).',
         }),
         defineFieldWithDescription({
           name: 'company_data_social_media_youtube',
@@ -73,7 +79,8 @@ export const companyData = defineType({
             Rule.custom((url: string | undefined) =>
               validateSocialMediaUrl(url, 'youtube'),
             ),
-          description: 'Link do kanału YouTube.',
+          description:
+            'Wklej link do kanału na YouTube (np. https://youtube.com/@twoja-firma).',
         }),
         defineFieldWithDescription({
           name: 'company_data_social_media_tiktok',
@@ -83,7 +90,8 @@ export const companyData = defineType({
             Rule.custom((url: string | undefined) =>
               validateSocialMediaUrl(url, 'tiktok'),
             ),
-          description: 'Link do profilu TikTok.',
+          description:
+            'Wklej link do profilu na TikToku (np. https://tiktok.com/@twoja-firma).',
         }),
       ],
     }),

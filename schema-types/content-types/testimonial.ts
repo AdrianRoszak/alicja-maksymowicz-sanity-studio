@@ -18,7 +18,8 @@ export const testimonial = defineType({
       title: 'Imię i nazwisko',
       type: 'string',
       validation: (Rule) => Rule.required().max(30),
-      description: 'Imię i nazwisko autora opinii (maksymalnie 30 znaków).',
+      description:
+        'Wpisz imię i nazwisko osoby, która zostawiła opinię (max 30 znaków).',
     }),
     defineFieldWithDescription({
       name: 'testimonial_body',
@@ -39,7 +40,8 @@ export const testimonial = defineType({
         }),
       ],
       validation: (Rule) => Rule.required(),
-      description: 'Treść opinii (maksymalnie 400 znaków).',
+      description:
+        'Wpisz treść opinii klienta (max 400 znaków). Możesz użyć pogrubienia lub kursywy do wyróżnienia ważnych fragmentów.',
     }),
     defineFieldWithDescription({
       name: 'testimonial_rating',
@@ -56,7 +58,7 @@ export const testimonial = defineType({
         layout: 'radio',
       },
       validation: (Rule) => Rule.required(),
-      description: 'Ocena od 1 do 5.',
+      description: 'Wybierz ocenę w skali od 1 do 5 gwiazdek.',
     }),
   ],
   preview: {

@@ -11,7 +11,8 @@ export const galleryBlock = defineType({
       type: 'array',
       of: [{ type: 'image_block' }],
       validation: (Rule) => Rule.required().min(1),
-      description: 'Zdjęcia w galerii.',
+      description:
+        'Dodaj zdjęcia do galerii klikając "Dodaj element". Pamiętaj, aby każde zdjęcie miało tekst alternatywny.',
     }),
   ],
   preview: {

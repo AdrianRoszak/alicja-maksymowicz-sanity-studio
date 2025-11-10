@@ -10,13 +10,15 @@ export const processPoint = defineType({
       name: 'process_point_header',
       title: 'Tytuł',
       type: 'string',
-      description: 'Tytuł punktu procesu.',
+      description:
+        'Wpisz nazwę kroku/etapu procesu (np. "Konsultacja", "Realizacja"). Powinien być krótki i zwięzły.',
     }),
     defineFieldWithDescription({
       name: 'process_point_description',
       title: 'Opis',
       type: 'text',
-      description: 'Opis punktu procesu.',
+      description:
+        'Opisz szczegółowo co dzieje się w tym etapie. Wyjaśnij czego mogą spodziewać się klienci.',
     }),
   ],
 })

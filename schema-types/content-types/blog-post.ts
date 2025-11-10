@@ -19,7 +19,7 @@ export const blogPost = defineType({
       type: 'string',
       validation: (Rule) => Rule.required(),
       description:
-        'Główny tytuł wpisu na blogu. Pełni także rolę nagłówka H1 na dedykowanej podstronie wpisu.',
+        'Wpisz tytuł artykułu. Ten tytuł będzie widoczny jako główny nagłówek na stronie wpisu oraz w liście artykułów na blogu.',
     }),
     defineFieldWithDescription({
       name: 'blog_post_author',
@@ -27,13 +27,15 @@ export const blogPost = defineType({
       type: 'reference',
       to: [{ type: 'author_block' }],
       validation: (Rule) => Rule.required(),
-      description: 'Autor wpisu na blogu.',
+      description:
+        'Wybierz autora tego wpisu z listy. Jeśli nie ma go na liście, najpierw dodaj go w sekcji "Autorzy".',
     }),
     defineFieldWithDescription({
       name: 'blog_post_published_at',
       title: 'Data publikacji',
       type: 'datetime',
-      description: 'Data publikacji wpisu.',
+      description:
+        'Wybierz datę i godzinę publikacji wpisu. Domyślnie ustawiona jest bieżąca data.',
       initialValue: () => new Date().toISOString(),
     }),
     defineFieldWithDescription({
@@ -41,7 +43,7 @@ export const blogPost = defineType({
       title: 'Streszczenie',
       type: 'text',
       description:
-        'Krótki opis do widoków listy i jako zapasowy opis meta (max ~160 znaków)',
+        'Napisz krótkie streszczenie wpisu (max 160 znaków). Tekst pojawi się na liście artykułów i w wynikach wyszukiwania Google.',
       validation: (Rule) =>
         Rule.max(160).warning(
           'Zalecane: streszczenie nie powinno przekraczać ~160 znaków ze względu na SEO',
@@ -52,7 +54,7 @@ export const blogPost = defineType({
       title: 'Zdjęcie główne',
       type: 'image_block',
       description:
-        'Główne zdjęcie wpisu na blogu, wyświetlane w nagłówku i podglądzie na stronie jako miniaturka.',
+        'Dodaj zdjęcie główne artykułu. Będzie ono wyświetlane na górze strony wpisu oraz jako miniaturka na liście artykułów.',
       validation: (Rule) => Rule.required(),
     }),
     defineFieldWithDescription({
@@ -88,7 +90,8 @@ export const blogPost = defineType({
                     name: 'link_href',
                     type: 'url',
                     title: 'Href',
-                    description: 'Adres URL do linku.',
+                    description:
+                      'Wklej pełny adres URL (np. https://example.com) do którego ma prowadzić link.',
                   }),
                 ],
               },
@@ -98,13 +101,14 @@ export const blogPost = defineType({
         defineArrayMember({ type: 'image', options: { hotspot: true } }),
       ],
       description:
-        'Główna treść wpisu na blogu. Użyj H2/H3/H4, aby strukturyzować treść pod kątem czytelności i gotowości dla AI.',
+        'Napisz treść artykułu. Użyj nagłówków H2/H3/H4 aby podzielić tekst na sekcje - to ułatwi czytanie i poprawi SEO.',
     }),
     defineFieldWithDescription({
       name: 'blog_post_reading_time',
       title: 'Czas czytania (minuty)',
       type: 'number',
-      description: 'Szacowany czas czytania w minutach.',
+      description:
+        'Wpisz szacowany czas potrzebny na przeczytanie artykułu (np. 5 oznacza "5 minut czytania").',
     }),
     defineFieldWithDescription({
       name: 'blog_post_slug',
@@ -113,13 +117,14 @@ export const blogPost = defineType({
       options: { source: 'blog_post_title', maxLength: 96 },
       validation: (Rule) => Rule.required(),
       description:
-        'Unikalny identyfikator URL generowany na podstawie tytułu. Przykład: https://moja-strona.com/blog/moj-wpis-na-blogu',
+        'Kliknij "Generate" aby automatycznie utworzyć adres URL na podstawie tytułu. To będzie końcówka adresu strony (np. moj-artykul).',
     }),
     defineFieldWithDescription({
       name: 'blog_post_seo',
       title: 'Ustawienia SEO',
       type: 'seo_block',
-      description: 'Ustawienia SEO specyficzne dla tego wpisu na blogu.',
+      description:
+        'Skonfiguruj jak ten wpis będzie wyglądał w Google i mediach społecznościowych. To opcjonalne, ale polecane dla lepszej widoczności.',
     }),
   ],
   preview: {

@@ -23,12 +23,14 @@ export const SECTION_ITEMS = {
   VALUE: {
     schemaType: 'value',
     title: 'Wartości',
-    description: 'Dodaj wartości',
+    description:
+      'Dodaj wartości, którymi się kierujesz. Kliknij "Dodaj element" aby dodać każdą wartość osobno.',
   },
   PROCESS_POINT: {
     schemaType: 'process_point',
     title: 'Punkty procesu',
-    description: 'Dodaj punkty procesu',
+    description:
+      'Dodaj kolejne kroki procesu współpracy. Każdy krok to osobny element z tytułem i opisem.',
   },
 } as const satisfies Record<string, SectionItemConfig>
 
@@ -40,22 +42,26 @@ export const SECTION_REFERENCES = {
   COURSE: {
     schemaType: 'course',
     title: 'Programy',
-    description: 'Dodaj programy',
+    description:
+      'Wybierz programy/kursy, które mają się pojawić w tej sekcji. Kliknij "Dodaj element" aby wybrać kolejne programy.',
   },
   TESTIMONIAL: {
     schemaType: 'testimonial',
     title: 'Opinie klientów',
-    description: 'Dodaj opinie klientów',
+    description:
+      'Wybierz opinie klientów do wyświetlenia w tej sekcji. Najpierw musisz dodać opinie w sekcji "Opinie klientów".',
   },
   FAQ: {
     schemaType: 'faq',
     title: 'FAQ',
-    description: 'Dodaj pytania i odpowiedzi',
+    description:
+      'Wybierz pytania i odpowiedzi do wyświetlenia. Najpierw dodaj FAQ w sekcji "FAQ", a potem wybierz je tutaj.',
   },
   GALLERY_BLOCK: {
     schemaType: 'gallery_block',
     title: 'Galeria zdjęć',
-    description: 'Dodaj galerię zdjęć',
+    description:
+      'Wybierz galerie zdjęć do wyświetlenia. Najpierw utwórz galerie w sekcji "Galerie zdjęć", potem dodaj je tutaj.',
   },
 } as const satisfies Record<string, SectionReferenceConfig>
 

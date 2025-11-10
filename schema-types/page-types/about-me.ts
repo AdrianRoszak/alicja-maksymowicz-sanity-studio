@@ -29,7 +29,8 @@ export const pageAboutMe = defineType({
       title: 'Tytuł',
       type: 'string',
       validation: (Rule) => Rule.required(),
-      description: 'Tytuł strony o mnie.',
+      description:
+        'Wpisz tytuł strony "O mnie". Jest używany wewnętrznie do identyfikacji.',
       group: 'content',
     }),
     defineFieldWithDescription({
@@ -37,14 +38,16 @@ export const pageAboutMe = defineType({
       title: 'Hero',
       type: 'reference',
       to: [{ type: 'hero' }],
-      description: 'Hero wyświetlane na stronie o mnie.',
+      description:
+        'Wybierz hero dla strony "O mnie". To główna sekcja na górze strony z Twoim zdjęciem i opisem.',
       group: 'content',
     }),
     defineFieldWithDescription({
       name: 'about_me_seo',
       title: 'Ustawienia SEO',
       type: 'seo_block',
-      description: 'Ustawienia SEO dla strony o mnie.',
+      description:
+        'Skonfiguruj jak strona "O mnie" będzie wyglądać w Google i mediach społecznościowych.',
       group: 'seo',
     }),
   ],

@@ -18,14 +18,16 @@ export const faq = defineType({
       title: 'Pytanie',
       type: 'string',
       validation: (Rule) => Rule.required().max(200),
-      description: 'Pytanie FAQ (maksymalnie 200 znaków).',
+      description:
+        'Wpisz pytanie, które często zadają Twoi klienci (max 200 znaków). Staraj się formułować je tak, jak pytaliby odwiedzający.',
     }),
     defineFieldWithDescription({
       name: 'faq_answer',
       title: 'Odpowiedź',
       type: 'text',
       validation: (Rule) => Rule.required(),
-      description: 'Odpowiedź na pytanie FAQ.',
+      description:
+        'Napisz szczegółową odpowiedź na powyższe pytanie. Im bardziej konkretna, tym lepiej dla użytkowników.',
     }),
   ],
   preview: {

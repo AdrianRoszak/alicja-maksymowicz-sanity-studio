@@ -20,13 +20,14 @@ export const course = defineType({
       type: 'string',
       validation: (Rule) => Rule.required(),
       description:
-        'Nazwa programu. Pełni także rolę nagłówka H1 na dedykowanej stronie kursu.',
+        'Wpisz nazwę programu/kursu. Ta nazwa będzie widoczna jako główny tytuł na stronie kursu oraz w liście programów.',
     }),
     defineFieldWithDescription({
       name: 'course_thumbnail',
       title: 'Miniatura kursu',
       type: 'image_block',
-      description: 'Miniatura kursu.',
+      description:
+        'Dodaj miniaturkę kursu, która wyświetli się na liście programów. To zdjęcie nie będzie widoczne na stronie szczegółów kursu.',
       validation: (Rule) => Rule.required(),
     }),
     defineFieldWithDescription({
@@ -34,13 +35,15 @@ export const course = defineType({
       title: 'Hero kursu',
       type: 'reference',
       to: [{ type: 'hero' }],
-      description: 'Hero wyświetlane na stronie kursu.',
+      description:
+        'Wybierz sekcję hero dla strony kursu. Jeśli chcesz stworzyć nowe hero, najpierw dodaj je w sekcji "Hero".',
     }),
     defineFieldWithDescription({
       name: 'course_intro_section',
       title: 'Sekcja wprowadzająca',
       type: 'object',
-      description: 'Sekcja wprowadzająca kursu z nagłówkiem i treścią.',
+      description:
+        'Dodaj sekcję wprowadzającą z nagłówkiem i opisem. To pierwsze informacje, które zobaczą odwiedzający na stronie kursu.',
       fields: createSectionBlock({
         hasDescription: true,
       }),
@@ -50,14 +53,16 @@ export const course = defineType({
       title: 'Cechy kursu',
       type: 'array',
       of: [{ type: 'string' }],
-      description: 'Lista głównych cech i korzyści kursu.',
+      description:
+        'Dodaj listę głównych cech i korzyści kursu. Każda cecha to osobny punkt - kliknij "Dodaj element" aby dodać kolejną.',
     }),
     defineFieldWithDescription({
       name: 'course_price',
       title: 'Cena',
       type: 'number',
       validation: (Rule) => Rule.min(0),
-      description: 'Cena kursu (w PLN).',
+      description:
+        'Wpisz cenę kursu jako liczbę (np. 299). Walutę wybierzesz w następnym polu.',
     }),
     defineFieldWithDescription({
       name: 'course_price_currency',
@@ -71,13 +76,15 @@ export const course = defineType({
           { title: 'USD', value: 'USD' },
         ],
       },
-      description: 'Waluta ceny kursu.',
+      description:
+        'Wybierz walutę dla ceny kursu. Domyślnie ustawione są polskie złote (PLN).',
     }),
     defineFieldWithDescription({
       name: 'course_faq_section',
       title: 'Sekcja FAQ',
       type: 'object',
-      description: 'Sekcja z pytaniami i odpowiedziami dotyczącymi kursu.',
+      description:
+        'Dodaj sekcję z najczęściej zadawanymi pytaniami o kurs. Pytania i odpowiedzi wybierzesz z listy FAQ.',
       fields: createSectionBlock({
         referencesType: 'FAQ',
       }),
@@ -89,13 +96,14 @@ export const course = defineType({
       options: { source: 'course_name', maxLength: 96 },
       validation: (Rule) => Rule.required(),
       description:
-        'Unikalny identyfikator URL generowany na podstawie nazwy kursu. Przykład: https://moja-strona.com/kursy/nazwa-kursu',
+        'Kliknij "Generate" aby automatycznie utworzyć adres URL na podstawie nazwy kursu. To będzie końcówka adresu strony (np. moj-kurs).',
     }),
     defineFieldWithDescription({
       name: 'course_seo',
       title: 'Ustawienia SEO',
       type: 'seo_block',
-      description: 'Ustawienia SEO specyficzne dla strony tego kursu.',
+      description:
+        'Skonfiguruj jak ten kurs będzie wyglądał w Google i mediach społecznościowych. To opcjonalne, ale polecane.',
     }),
   ],
   preview: {
