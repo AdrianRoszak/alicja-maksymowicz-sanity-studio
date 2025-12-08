@@ -38,6 +38,7 @@ export default defineConfig({
         'faq',
         'company_data',
         'competency',
+        'trust_point',
       ],
     }),
   ],

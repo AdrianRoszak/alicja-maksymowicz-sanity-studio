@@ -38,6 +38,18 @@ export const SECTION_ITEMS = {
     description:
       'Dodaj kolejne kroki procesu współpracy. Każdy krok to osobny element z tytułem i opisem.',
   },
+  TRUST_POINT: {
+    schemaType: 'trust_point',
+    title: 'Punkty zaufania',
+    description:
+      'Dodaj punkty zaufania do wyświetlenia w tej sekcji. Każdy punkt to osobny element z tytułem i opisem.',
+  },
+  STRING: {
+    schemaType: 'string',
+    title: 'Tekst',
+    description:
+      'Dodaj tekst do wyświetlenia w tej sekcji. Możesz użyć dowolnego tekstu.',
+  },
 } as const satisfies Record<string, SectionItemConfig>
 
 /**
