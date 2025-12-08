@@ -34,6 +34,14 @@ export const pageBlog = defineType({
       group: 'content',
     }),
     defineFieldWithDescription({
+      name: 'blog_excerpt',
+      title: 'Wprowadzenie do strony bloga',
+      type: 'text',
+      description:
+        'Napisz krótkie wprowadzenie do strony bloga (max 160 znaków). Tekst pojawi się na stronie bloga.',
+      group: 'content',
+    }),
+    defineFieldWithDescription({
       name: 'blog_seo',
       title: 'Ustawienia SEO',
       type: 'seo_block',
