@@ -5,6 +5,28 @@ export const blogPost = defineType({
   name: 'blog_post',
   title: 'Wpis na blogu',
   type: 'document',
+  groups: [
+    {
+      title: 'Treść',
+      name: 'content',
+    },
+    {
+      title: 'Zdjęcia',
+      name: 'images',
+    },
+    {
+      title: 'Szczegóły',
+      name: 'details',
+    },
+    {
+      title: 'Powiązane wpisy',
+      name: 'related_posts',
+    },
+    {
+      title: 'SEO',
+      name: 'seo',
+    },
+  ],
   fields: [
     defineFieldWithDescription({
       name: 'blog_post_language',
@@ -20,15 +42,7 @@ export const blogPost = defineType({
       validation: (Rule) => Rule.required(),
       description:
         'Wpisz tytuł artykułu. Ten tytuł będzie widoczny jako główny nagłówek na stronie wpisu oraz w liście artykułów na blogu.',
-    }),
-    defineFieldWithDescription({
-      name: 'blog_post_author',
-      title: 'Autor',
-      type: 'reference',
-      to: [{ type: 'author_block' }],
-      validation: (Rule) => Rule.required(),
-      description:
-        'Wybierz autora tego wpisu z listy. Jeśli nie ma go na liście, najpierw dodaj go w sekcji "Autorzy".',
+      group: 'content',
     }),
     defineFieldWithDescription({
       name: 'blog_post_published_at',
@@ -37,6 +51,7 @@ export const blogPost = defineType({
       description:
         'Wybierz datę i godzinę publikacji wpisu. Domyślnie ustawiona jest bieżąca data.',
       initialValue: () => new Date().toISOString(),
+      group: 'details',
     }),
     defineFieldWithDescription({
       name: 'blog_post_excerpt',
@@ -48,6 +63,16 @@ export const blogPost = defineType({
         Rule.max(160).warning(
           'Zalecane: streszczenie nie powinno przekraczać ~160 znaków ze względu na SEO',
         ),
+      group: 'content',
+    }),
+    defineFieldWithDescription({
+      name: 'blog_post_thumbnail',
+      title: 'Miniatura',
+      type: 'image_block',
+      description:
+        'Dodaj miniaturkę artykułu. Będzie ona wyświetlana na liście artykułów.',
+      validation: (Rule) => Rule.required(),
+      group: 'images',
     }),
     defineFieldWithDescription({
       name: 'blog_post_main_image',
@@ -56,6 +81,7 @@ export const blogPost = defineType({
       description:
         'Dodaj zdjęcie główne artykułu. Będzie ono wyświetlane na górze strony wpisu oraz jako miniaturka na liście artykułów.',
       validation: (Rule) => Rule.required(),
+      group: 'images',
     }),
     defineFieldWithDescription({
       name: 'blog_post_body',
@@ -102,6 +128,7 @@ export const blogPost = defineType({
       ],
       description:
         'Napisz treść artykułu. Użyj nagłówków H2/H3/H4 aby podzielić tekst na sekcje - to ułatwi czytanie i poprawi SEO.',
+      group: 'content',
     }),
     defineFieldWithDescription({
       name: 'blog_post_reading_time',
@@ -109,6 +136,7 @@ export const blogPost = defineType({
       type: 'number',
       description:
         'Wpisz szacowany czas potrzebny na przeczytanie artykułu (np. 5 oznacza "5 minut czytania").',
+      group: 'details',
     }),
     defineFieldWithDescription({
       name: 'blog_post_slug',
@@ -118,6 +146,17 @@ export const blogPost = defineType({
       validation: (Rule) => Rule.required(),
       description:
         'Kliknij "Generate" aby automatycznie utworzyć adres URL na podstawie tytułu. To będzie końcówka adresu strony (np. moj-artykul).',
+      group: 'seo',
+    }),
+    defineFieldWithDescription({
+      name: 'blog_post_related_posts',
+      title: 'Powiązane wpisy',
+      type: 'array',
+      of: [{ type: 'reference', to: [{ type: 'blog_post' }] }],
+      description:
+        'Wybierz maksymalnie 3 wpisy, które mają być widoczne jako powiązane z tym wpisem. To pole jest opcjonalne.',
+      validation: (Rule) => Rule.max(3),
+      group: 'related_posts',
     }),
     defineFieldWithDescription({
       name: 'blog_post_seo',
@@ -125,6 +164,7 @@ export const blogPost = defineType({
       type: 'seo_block',
       description:
         'Skonfiguruj jak ten wpis będzie wyglądał w Google i mediach społecznościowych. To opcjonalne, ale polecane dla lepszej widoczności.',
+      group: 'seo',
     }),
   ],
   preview: {
