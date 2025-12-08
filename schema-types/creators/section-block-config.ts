@@ -9,6 +9,12 @@ export type SectionItemConfig = {
   description: string
 }
 
+export type SectionBlockConfig = {
+  schemaType: string
+  title: string
+  description: string
+}
+
 export type SectionReferenceConfig = {
   schemaType: string
   title: string
@@ -65,6 +71,26 @@ export const SECTION_REFERENCES = {
   },
 } as const satisfies Record<string, SectionReferenceConfig>
 
+/**
+ * Available single-block types for section blocks
+ * These are added as individual fields (not arrays)
+ */
+export const SECTION_BLOCKS = {
+  IMAGE_BLOCK: {
+    schemaType: 'image_block',
+    title: 'Zdjęcie',
+    description:
+      'Dodaj pojedyncze zdjęcie w tej sekcji. Użyj, gdy chcesz pokazać ilustrację lub element wizualny obok treści.',
+  },
+  LINK_BLOCK: {
+    schemaType: 'link_block',
+    title: 'Link',
+    description:
+      'Dodaj link z etykietą. Możesz wybrać wariant zewnętrzny (https://) lub wewnętrzny do strony w CMS.',
+  },
+} as const satisfies Record<string, SectionBlockConfig>
+
 // Type helpers for better autocomplete
 export type SectionItemType = keyof typeof SECTION_ITEMS
 export type SectionReferenceType = keyof typeof SECTION_REFERENCES
+export type SectionBlockType = keyof typeof SECTION_BLOCKS

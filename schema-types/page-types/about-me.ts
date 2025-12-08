@@ -1,3 +1,4 @@
+import { createSectionBlock } from '@schema/creators/create-section-block'
 import { defineFieldWithDescription } from '@src/lib/types'
 import { defineType } from 'sanity'
 
@@ -41,6 +42,17 @@ export const pageAboutMe = defineType({
       description:
         'Wybierz hero dla strony "O mnie". To główna sekcja na górze strony z Twoim zdjęciem i opisem.',
       group: 'content',
+    }),
+    defineFieldWithDescription({
+      name: 'about_me_intro',
+      title: 'Wprowadzenie',
+      type: 'object',
+      description:
+        'Dodaj wprowadzenie do strony "O mnie". To pierwsze informacje, które zobaczą odwiedzający na stronie.',
+      fields: createSectionBlock({
+        hasDescription: true,
+        blocks: ['IMAGE_BLOCK', 'LINK_BLOCK'],
+      }),
     }),
     defineFieldWithDescription({
       name: 'about_me_seo',
