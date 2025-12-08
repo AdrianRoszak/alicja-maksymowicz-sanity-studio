@@ -1,7 +1,9 @@
 import { defineFieldWithDescription } from '@src/lib'
 import {
+  SECTION_BLOCKS,
   SECTION_ITEMS,
   SECTION_REFERENCES,
+  type SectionBlockType,
   type SectionItemType,
   type SectionReferenceType,
 } from './section-block-config'
@@ -11,8 +13,16 @@ export type CreateSectionBlockOptions = {
   hasExcerpt?: boolean
   /** Include description field in the section */
   hasDescription?: boolean
-  /** Add an array of embedded items (e.g., values, process points) */
-  itemsType?: SectionItemType
+  /**
+   * Add embedded items (np. values, process points). Tworzy osobne pole typu array dla każdego itemu.
+   * Możesz podać wiele typów naraz, np. ['VALUE', 'PROCESS_POINT'].
+   */
+  items?: SectionItemType | SectionItemType[]
+  /**
+   * Add single blocks (np. image_block, link_block). Każdy blok jest osobnym polem (nie array).
+   * Możesz podać wiele typów naraz, np. ['IMAGE_BLOCK', 'LINK_BLOCK'].
+   */
+  blocks?: SectionBlockType | SectionBlockType[]
   /** Add an array of references to documents (e.g., courses, testimonials) */
   referencesType?: SectionReferenceType
 }
@@ -25,26 +35,34 @@ export type CreateSectionBlockOptions = {
  * createSectionBlock()
  *
  * @example
- * // Section with excerpt and testimonials
+ * // Section z excerpt i referencjami
  * createSectionBlock({
  *   hasExcerpt: true,
  *   referencesType: 'TESTIMONIAL'
  * })
  *
  * @example
- * // Section with description and process points
+ * // Section z opisem i wieloma typami elementów
  * createSectionBlock({
  *   hasDescription: true,
- *   itemsType: 'PROCESS_POINT'
+ *   items: ['PROCESS_POINT'],
+ *   blocks: ['IMAGE_BLOCK', 'LINK_BLOCK']
  * })
  */
 export function createSectionBlock(options?: CreateSectionBlockOptions) {
   const {
     hasExcerpt = false,
     hasDescription = false,
-    itemsType,
+    items,
+    blocks,
     referencesType,
   } = options || {}
+
+  const resolvedItems =
+    items === undefined ? [] : Array.isArray(items) ? items : [items]
+
+  const resolvedBlocks =
+    blocks === undefined ? [] : Array.isArray(blocks) ? blocks : [blocks]
 
   const fields = [
     // Always include header
@@ -85,18 +103,26 @@ export function createSectionBlock(options?: CreateSectionBlockOptions) {
         ]
       : []),
 
-    // Conditionally include items array
-    ...(itemsType
-      ? [
-          defineFieldWithDescription({
-            name: 'section_block_items',
-            title: SECTION_ITEMS[itemsType].title,
-            type: 'array',
-            of: [{ type: SECTION_ITEMS[itemsType].schemaType }],
-            description: SECTION_ITEMS[itemsType].description,
-          }),
-        ]
-      : []),
+    // Conditionally include items arrays (one field per item type)
+    ...resolvedItems.map((itemType) =>
+      defineFieldWithDescription({
+        name: `section_block_items_${SECTION_ITEMS[itemType].schemaType}`,
+        title: SECTION_ITEMS[itemType].title,
+        type: 'array',
+        of: [{ type: SECTION_ITEMS[itemType].schemaType }],
+        description: SECTION_ITEMS[itemType].description,
+      }),
+    ),
+
+    // Conditionally include single blocks (one field per block type)
+    ...resolvedBlocks.map((blockType) =>
+      defineFieldWithDescription({
+        name: `section_block_${SECTION_BLOCKS[blockType].schemaType}`,
+        title: SECTION_BLOCKS[blockType].title,
+        type: SECTION_BLOCKS[blockType].schemaType,
+        description: SECTION_BLOCKS[blockType].description,
+      }),
+    ),
 
     // Conditionally include references array
     ...(referencesType

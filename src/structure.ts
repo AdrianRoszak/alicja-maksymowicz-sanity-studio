@@ -1,5 +1,6 @@
-// @ts-expect-error :: There may be a problem with the types, but it's not a problem for us
-export const structure = (S) =>
+import type { StructureResolver } from 'sanity/structure'
+
+export const structure: StructureResolver = (S) =>
   S.list()
     .title('PANEL ADMINISTRACYJNY')
     .items([
@@ -9,17 +10,17 @@ export const structure = (S) =>
         .child(S.document().schemaType('page_home').documentId('page_home')),
       S.listItem()
         .id('about-me')
-        .title('O mnie')
+        .title('Strona O mnie')
         .child(
           S.document().schemaType('page_about_me').documentId('page_about_me'),
         ),
       S.listItem()
         .id('blog')
-        .title('Strona bloga')
+        .title('Strona Bloga')
         .child(S.document().schemaType('page_blog').documentId('page_blog')),
       S.listItem()
         .id('contact')
-        .title('Kontakt')
+        .title('Strona Kontakt')
         .child(
           S.document().schemaType('page_contact').documentId('page_contact'),
         ),
@@ -47,6 +48,10 @@ export const structure = (S) =>
         .id('gallery-blocks')
         .title('Galerie zdjęć')
         .child(S.documentTypeList('gallery_block')),
+      S.listItem()
+        .id('competencies')
+        .title('Kompetencje')
+        .child(S.documentTypeList('competency')),
       S.divider(),
       S.listItem()
         .id('company-data')
