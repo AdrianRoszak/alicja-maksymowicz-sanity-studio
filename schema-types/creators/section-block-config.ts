@@ -69,6 +69,12 @@ export const SECTION_REFERENCES = {
     description:
       'Wybierz galerie zdjęć do wyświetlenia. Najpierw utwórz galerie w sekcji "Galerie zdjęć", potem dodaj je tutaj.',
   },
+  COMPETENCY: {
+    schemaType: 'competency',
+    title: 'Kompetencje',
+    description:
+      'Wybierz kompetencje do wyświetlenia w tej sekcji. Najpierw dodaj kompetencje w sekcji "Kompetencje", a potem wybierz je tutaj.',
+  },
 } as const satisfies Record<string, SectionReferenceConfig>
 
 /**

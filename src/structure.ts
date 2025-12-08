@@ -48,6 +48,10 @@ export const structure: StructureResolver = (S) =>
         .id('gallery-blocks')
         .title('Galerie zdjęć')
         .child(S.documentTypeList('gallery_block')),
+      S.listItem()
+        .id('competencies')
+        .title('Kompetencje')
+        .child(S.documentTypeList('competency')),
       S.divider(),
       S.listItem()
         .id('company-data')
