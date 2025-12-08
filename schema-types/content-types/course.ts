@@ -6,6 +6,16 @@ export const course = defineType({
   name: 'course',
   title: 'Program',
   type: 'document',
+  groups: [
+    {
+      title: 'Sekcja Korzyści',
+      name: 'benefits_section',
+    },
+    {
+      title: 'Sekcja Zaufania',
+      name: 'trust_section',
+    },
+  ],
   fields: [
     defineFieldWithDescription({
       name: 'course_language',
@@ -31,6 +41,15 @@ export const course = defineType({
       validation: (Rule) => Rule.required(),
     }),
     defineFieldWithDescription({
+      name: 'course_slug',
+      title: 'Slug',
+      type: 'slug',
+      options: { source: 'course_name', maxLength: 96 },
+      validation: (Rule) => Rule.required(),
+      description:
+        'Kliknij "Generate" aby automatycznie utworzyć adres URL na podstawie nazwy kursu. To będzie końcówka adresu strony (np. moj-kurs).',
+    }),
+    defineFieldWithDescription({
       name: 'course_hero',
       title: 'Hero kursu',
       type: 'reference',
@@ -47,14 +66,6 @@ export const course = defineType({
       fields: createSectionBlock({
         hasDescription: true,
       }),
-    }),
-    defineFieldWithDescription({
-      name: 'course_features',
-      title: 'Cechy kursu',
-      type: 'array',
-      of: [{ type: 'string' }],
-      description:
-        'Dodaj listę głównych cech i korzyści kursu. Każda cecha to osobny punkt - kliknij "Dodaj element" aby dodać kolejną.',
     }),
     defineFieldWithDescription({
       name: 'course_price',
@@ -80,23 +91,65 @@ export const course = defineType({
         'Wybierz walutę dla ceny kursu. Domyślnie ustawione są polskie złote (PLN).',
     }),
     defineFieldWithDescription({
+      name: 'course_benefits',
+      title: 'Korzyści',
+      type: 'object',
+      description:
+        'Dodaj sekcję z korzyściami kursu. Każda korzyść ma nazwę, tekst i obraz SVG.',
+      fields: createSectionBlock({
+        referencesType: 'BENEFIT',
+      }),
+      group: 'benefits_section',
+    }),
+    defineFieldWithDescription({
+      name: 'course_process_points',
+      title: 'Punkty procesu',
+      type: 'object',
+      description:
+        'Dodaj sekcję z punktami procesu kursu. Każdy punkt to krok w procesie z tytułem i opisem.',
+      fields: createSectionBlock({
+        hasExcerpt: true,
+        blocks: ['LINK_BLOCK'],
+        items: ['PROCESS_POINT'],
+      }),
+    }),
+    defineFieldWithDescription({
+      name: 'course_trust_section',
+      title: 'Sekcja zaufania',
+      type: 'object',
+      description:
+        'Dodaj sekcję z zaufaniem do kursu. Wybierz nagłówek i które zaufania mają być widoczne na stronie kursu.',
+      fields: createSectionBlock({
+        hasExcerpt: true,
+        hasDescription: true,
+        items: ['TRUST_POINT'],
+      }),
+      group: 'trust_section',
+    }),
+    defineFieldWithDescription({
+      name: 'course_final_section',
+      title: 'Sekcja końcowa',
+      type: 'object',
+      description:
+        'Dodaj sekcję końcową kursu. Wybierz nagłówek i które elementy mają być widoczne na stronie kursu.',
+      fields: createSectionBlock({
+        hasExcerpt: true,
+        hasDescription: true,
+        items: ['STRING'],
+        blocks: ['LINK_BLOCK'],
+      }),
+      group: 'final_section',
+    }),
+    defineFieldWithDescription({
       name: 'course_faq_section',
       title: 'Sekcja FAQ',
       type: 'object',
       description:
         'Dodaj sekcję z najczęściej zadawanymi pytaniami o kurs. Pytania i odpowiedzi wybierzesz z listy FAQ.',
       fields: createSectionBlock({
+        hasDescription: true,
         referencesType: 'FAQ',
       }),
-    }),
-    defineFieldWithDescription({
-      name: 'course_slug',
-      title: 'Slug',
-      type: 'slug',
-      options: { source: 'course_name', maxLength: 96 },
-      validation: (Rule) => Rule.required(),
-      description:
-        'Kliknij "Generate" aby automatycznie utworzyć adres URL na podstawie nazwy kursu. To będzie końcówka adresu strony (np. moj-kurs).',
     }),
     defineFieldWithDescription({
       name: 'course_seo',
