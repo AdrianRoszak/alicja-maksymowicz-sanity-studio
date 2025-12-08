@@ -32,6 +32,10 @@ export const course = defineType({
       name: 'intro_section',
     },
     {
+      title: 'Sekcja Procesu',
+      name: 'process_section',
+    },
+    {
       title: 'Sekcja Cena',
       name: 'price_section',
     },
