@@ -34,6 +34,14 @@ export const pageContact = defineType({
       group: 'content',
     }),
     defineFieldWithDescription({
+      name: 'contact_excerpt',
+      title: 'Wprowadzenie do strony kontaktowej',
+      type: 'text',
+      description:
+        'Napisz krótkie wprowadzenie do strony kontaktowej (max 160 znaków). Tekst pojawi się na stronie kontaktowej.',
+      group: 'content',
+    }),
+    defineFieldWithDescription({
       name: 'contact_seo',
       title: 'Ustawienia SEO',
       type: 'seo_block',
