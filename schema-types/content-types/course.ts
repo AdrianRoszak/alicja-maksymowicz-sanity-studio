@@ -6,6 +6,12 @@ export const course = defineType({
   name: 'course',
   title: 'Program',
   type: 'document',
+  groups: [
+    {
+      title: 'Sekcja Korzyści',
+      name: 'benefits_section',
+    },
+  ],
   fields: [
     defineFieldWithDescription({
       name: 'course_language',
@@ -88,6 +94,17 @@ export const course = defineType({
       fields: createSectionBlock({
         referencesType: 'FAQ',
       }),
+    }),
+    defineFieldWithDescription({
+      name: 'course_benefits',
+      title: 'Korzyści',
+      type: 'object',
+      description:
+        'Dodaj sekcję z korzyściami kursu. Każda korzyść ma nazwę, tekst i obraz SVG.',
+      fields: createSectionBlock({
+        referencesType: 'BENEFIT',
+      }),
+      group: 'benefits_section',
     }),
     defineFieldWithDescription({
       name: 'course_slug',

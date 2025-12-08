@@ -22,10 +22,11 @@ export default defineConfig({
     }),
     documentInternationalization({
       supportedLanguages: [
-        { id: 'pl', title: 'Polish' },
-        { id: 'en', title: 'English' },
+        { id: 'pl', title: 'Polski' },
+        { id: 'en', title: 'Angielski' },
       ],
       schemaTypes: [
+        'benefit',
         'blog_post',
         'course',
         'page_home',

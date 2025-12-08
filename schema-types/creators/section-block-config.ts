@@ -75,6 +75,12 @@ export const SECTION_REFERENCES = {
     description:
       'Wybierz kompetencje do wyświetlenia w tej sekcji. Najpierw dodaj kompetencje w sekcji "Kompetencje", a potem wybierz je tutaj.',
   },
+  BENEFIT: {
+    schemaType: 'benefit',
+    title: 'Korzyści',
+    description:
+      'Wybierz korzyści do wyświetlenia w tej sekcji. Najpierw dodaj korzyści w sekcji "Korzyści", a potem wybierz je tutaj.',
+  },
 } as const satisfies Record<string, SectionReferenceConfig>
 
 /**
