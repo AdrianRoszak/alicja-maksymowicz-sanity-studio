@@ -9,8 +9,28 @@ export const pageAboutMe = defineType({
   __experimental_formPreviewTitle: false,
   groups: [
     {
-      title: 'Treść',
-      name: 'content',
+      title: 'Hero',
+      name: 'section_hero',
+    },
+    {
+      title: 'Sekcja Intro',
+      name: 'intro_section',
+    },
+    {
+      title: 'Sekcja Dlaczego ja?',
+      name: 'why_me_section',
+    },
+    {
+      title: 'Sekcja Programów',
+      name: 'courses_section',
+    },
+    {
+      title: 'Sekcja Kompetencji',
+      name: 'competencies_section',
+    },
+    {
+      title: 'Sekcja Opinii klientów',
+      name: 'testimonials_section',
     },
     {
       title: 'SEO',
@@ -32,7 +52,6 @@ export const pageAboutMe = defineType({
       validation: (Rule) => Rule.required(),
       description:
         'Wpisz tytuł strony "O mnie". Jest używany wewnętrznie do identyfikacji.',
-      group: 'content',
     }),
     defineFieldWithDescription({
       name: 'about_me_hero',
@@ -41,7 +60,7 @@ export const pageAboutMe = defineType({
       to: [{ type: 'hero' }],
       description:
         'Wybierz hero dla strony "O mnie". To główna sekcja na górze strony z Twoim zdjęciem i opisem.',
-      group: 'content',
+      group: 'section_hero',
     }),
     defineFieldWithDescription({
       name: 'about_me_intro_section',
@@ -53,6 +72,7 @@ export const pageAboutMe = defineType({
         hasDescription: true,
         blocks: ['IMAGE_BLOCK', 'LINK_BLOCK'],
       }),
+      group: 'intro_section',
     }),
     defineFieldWithDescription({
       name: 'about_me_why_me_section',
@@ -63,6 +83,7 @@ export const pageAboutMe = defineType({
       fields: createSectionBlock({
         hasDescription: true,
       }),
+      group: 'why_me_section',
     }),
     defineFieldWithDescription({
       name: 'about_me_courses_section',
@@ -73,7 +94,7 @@ export const pageAboutMe = defineType({
       fields: createSectionBlock({
         referencesType: 'COURSE',
       }),
-      group: 'content',
+      group: 'courses_section',
     }),
     defineFieldWithDescription({
       name: 'about_me_competencies_section',
@@ -82,9 +103,21 @@ export const pageAboutMe = defineType({
       description:
         'Pokaż swoje umiejętności i doświadczenie. Wybierz nagłówek i które umiejętności mają być widoczne na stronie głównej.',
       fields: createSectionBlock({
+        hasExcerpt: true,
         referencesType: 'COMPETENCY',
       }),
-      group: 'content',
+      group: 'competencies_section',
+    }),
+    defineFieldWithDescription({
+      name: 'about_me_testimonials_section',
+      title: 'Sekcja opinii klientów',
+      type: 'object',
+      description:
+        'Pokaż opinie zadowolonych klientów. Wybierz nagłówek i które opinie mają być widoczne na stronie głównej.',
+      fields: createSectionBlock({
+        referencesType: 'TESTIMONIAL',
+      }),
+      group: 'testimonials_section',
     }),
     defineFieldWithDescription({
       name: 'about_me_seo',
