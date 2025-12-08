@@ -15,6 +15,34 @@ export const course = defineType({
       title: 'Sekcja Zaufania',
       name: 'trust_section',
     },
+    {
+      title: 'Sekcja Końcowa',
+      name: 'final_section',
+    },
+    {
+      title: 'Sekcja FAQ',
+      name: 'faq_section',
+    },
+    {
+      title: 'Sekcja Hero',
+      name: 'hero_section',
+    },
+    {
+      title: 'Sekcja Wprowadzająca',
+      name: 'intro_section',
+    },
+    {
+      title: 'Sekcja Procesu',
+      name: 'process_section',
+    },
+    {
+      title: 'Sekcja Cena',
+      name: 'price_section',
+    },
+    {
+      title: 'Sekcja SEO',
+      name: 'seo_section',
+    },
   ],
   fields: [
     defineFieldWithDescription({
@@ -48,6 +76,7 @@ export const course = defineType({
       validation: (Rule) => Rule.required(),
       description:
         'Kliknij "Generate" aby automatycznie utworzyć adres URL na podstawie nazwy kursu. To będzie końcówka adresu strony (np. moj-kurs).',
+      group: 'seo_section',
     }),
     defineFieldWithDescription({
       name: 'course_hero',
@@ -56,6 +85,7 @@ export const course = defineType({
       to: [{ type: 'hero' }],
       description:
         'Wybierz sekcję hero dla strony kursu. Jeśli chcesz stworzyć nowe hero, najpierw dodaj je w sekcji "Hero".',
+      group: 'hero_section',
     }),
     defineFieldWithDescription({
       name: 'course_intro_section',
@@ -66,6 +96,7 @@ export const course = defineType({
       fields: createSectionBlock({
         hasDescription: true,
       }),
+      group: 'intro_section',
     }),
     defineFieldWithDescription({
       name: 'course_price',
@@ -74,6 +105,7 @@ export const course = defineType({
       validation: (Rule) => Rule.min(0),
       description:
         'Wpisz cenę kursu jako liczbę (np. 299). Walutę wybierzesz w następnym polu.',
+      group: 'price_section',
     }),
     defineFieldWithDescription({
       name: 'course_price_currency',
@@ -112,6 +144,7 @@ export const course = defineType({
         blocks: ['LINK_BLOCK'],
         items: ['PROCESS_POINT'],
       }),
+      group: 'process_section',
     }),
     defineFieldWithDescription({
       name: 'course_trust_section',
@@ -150,6 +183,7 @@ export const course = defineType({
         hasDescription: true,
         referencesType: 'FAQ',
       }),
+      group: 'faq_section',
     }),
     defineFieldWithDescription({
       name: 'course_seo',
@@ -157,6 +191,7 @@ export const course = defineType({
       type: 'seo_block',
       description:
         'Skonfiguruj jak ten kurs będzie wyglądał w Google i mediach społecznościowych. To opcjonalne, ale polecane.',
+      group: 'seo_section',
     }),
   ],
   preview: {
