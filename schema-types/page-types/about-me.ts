@@ -1,3 +1,4 @@
+import { createSectionBlock } from '@schema/creators/create-section-block'
 import { defineFieldWithDescription } from '@src/lib/types'
 import { defineType } from 'sanity'
 
@@ -8,8 +9,28 @@ export const pageAboutMe = defineType({
   __experimental_formPreviewTitle: false,
   groups: [
     {
-      title: 'Treść',
-      name: 'content',
+      title: 'Hero',
+      name: 'section_hero',
+    },
+    {
+      title: 'Sekcja Intro',
+      name: 'intro_section',
+    },
+    {
+      title: 'Sekcja Dlaczego ja?',
+      name: 'why_me_section',
+    },
+    {
+      title: 'Sekcja Programów',
+      name: 'courses_section',
+    },
+    {
+      title: 'Sekcja Kompetencji',
+      name: 'competencies_section',
+    },
+    {
+      title: 'Sekcja Opinii klientów',
+      name: 'testimonials_section',
     },
     {
       title: 'SEO',
@@ -31,7 +52,6 @@ export const pageAboutMe = defineType({
       validation: (Rule) => Rule.required(),
       description:
         'Wpisz tytuł strony "O mnie". Jest używany wewnętrznie do identyfikacji.',
-      group: 'content',
     }),
     defineFieldWithDescription({
       name: 'about_me_hero',
@@ -40,7 +60,64 @@ export const pageAboutMe = defineType({
       to: [{ type: 'hero' }],
       description:
         'Wybierz hero dla strony "O mnie". To główna sekcja na górze strony z Twoim zdjęciem i opisem.',
-      group: 'content',
+      group: 'section_hero',
+    }),
+    defineFieldWithDescription({
+      name: 'about_me_intro_section',
+      title: 'Wprowadzenie',
+      type: 'object',
+      description:
+        'Dodaj wprowadzenie do strony "O mnie". To pierwsze informacje, które zobaczą odwiedzający na stronie.',
+      fields: createSectionBlock({
+        hasDescription: true,
+        blocks: ['IMAGE_BLOCK', 'LINK_BLOCK'],
+      }),
+      group: 'intro_section',
+    }),
+    defineFieldWithDescription({
+      name: 'about_me_why_me_section',
+      title: 'Dlaczego ja?',
+      type: 'object',
+      description:
+        'Dodaj sekcję z informacjami o tym, dlaczego warto Cię wybrać. To pierwsze informacje, które zobaczą odwiedzający na stronie.',
+      fields: createSectionBlock({
+        hasDescription: true,
+      }),
+      group: 'why_me_section',
+    }),
+    defineFieldWithDescription({
+      name: 'about_me_courses_section',
+      title: 'Sekcja programów',
+      type: 'object',
+      description:
+        'Pokaż swoją ofertę programów/kursów. Wybierz nagłówek i które programy mają być widoczne na stronie głównej.',
+      fields: createSectionBlock({
+        referencesType: 'COURSE',
+      }),
+      group: 'courses_section',
+    }),
+    defineFieldWithDescription({
+      name: 'about_me_competencies_section',
+      title: 'Sekcja kompetencji',
+      type: 'object',
+      description:
+        'Pokaż swoje umiejętności i doświadczenie. Wybierz nagłówek i które umiejętności mają być widoczne na stronie głównej.',
+      fields: createSectionBlock({
+        hasExcerpt: true,
+        referencesType: 'COMPETENCY',
+      }),
+      group: 'competencies_section',
+    }),
+    defineFieldWithDescription({
+      name: 'about_me_testimonials_section',
+      title: 'Sekcja opinii klientów',
+      type: 'object',
+      description:
+        'Pokaż opinie zadowolonych klientów. Wybierz nagłówek i które opinie mają być widoczne na stronie głównej.',
+      fields: createSectionBlock({
+        referencesType: 'TESTIMONIAL',
+      }),
+      group: 'testimonials_section',
     }),
     defineFieldWithDescription({
       name: 'about_me_seo',

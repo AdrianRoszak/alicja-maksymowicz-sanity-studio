@@ -25,7 +25,7 @@ export const hero = defineType({
       name: 'hero_excerpt',
       title: 'Excerpt',
       type: 'text',
-      validation: (Rule) => Rule.required().max(150),
+      validation: (Rule) => Rule.optional().max(150),
       description:
         'Napisz krótki opis lub podtytuł (max 150 znaków), który uzupełni główny tytuł i zachęci do zapoznania się z ofertą.',
     }),
@@ -36,6 +36,13 @@ export const hero = defineType({
       validation: (Rule) => Rule.required(),
       description:
         'Dodaj główne zdjęcie dla sekcji hero. To duże, widoczne zdjęcie na górze strony - wybierz coś atrakcyjnego wizualnie.',
+    }),
+    defineFieldWithDescription({
+      name: 'hero_link',
+      title: 'Link w sekcji hero',
+      type: 'link_block',
+      description:
+        'Dodaj przycisk/link w sekcji hero. Wybierz wariant zewnętrzny (https://) lub wewnętrzny do strony w CMS.',
     }),
   ],
   preview: {

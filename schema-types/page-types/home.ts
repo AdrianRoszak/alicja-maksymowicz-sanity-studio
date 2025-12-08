@@ -51,7 +51,7 @@ export const pageHome = defineType({
         'Opowiedz o sobie i swoich wartościach. Dodaj nagłówek, opis i listę wartości, którymi się kierujesz.',
       fields: createSectionBlock({
         hasDescription: true,
-        itemsType: 'VALUE',
+        items: ['VALUE'],
       }),
       group: 'content',
     }),
@@ -74,7 +74,7 @@ export const pageHome = defineType({
         'Opisz jak przebiega współpraca z Tobą krok po kroku. Dodaj nagłówek, opis i poszczególne etapy procesu.',
       fields: createSectionBlock({
         hasDescription: true,
-        itemsType: 'PROCESS_POINT',
+        items: ['PROCESS_POINT'],
       }),
       group: 'content',
     }),
