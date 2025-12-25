@@ -11,7 +11,14 @@ export const value = defineType({
       title: 'Nazwa wartości',
       type: 'string',
       description:
-        'Wpisz wartość lub zasadę, którą się kierujesz (np. "Uczciwość", "Innowacyjność"). Każda wartość to osobny element.',
+        'Wpisz nazwę wartości, którą się kierujesz (np. "Uczciwość", "Innowacyjność"). Każda wartość to osobny element.',
+    }),
+    defineFieldWithDescription({
+      name: 'value_description',
+      title: 'Opis wartości',
+      type: 'text',
+      description:
+        'Opisz wartość, którą się kierujesz w kilku zdaniach. Wyjaśnij, dlaczego jest ważna dla Twojej oferty.',
     }),
   ],
 })
