@@ -8,6 +8,10 @@ export const course = defineType({
   type: 'document',
   groups: [
     {
+      title: 'Sekcja Odbiorców',
+      name: 'beneficiaries_section',
+    },
+    {
       title: 'Sekcja Korzyści',
       name: 'benefits_section',
     },
@@ -121,6 +125,17 @@ export const course = defineType({
       },
       description:
         'Wybierz walutę dla ceny kursu. Domyślnie ustawione są polskie złote (PLN).',
+    }),
+    defineFieldWithDescription({
+      name: 'course_beneficiaries',
+      title: 'Odbiorcy',
+      type: 'object',
+      description:
+        'Dodaj sekcję z odbiorcami kursu. Każdy odbiorca ma nazwę, tekst i obraz SVG.',
+      fields: createSectionBlock({
+        referencesType: 'BENEFICIARY',
+      }),
+      group: 'beneficiaries_section',
     }),
     defineFieldWithDescription({
       name: 'course_benefits',

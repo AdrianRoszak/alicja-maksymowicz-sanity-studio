@@ -93,6 +93,12 @@ export const SECTION_REFERENCES = {
     description:
       'Wybierz korzyści do wyświetlenia w tej sekcji. Najpierw dodaj korzyści w sekcji "Korzyści", a potem wybierz je tutaj.',
   },
+  BENEFICIARY: {
+    schemaType: 'beneficiary',
+    title: 'Odbiorcy',
+    description:
+      'Wybierz odbiorców do wyświetlenia w tej sekcji. Najpierw dodaj odbiorców w sekcji "Odbiorcy", a potem wybierz je tutaj.',
+  },
 } as const satisfies Record<string, SectionReferenceConfig>
 
 /**

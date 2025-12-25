@@ -1,3 +1,4 @@
+export { beneficiary } from './beneficiary'
 export { benefit } from './benefit'
 export { blockContent } from './block-content'
 export { blogPost } from './blog-post'
