@@ -118,6 +118,12 @@ export const SECTION_BLOCKS = {
     description:
       'Dodaj link z etykietą. Możesz wybrać wariant zewnętrzny (https://) lub wewnętrzny do strony w CMS.',
   },
+  BENEFITS_BLOCK: {
+    schemaType: 'benefits_block',
+    title: 'Korzyści',
+    description:
+      'Dodaj sekcję z korzyściami kursu. Każda korzyść ma nazwę, tekst i obraz SVG.',
+  },
 } as const satisfies Record<string, SectionBlockConfig>
 
 // Type helpers for better autocomplete

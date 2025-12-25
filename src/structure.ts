@@ -54,6 +54,11 @@ export const structure: StructureResolver = (S) =>
         .child(S.documentTypeList('competency')),
       S.divider(),
       S.listItem()
+        .id('templates')
+        .title('IN PROGRESS: Szablony')
+        .child(S.documentTypeList('benefits_block')),
+      S.divider(),
+      S.listItem()
         .id('company-data')
         .title('Dane firmy')
         .child(
