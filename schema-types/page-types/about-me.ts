@@ -105,6 +105,7 @@ export const pageAboutMe = defineType({
       fields: createSectionBlock({
         hasExcerpt: true,
         referencesType: 'COMPETENCY',
+        items: ['IMAGE_BLOCK'],
       }),
       group: 'competencies_section',
     }),

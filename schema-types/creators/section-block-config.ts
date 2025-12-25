@@ -50,6 +50,12 @@ export const SECTION_ITEMS = {
     description:
       'Dodaj tekst do wyświetlenia w tej sekcji. Możesz użyć dowolnego tekstu.',
   },
+  IMAGE_BLOCK: {
+    schemaType: 'image_block',
+    title: 'Zdjęcia',
+    description:
+      'Dodaj zdjęcia do wyświetlenia w tej sekcji. Możesz wybrać zdjęcia z biblioteki lub dodać nowe.',
+  },
 } as const satisfies Record<string, SectionItemConfig>
 
 /**

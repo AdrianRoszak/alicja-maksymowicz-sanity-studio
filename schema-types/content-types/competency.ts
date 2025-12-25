@@ -29,14 +29,6 @@ export const competency = defineType({
       description:
         'Opisz kompetencję w kilku zdaniach. Wyjaśnij, dlaczego jest ważna dla Twojej oferty.',
     }),
-    defineFieldWithDescription({
-      name: 'competency_image',
-      title: 'Zdjęcie',
-      type: 'image_block',
-      validation: (Rule) => Rule.required(),
-      description:
-        'Dodaj zdjęcie lub ikonę ilustrującą tę kompetencję. Wybierz grafikę, która wzmacnia przekaz.',
-    }),
   ],
   preview: {
     select: {
