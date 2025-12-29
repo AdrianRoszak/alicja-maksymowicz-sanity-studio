@@ -8,6 +8,10 @@ export const course = defineType({
   type: 'document',
   groups: [
     {
+      title: 'Sekcja Odbiorców',
+      name: 'beneficiaries_section',
+    },
+    {
       title: 'Sekcja Korzyści',
       name: 'benefits_section',
     },
@@ -123,15 +127,15 @@ export const course = defineType({
         'Wybierz walutę dla ceny kursu. Domyślnie ustawione są polskie złote (PLN).',
     }),
     defineFieldWithDescription({
-      name: 'course_benefits',
-      title: 'Korzyści',
+      name: 'course_beneficiaries',
+      title: 'Odbiorcy',
       type: 'object',
       description:
-        'Dodaj sekcję z korzyściami kursu. Każda korzyść ma nazwę, tekst i obraz SVG.',
+        'Dodaj sekcję z odbiorcami kursu. Każdy odbiorca ma nazwę, tekst i obraz SVG.',
       fields: createSectionBlock({
-        referencesType: 'BENEFIT',
+        referencesType: 'BENEFICIARY',
       }),
-      group: 'benefits_section',
+      group: 'beneficiaries_section',
     }),
     defineFieldWithDescription({
       name: 'course_process_points',
@@ -148,7 +152,7 @@ export const course = defineType({
     }),
     defineFieldWithDescription({
       name: 'course_trust_section',
-      title: 'Sekcja zaufania',
+      title: 'Sekcja korzyści',
       type: 'object',
       description:
         'Dodaj sekcję z zaufaniem do kursu. Wybierz nagłówek i które zaufania mają być widoczne na stronie kursu.',
@@ -172,6 +176,14 @@ export const course = defineType({
         blocks: ['LINK_BLOCK'],
       }),
       group: 'final_section',
+    }),
+    defineFieldWithDescription({
+      name: 'course_benefits',
+      title: 'Korzyści',
+      type: 'reference',
+      to: [{ type: 'benefits_block' }],
+      description: 'Wybierz szablon sekcji z korzyściami kursu.',
+      group: 'benefits_section',
     }),
     defineFieldWithDescription({
       name: 'course_faq_section',

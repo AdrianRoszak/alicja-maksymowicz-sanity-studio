@@ -50,6 +50,12 @@ export const SECTION_ITEMS = {
     description:
       'Dodaj tekst do wyświetlenia w tej sekcji. Możesz użyć dowolnego tekstu.',
   },
+  IMAGE_BLOCK: {
+    schemaType: 'image_block',
+    title: 'Zdjęcia',
+    description:
+      'Dodaj zdjęcia do wyświetlenia w tej sekcji. Możesz wybrać zdjęcia z biblioteki lub dodać nowe.',
+  },
 } as const satisfies Record<string, SectionItemConfig>
 
 /**
@@ -93,6 +99,12 @@ export const SECTION_REFERENCES = {
     description:
       'Wybierz korzyści do wyświetlenia w tej sekcji. Najpierw dodaj korzyści w sekcji "Korzyści", a potem wybierz je tutaj.',
   },
+  BENEFICIARY: {
+    schemaType: 'beneficiary',
+    title: 'Odbiorcy',
+    description:
+      'Wybierz odbiorców do wyświetlenia w tej sekcji. Najpierw dodaj odbiorców w sekcji "Odbiorcy", a potem wybierz je tutaj.',
+  },
 } as const satisfies Record<string, SectionReferenceConfig>
 
 /**
@@ -111,6 +123,12 @@ export const SECTION_BLOCKS = {
     title: 'Link',
     description:
       'Dodaj link z etykietą. Możesz wybrać wariant zewnętrzny (https://) lub wewnętrzny do strony w CMS.',
+  },
+  BENEFITS_BLOCK: {
+    schemaType: 'benefits_block',
+    title: 'Korzyści',
+    description:
+      'Dodaj sekcję z korzyściami kursu. Każda korzyść ma nazwę, tekst i obraz SVG.',
   },
 } as const satisfies Record<string, SectionBlockConfig>
 

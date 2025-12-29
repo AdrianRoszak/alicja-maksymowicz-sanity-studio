@@ -136,7 +136,7 @@ export function createSectionBlock(options?: CreateSectionBlockOptions) {
                 type: 'reference',
                 to: [{ type: SECTION_REFERENCES[referencesType].schemaType }],
                 options: {
-                  disableNew: true,
+                  disableNew: false,
                 },
               },
             ],
