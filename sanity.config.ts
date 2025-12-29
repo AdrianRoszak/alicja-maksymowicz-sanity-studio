@@ -39,6 +39,7 @@ export default defineConfig({
         'company_data',
         'competency',
         'trust_point',
+        'benefits_block',
       ],
     }),
   ],
