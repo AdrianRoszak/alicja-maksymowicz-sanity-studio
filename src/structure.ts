@@ -55,7 +55,7 @@ export const structure: StructureResolver = (S) =>
       S.divider(),
       S.listItem()
         .id('templates')
-        .title('IN PROGRESS: Szablony')
+        .title('Szablon sekcji Korzyści')
         .child(S.documentTypeList('benefits_block')),
       S.divider(),
       S.listItem()
