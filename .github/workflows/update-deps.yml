@@ -1,37 +1,153 @@
-name: Update Dependencies
+# name: Update Dependencies
 
+# on:
+#   schedule:
+#     # Run every Monday at 9 AM UTC
+#     - cron: "0 9 * * 1"
+#   workflow_dispatch: # Allow manual runs
+
+# jobs:
+#   update-deps:
+#     name: Update Dependencies
+#     runs-on: ubuntu-latest
+
+#     steps:
+#       - name: Checkout code
+#         uses: actions/checkout@v4
+#         with:
+#           token: ${{ secrets.GITHUB_TOKEN }}
+
+#       - name: Setup Node.js
+#         uses: actions/setup-node@v4
+#         with:
+#           node-version: "22"
+
+#       - name: Setup pnpm
+#         uses: pnpm/action-setup@v4
+#         with:
+#           version: "latest"
+#           run_install: false
+
+#       - name: Get pnpm store directory
+#         shell: bash
+#         run: |
+#           echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
+
+#       - name: Setup pnpm cache
+#         uses: actions/cache@v4
+#         with:
+#           path: ${{ env.STORE_PATH }}
+#           key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+#           restore-keys: |
+#             ${{ runner.os }}-pnpm-store-
+
+#       - name: Update dependencies
+#         run: |
+#           pnpm update --latest
+#           pnpm install
+
+#       - name: Check for changes
+#         id: verify-changed-files
+#         run: |
+#           if [ -n "$(git status --porcelain)" ]; then
+#             echo "changed=true" >> $GITHUB_OUTPUT
+#           else
+#             echo "changed=false" >> $GITHUB_OUTPUT
+#           fi
+
+#       - name: Run tests after update
+#         if: steps.verify-changed-files.outputs.changed == 'true'
+#         run: |
+#           pnpm lint
+#           pnpm tsc --noEmit
+#           pnpm build
+#         env:
+#           SANITY_STUDIO_PROJECT_ID: u1jpe37y
+#           SANITY_STUDIO_DATASET: production
+#           SANITY_STUDIO_API_VERSION: 2023-10-17
+
+#       - name: Create Pull Request
+#         if: steps.verify-changed-files.outputs.changed == 'true'
+#         uses: peter-evans/create-pull-request@v6
+#         with:
+#           token: ${{ secrets.GITHUB_TOKEN }}
+#           commit-message: "chore: update dependencies"
+#           title: "chore: automated dependency updates"
+#           body: |
+#             ## Automated Dependency Updates
+
+#             This PR contains automated updates to project dependencies.
+
+#             ### Changes
+#             - Updated all dependencies to their latest versions
+#             - Verified that linting, type checking, and build still work
+
+#             ### Verification
+#             - ✅ Biome linting passed
+#             - ✅ TypeScript compilation successful
+#             - ✅ Studio build successful
+
+#             Please review the changes and test manually before merging.
+#           branch: chore/automated-dependency-updates
+#           delete-branch: true
+
+################################################################################
+
+name: AI-Powered Dependency Updates
+
+# Kiedy uruchamiać workflow?
 on:
   schedule:
-    # Run every Monday at 9 AM UTC
+    # Automatycznie każdy poniedziałek o 9:00 UTC
     - cron: "0 9 * * 1"
-  workflow_dispatch: # Allow manual runs
+  # Możliwość ręcznego uruchomienia przez zakładkę "Actions" w GitHub
+  workflow_dispatch:
 
 jobs:
-  update-deps:
-    name: Update Dependencies
+  analyze-and-update:
+    name: Analyze & Update Dependencies
     runs-on: ubuntu-latest
 
+    # -------------------------------------------------------------------------
+    # [ACTION REQUIRED] Before first run, configure in repo Settings:
+    # - Secrets: OPENAI_API_KEY (required), SLACK_WEBHOOK (optional)
+    # - Variables (or Secrets): SANITY_STUDIO_PROJECT_ID, SANITY_STUDIO_DATASET, SANITY_STUDIO_API_VERSION
+    # - Create labels in repo: dependencies, automated, ai-reviewed, manual-review-required
+    #   Or remove/change the 'labels' key in Create Pull Request step to match existing labels.
+    # -------------------------------------------------------------------------
+
+    permissions:
+      contents: write
+      pull-requests: write
+      issues: write
+
     steps:
+      # =====================================================
+      # KROK 1: PRZYGOTOWANIE ŚRODOWISKA
+      # =====================================================
+      
       - name: Checkout code
         uses: actions/checkout@v4
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+        # Pobiera kod z repozytorium
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: "22"
+        # Instaluje Node.js w wersji 22
 
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
         with:
-          version: "latest"
+          version: "9"
           run_install: false
+        # Konfiguruje menedżer pakietów pnpm
 
       - name: Get pnpm store directory
         shell: bash
         run: |
           echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
+        # Pobiera ścieżkę do cache pnpm i zapisuje jako zmienną środowiskową
 
       - name: Setup pnpm cache
         uses: actions/cache@v4
@@ -40,53 +156,360 @@ jobs:
           key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
           restore-keys: |
             ${{ runner.os }}-pnpm-store-
+        # Konfiguruje cache dla pnpm - przyspiesza kolejne uruchomienia
+        # Cache jest unieważniany gdy zmieni się pnpm-lock.yaml
 
-      - name: Update dependencies
-        run: |
-          pnpm update --latest
-          pnpm install
+      - name: Install dependencies
+        run: pnpm install
+        # Instaluje wszystkie zależności z package.json
 
-      - name: Check for changes
-        id: verify-changed-files
+      # =====================================================
+      # KROK 2: SPRAWDZENIE KTÓRE PAKIETY SĄ NIEAKTUALNE
+      # =====================================================
+      
+      - name: Check outdated packages
+        id: outdated
         run: |
-          if [ -n "$(git status --porcelain)" ]; then
-            echo "changed=true" >> $GITHUB_OUTPUT
+          # pnpm outdated exits 0 = no outdated, 1 = has outdated; stderr left visible so real errors show in Actions log
+          pnpm outdated --format json > outdated.json || true
+          if [ -s outdated.json ] && jq empty outdated.json 2>/dev/null; then
+            echo "has_outdated=true" >> $GITHUB_OUTPUT
+            echo "Outdated packages found"
+            cat outdated.json
           else
-            echo "changed=false" >> $GITHUB_OUTPUT
+            echo "has_outdated=false" >> $GITHUB_OUTPUT
+            echo "No outdated packages or invalid/empty outdated.json"
           fi
 
-      - name: Run tests after update
-        if: steps.verify-changed-files.outputs.changed == 'true'
+      # =====================================================
+      # KROK 3: AI OCENIA RYZYKO AKTUALIZACJI
+      # =====================================================
+
+      - name: AI Risk Assessment
+        if: steps.outdated.outputs.has_outdated == 'true'
+        id: ai-assessment
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
         run: |
+          node << 'SCRIPT'
+          const fs = require('fs');
+
+          function writeOutput(name, value) {
+            const path = process.env.GITHUB_OUTPUT;
+            if (path) fs.appendFileSync(path, name + '=' + (value + '').replace(/\n/g, '%0A') + '\n');
+          }
+
+          async function assessRisk() {
+            if (!process.env.OPENAI_API_KEY) {
+              console.error('OPENAI_API_KEY secret is not set. Add it in repo Settings → Secrets and variables → Actions.');
+              process.exit(1);
+            }
+
+            let outdated, packageJson;
+            try {
+              outdated = JSON.parse(fs.readFileSync('outdated.json', 'utf8'));
+              packageJson = JSON.parse(fs.readFileSync('package.json', 'utf8'));
+            } catch (e) {
+              console.error('Failed to read/parse outdated.json or package.json:', e.message);
+              process.exit(1);
+            }
+
+            const response = await fetch('https://api.openai.com/v1/chat/completions', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + process.env.OPENAI_API_KEY
+              },
+              body: JSON.stringify({
+                model: 'gpt-4o',
+                max_tokens: 4000,
+                messages: [{
+                  role: 'user',
+                  content: 'Analyze these outdated npm packages and categorize by update risk.\n\nOutdated packages:\n' +
+                    JSON.stringify(outdated, null, 2) + '\n\nCurrent package.json dependencies:\n' +
+                    JSON.stringify(packageJson.dependencies, null, 2) + '\n' +
+                    JSON.stringify(packageJson.devDependencies, null, 2) +
+                    '\n\nConsider: semantic versioning (major=high, minor=medium, patch=low), breaking changes, ecosystem. ' +
+                    'Return ONLY valid JSON: {"low_risk":["pkg",...],"medium_risk":["pkg",...],"high_risk":["pkg",...],"summary":"..."}'
+                }]
+              })
+            });
+
+            const data = await response.json();
+            if (!response.ok) {
+              console.error('OpenAI API error:', response.status, JSON.stringify(data, null, 2));
+              if (response.status === 401) console.error('Check that OPENAI_API_KEY is correct and has not been revoked.');
+              process.exit(1);
+            }
+
+            const content = data.choices && data.choices[0] && data.choices[0].message && data.choices[0].message.content;
+            if (!content) {
+              console.error('Unexpected API response:', JSON.stringify(data).slice(0, 500));
+              process.exit(1);
+            }
+
+            const jsonMatch = content.match(/\{[\s\S]*\}/);
+            if (!jsonMatch) {
+              console.error('No JSON found in response:', content.slice(0, 300));
+              process.exit(1);
+            }
+
+            let assessment;
+            try {
+              assessment = JSON.parse(jsonMatch[0]);
+            } catch (e) {
+              console.error('Invalid JSON in response:', e.message);
+              process.exit(1);
+            }
+
+            assessment.low_risk = Array.isArray(assessment.low_risk) ? assessment.low_risk : [];
+            assessment.medium_risk = Array.isArray(assessment.medium_risk) ? assessment.medium_risk : [];
+            assessment.high_risk = Array.isArray(assessment.high_risk) ? assessment.high_risk : [];
+            assessment.summary = assessment.summary || '';
+
+            fs.writeFileSync('risk-assessment.json', JSON.stringify(assessment, null, 2));
+            writeOutput('low_risk', assessment.low_risk.join(','));
+            writeOutput('has_low_risk', assessment.low_risk.length > 0);
+          }
+
+          assessRisk().catch(err => { console.error(err); process.exit(1); });
+          SCRIPT
+
+      - name: Display AI Assessment
+        if: steps.outdated.outputs.has_outdated == 'true' && steps.ai-assessment.outcome == 'success'
+        run: |
+          if [ ! -f risk-assessment.json ]; then exit 0; fi
+          echo "## AI Risk Assessment Results" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          jq -r '
+            "### Low Risk Updates (Safe to auto-apply)\n" +
+            ((.low_risk // []) | map("- " + .) | join("\n")) + "\n\n" +
+            "### Medium Risk Updates (Requires review)\n" +
+            ((.medium_risk // []) | map("- " + .) | join("\n")) + "\n\n" +
+            "### High Risk Updates (Requires careful review)\n" +
+            ((.high_risk // []) | map("- " + .) | join("\n")) + "\n\n" +
+            "### Analysis\n" + (.summary // "")
+          ' risk-assessment.json >> $GITHUB_STEP_SUMMARY
+
+      # =====================================================
+      # KROK 4: AUTOMATYCZNA AKTUALIZACJA LOW-RISK PAKIETÓW
+      # =====================================================
+      
+      - name: Apply low-risk updates
+        id: low-risk-update
+        if: steps.outdated.outputs.has_outdated == 'true'
+        run: |
+          set -e
+          if [ ! -f risk-assessment.json ]; then
+            echo "updated=false" >> $GITHUB_OUTPUT
+            echo "LOW_RISK_PACKAGES<<EOF" >> $GITHUB_OUTPUT
+            echo "" >> $GITHUB_OUTPUT
+            echo "EOF" >> $GITHUB_OUTPUT
+            exit 0
+          fi
+          LOW_RISK_PACKAGES=$(jq -r '.low_risk // [] | join(", ")' risk-assessment.json)
+          LOW_RISK_RAW=$(jq -r '.low_risk[]?' risk-assessment.json)
+          echo "LOW_RISK_PACKAGES<<EOF" >> $GITHUB_OUTPUT
+          echo "$LOW_RISK_PACKAGES" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+          if [ -n "$LOW_RISK_RAW" ]; then
+            for package in $LOW_RISK_RAW; do
+              echo "Updating $package..."
+              pnpm update "$package" --latest
+            done
+            echo "updated=true" >> $GITHUB_OUTPUT
+          else
+            echo "updated=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Check for changes after low-risk updates
+        id: check-changes
+        run: |
+          # Sprawdź czy aktualizacja zmieniła jakieś pliki (np. package.json, pnpm-lock.yaml)
+          if [ -n "$(git status --porcelain)" ]; then
+            echo "has_changes=true" >> $GITHUB_OUTPUT
+          else
+            echo "has_changes=false" >> $GITHUB_OUTPUT
+          fi
+        # Output: has_changes = true/false
+
+      # =====================================================
+      # KROK 5: WERYFIKACJA ŻE WSZYSTKO DZIAŁA PO AKTUALIZACJI
+      # =====================================================
+      
+      - name: Run tests on low-risk updates
+        if: steps.check-changes.outputs.has_changes == 'true'
+        run: |
+          set -e
+          echo "Format and run lint, typecheck, build..."
+          pnpm exec biome check --write
           pnpm lint
           pnpm tsc --noEmit
           pnpm build
         env:
-          SANITY_STUDIO_PROJECT_ID: u1jpe37y
-          SANITY_STUDIO_DATASET: production
-          SANITY_STUDIO_API_VERSION: 2023-10-17
+          SANITY_STUDIO_PROJECT_ID: ${{ vars.SANITY_STUDIO_PROJECT_ID || secrets.SANITY_STUDIO_PROJECT_ID }}
+          SANITY_STUDIO_DATASET: ${{ vars.SANITY_STUDIO_DATASET || secrets.SANITY_STUDIO_DATASET }}
+          SANITY_STUDIO_API_VERSION: ${{ vars.SANITY_STUDIO_API_VERSION || secrets.SANITY_STUDIO_API_VERSION || '2023-10-17' }}
 
+      # =====================================================
+      # KROK 6: UTWORZENIE PULL REQUESTA Z LOW-RISK UPDATES
+      # =====================================================
+      
       - name: Create Pull Request
-        if: steps.verify-changed-files.outputs.changed == 'true'
+        if: steps.check-changes.outputs.has_changes == 'true'
+        id: create-pr
         uses: peter-evans/create-pull-request@v6
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          commit-message: "chore: update dependencies"
-          title: "chore: automated dependency updates"
+          commit-message: "chore: update low-risk dependencies"
+          title: "🤖 Automated dependency updates (AI-assessed)"
           body: |
-            ## Automated Dependency Updates
-
-            This PR contains automated updates to project dependencies.
-
-            ### Changes
-            - Updated all dependencies to their latest versions
-            - Verified that linting, type checking, and build still work
-
-            ### Verification
+            ## 🤖 AI-Powered Dependency Update
+            
+            This PR was automatically generated after AI risk assessment of outdated dependencies.
+            
+            ### ✅ Auto-Applied Updates (Low Risk)
+            
+            The following packages were automatically updated as they were assessed as **low risk**:
+            
+            ${{ steps.low-risk-update.outputs.LOW_RISK_PACKAGES }}
+            
+            ### ⚠️ Pending Updates (Medium Risk)
+            
+            These packages require manual review before updating:
+            
+            $(cat risk-assessment.json | jq -r '.medium_risk | map("- `" + . + "`") | join("\n")')
+            
+            ### 🔴 High Risk Updates (Critical Review Required)
+            
+            These packages have significant changes that need careful consideration:
+            
+            $(cat risk-assessment.json | jq -r '.high_risk | map("- `" + . + "`") | join("\n")')
+            
+            ### 📊 AI Analysis Summary
+            
+            $(cat risk-assessment.json | jq -r '.summary')
+            
+            ### ✅ Automated Verification
+            
             - ✅ Biome linting passed
             - ✅ TypeScript compilation successful
             - ✅ Studio build successful
-
-            Please review the changes and test manually before merging.
-          branch: chore/automated-dependency-updates
+            
+            ---
+            
+            **Next Steps:**
+            1. ✅ Review this PR and merge if low-risk updates look good
+            2. ⚠️ Manually update medium-risk packages after testing
+            3. 🔴 Carefully plan high-risk updates (may need separate PRs)
+            
+            <details>
+            <summary>📋 Full outdated packages list</summary>
+            
+            ```json
+            $(cat outdated.json)
+            ```
+            
+            </details>
+            
+            <details>
+            <summary>🤖 Complete AI assessment</summary>
+            
+            ```json
+            $(cat risk-assessment.json)
+            ```
+            
+            </details>
+          branch: chore/ai-dependency-updates-${{ github.run_number }}
           delete-branch: true
+          # [ACTION REQUIRED] Create these labels in repo, or remove/change to match existing labels
+          labels: |
+            dependencies
+            automated
+            ai-reviewed
+
+      # =====================================================
+      # KROK 7: UTWORZENIE ISSUE DLA MEDIUM/HIGH RISK PAKIETÓW
+      # =====================================================
+
+      - name: Create issue for manual review
+        if: steps.outdated.outputs.has_outdated == 'true' && steps.ai-assessment.outcome == 'success'
+        env:
+          PR_NUMBER: ${{ steps.create-pr.outputs.pull-request-number }}
+          PR_URL: ${{ steps.create-pr.outputs.pull-request-url }}
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            if (!fs.existsSync('./risk-assessment.json')) return;
+            const assessment = require('./risk-assessment.json');
+            const medium = assessment.medium_risk || [];
+            const high = assessment.high_risk || [];
+            if (medium.length === 0 && high.length === 0) return;
+
+            const prLine = process.env.PR_NUMBER && process.env.PR_URL
+              ? `**Low-risk updates** were automatically applied in [PR #${process.env.PR_NUMBER}](${process.env.PR_URL}).`
+              : 'No low-risk dependency PR was created in this run (no low-risk packages or no changes).';
+
+            const issueBody = `## Manual Dependency Review Required
+
+            AI analysis has identified packages that need your attention before updating.
+
+            ### Medium Risk Updates
+
+            ${medium.map(pkg => `- \`${pkg}\``).join('\n')}
+
+            ### High Risk Updates
+
+            ${high.map(pkg => `- \`${pkg}\``).join('\n')}
+
+            ### AI Recommendation
+
+            ${assessment.summary || 'N/A'}
+
+            ### Action Required
+
+            Please review these updates manually:
+            1. Check changelogs for breaking changes
+            2. Test in development environment
+            3. Update in separate PR with thorough testing
+
+            ${prLine}
+            `;
+
+            await github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: 'Dependency Updates Require Manual Review',
+              body: issueBody,
+              labels: ['dependencies', 'manual-review-required']
+            });
+
+      # =====================================================
+      # KROK 8: POWIADOMIENIE NA SLACKU (OPCJONALNE)
+      # =====================================================
+
+      - name: Notify about updates
+        if: steps.create-pr.outputs.pull-request-number != ''
+        env:
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+          PR_URL: ${{ steps.create-pr.outputs.pull-request-url }}
+        run: |
+          if [ -z "$SLACK_WEBHOOK" ]; then
+            echo "SLACK_WEBHOOK not set, skipping notification"
+            exit 0
+          fi
+          curl -sf -X POST "$SLACK_WEBHOOK" \
+            -H 'Content-Type: application/json' \
+            -d "{\"text\":\"AI-powered dependency update PR created\",\"blocks\":[{\"type\":\"section\",\"text\":{\"type\":\"mrkdwn\",\"text\":\"*New dependency update PR*\\n\\nAI has analyzed and auto-applied low-risk updates.\\n\\n<$PR_URL|View Pull Request>\"}}]}"
+
+      - name: Report workflow failure
+        if: failure()
+        continue-on-error: true
+        run: |
+          {
+            echo '## Workflow failed'
+            echo ''
+            echo 'Scroll up in the log to find the first failed step (red cross) and its error message.'
+            echo 'Common causes: missing OPENAI_API_KEY or Sanity vars, OpenAI API error, lint/build failure, or create-pull-request/labels issue.'
+          } >> "$GITHUB_STEP_SUMMARY"
