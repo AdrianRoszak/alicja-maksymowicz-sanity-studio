@@ -59,10 +59,20 @@ Recommended branch protection for `main`:
 - **Reports:** Security tab in GitHub repository
 
 ### Dependencies Workflow (`update-deps.yml`)
-- **Purpose:** Automated dependency updates
-- **Trigger:** Weekly schedule (Mondays, 9 AM UTC)
-- **Process:** Update deps → Test → Create PR if changes
+- **Purpose:** Automated dependency updates (AI risk assessment → low-risk updates → test → PR)
+- **Trigger:** Weekly schedule (Mondays, 9 AM UTC), or manually via Actions → Run workflow
+- **Process:** Check outdated → OpenAI risk assessment → apply low-risk → lint/tsc/build → create PR (and optional issue, Slack)
 - **Review:** Manual review required before merge
+
+**Local testing (without GitHub):** You can run the “outdated + AI assessment” part locally to verify the OpenAI step and inspect `risk-assessment.json`:
+
+```bash
+# 1. Ensure OPENAI_API_KEY is in .env (or export it)
+# 2. Generate outdated list and run AI assessment (writes risk-assessment.json)
+pnpm run update-deps:local
+```
+
+Then optionally run the same checks as in CI: `pnpm lint`, `pnpm tsc --noEmit`, `pnpm build`. Creating the PR, issue, and Slack notification only run on GitHub.
 
 ## 🚨 Troubleshooting
 

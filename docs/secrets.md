@@ -24,6 +24,23 @@ This document explains which repository secrets are required for CI and deploy w
 - `SANITY_STUDIO_BASE_PATH` (optional)
   - Description: Base path where the Studio is served. Useful when deploying to subpaths.
 
+## Update Dependencies workflow (update-deps)
+
+The `update-deps` workflow uses the following. **No values are hardcoded in the workflow; configure them in Settings → Secrets and variables → Actions.**
+
+- **OPENAI_API_KEY** (Secret, required for AI assessment)
+  - Description: OpenAI API key used for dependency risk assessment (e.g. gpt-4o).
+  - Create at: Settings → Secrets and variables → Actions → New repository secret.
+
+- **SLACK_WEBHOOK** (Secret, optional)
+  - Description: Slack webhook URL for notifications when a dependency update PR is created. If not set, the notification step is skipped.
+
+- **SANITY_STUDIO_PROJECT_ID**, **SANITY_STUDIO_DATASET**, **SANITY_STUDIO_API_VERSION**
+  - Description: Used when running `pnpm build` in the workflow. Can be stored as repository **Variables** (or Secrets).
+  - Ensure these are set so the workflow does not rely on hardcoded values.
+
+For local consistency, the same keys are documented in `.env.example` (for local or script use). For GitHub Actions, only Secrets and Variables in the repository settings are used.
+
 ## Where to store them
 
 - Repository-level secrets: Settings → Secrets & variables → Actions → New repository secret.
