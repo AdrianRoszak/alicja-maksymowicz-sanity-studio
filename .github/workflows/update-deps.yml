@@ -1,120 +1,16 @@
-# name: Update Dependencies
-
-# on:
-#   schedule:
-#     # Run every Monday at 9 AM UTC
-#     - cron: "0 9 * * 1"
-#   workflow_dispatch: # Allow manual runs
-
-# jobs:
-#   update-deps:
-#     name: Update Dependencies
-#     runs-on: ubuntu-latest
-
-#     steps:
-#       - name: Checkout code
-#         uses: actions/checkout@v4
-#         with:
-#           token: ${{ secrets.GITHUB_TOKEN }}
-
-#       - name: Setup Node.js
-#         uses: actions/setup-node@v4
-#         with:
-#           node-version: "22"
-
-#       - name: Setup pnpm
-#         uses: pnpm/action-setup@v4
-#         with:
-#           version: "latest"
-#           run_install: false
-
-#       - name: Get pnpm store directory
-#         shell: bash
-#         run: |
-#           echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
-
-#       - name: Setup pnpm cache
-#         uses: actions/cache@v4
-#         with:
-#           path: ${{ env.STORE_PATH }}
-#           key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
-#           restore-keys: |
-#             ${{ runner.os }}-pnpm-store-
-
-#       - name: Update dependencies
-#         run: |
-#           pnpm update --latest
-#           pnpm install
-
-#       - name: Check for changes
-#         id: verify-changed-files
-#         run: |
-#           if [ -n "$(git status --porcelain)" ]; then
-#             echo "changed=true" >> $GITHUB_OUTPUT
-#           else
-#             echo "changed=false" >> $GITHUB_OUTPUT
-#           fi
-
-#       - name: Run tests after update
-#         if: steps.verify-changed-files.outputs.changed == 'true'
-#         run: |
-#           pnpm lint
-#           pnpm tsc --noEmit
-#           pnpm build
-#         env:
-#           SANITY_STUDIO_PROJECT_ID: u1jpe37y
-#           SANITY_STUDIO_DATASET: production
-#           SANITY_STUDIO_API_VERSION: 2023-10-17
-
-#       - name: Create Pull Request
-#         if: steps.verify-changed-files.outputs.changed == 'true'
-#         uses: peter-evans/create-pull-request@v6
-#         with:
-#           token: ${{ secrets.GITHUB_TOKEN }}
-#           commit-message: "chore: update dependencies"
-#           title: "chore: automated dependency updates"
-#           body: |
-#             ## Automated Dependency Updates
-
-#             This PR contains automated updates to project dependencies.
-
-#             ### Changes
-#             - Updated all dependencies to their latest versions
-#             - Verified that linting, type checking, and build still work
-
-#             ### Verification
-#             - ✅ Biome linting passed
-#             - ✅ TypeScript compilation successful
-#             - ✅ Studio build successful
-
-#             Please review the changes and test manually before merging.
-#           branch: chore/automated-dependency-updates
-#           delete-branch: true
-
-################################################################################
-
 name: AI-Powered Dependency Updates
 
-# Kiedy uruchamiać workflow?
 on:
   schedule:
-    # Automatycznie każdy poniedziałek o 9:00 UTC
-    - cron: "0 9 * * 1"
-  # Możliwość ręcznego uruchomienia przez zakładkę "Actions" w GitHub
-  workflow_dispatch:
+    - cron: "0 9 * * 1"  # Every Monday at 09:00 UTC
+  workflow_dispatch:  # Manual run from Actions tab
 
 jobs:
   analyze-and-update:
     name: Analyze & Update Dependencies
     runs-on: ubuntu-latest
 
-    # -------------------------------------------------------------------------
-    # [ACTION REQUIRED] Before first run, configure in repo Settings:
-    # - Secrets: OPENAI_API_KEY (required), SLACK_WEBHOOK (optional)
-    # - Variables (or Secrets): SANITY_STUDIO_PROJECT_ID, SANITY_STUDIO_DATASET, SANITY_STUDIO_API_VERSION
-    # - Create labels in repo: dependencies, automated, ai-reviewed, manual-review-required
-    #   Or remove/change the 'labels' key in Create Pull Request step to match existing labels.
-    # -------------------------------------------------------------------------
+    # Required before first run: OPENAI_API_KEY (secret), Sanity vars, repo labels (dependencies, automated, ai-reviewed, manual-review-required)
 
     permissions:
       contents: write
@@ -122,32 +18,26 @@ jobs:
       issues: write
 
     steps:
-      # =====================================================
-      # KROK 1: PRZYGOTOWANIE ŚRODOWISKA
-      # =====================================================
-      
       - name: Checkout code
         uses: actions/checkout@v4
-        # Pobiera kod z repozytorium
+        with:
+          ref: develop  # Workflow runs against develop; PR targets develop
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: "22"
-        # Instaluje Node.js w wersji 22
 
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
         with:
           version: "9"
           run_install: false
-        # Konfiguruje menedżer pakietów pnpm
 
       - name: Get pnpm store directory
         shell: bash
         run: |
           echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
-        # Pobiera ścieżkę do cache pnpm i zapisuje jako zmienną środowiskową
 
       - name: Setup pnpm cache
         uses: actions/cache@v4
@@ -156,17 +46,10 @@ jobs:
           key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
           restore-keys: |
             ${{ runner.os }}-pnpm-store-
-        # Konfiguruje cache dla pnpm - przyspiesza kolejne uruchomienia
-        # Cache jest unieważniany gdy zmieni się pnpm-lock.yaml
 
       - name: Install dependencies
         run: pnpm install
-        # Instaluje wszystkie zależności z package.json
 
-      # =====================================================
-      # KROK 2: SPRAWDZENIE KTÓRE PAKIETY SĄ NIEAKTUALNE
-      # =====================================================
-      
       - name: Check outdated packages
         id: outdated
         run: |
@@ -180,10 +63,6 @@ jobs:
             echo "has_outdated=false" >> $GITHUB_OUTPUT
             echo "No outdated packages or invalid/empty outdated.json"
           fi
-
-      # =====================================================
-      # KROK 3: AI OCENIA RYZYKO AKTUALIZACJI
-      # =====================================================
 
       - name: AI Risk Assessment
         if: steps.outdated.outputs.has_outdated == 'true'
@@ -291,10 +170,6 @@ jobs:
             "### Analysis\n" + (.summary // "")
           ' risk-assessment.json >> $GITHUB_STEP_SUMMARY
 
-      # =====================================================
-      # KROK 4: AUTOMATYCZNA AKTUALIZACJA LOW-RISK PAKIETÓW
-      # =====================================================
-      
       - name: Apply low-risk updates
         id: low-risk-update
         if: steps.outdated.outputs.has_outdated == 'true'
@@ -325,18 +200,12 @@ jobs:
       - name: Check for changes after low-risk updates
         id: check-changes
         run: |
-          # Sprawdź czy aktualizacja zmieniła jakieś pliki (np. package.json, pnpm-lock.yaml)
           if [ -n "$(git status --porcelain)" ]; then
             echo "has_changes=true" >> $GITHUB_OUTPUT
           else
             echo "has_changes=false" >> $GITHUB_OUTPUT
           fi
-        # Output: has_changes = true/false
 
-      # =====================================================
-      # KROK 5: WERYFIKACJA ŻE WSZYSTKO DZIAŁA PO AKTUALIZACJI
-      # =====================================================
-      
       - name: Run tests on low-risk updates
         if: steps.check-changes.outputs.has_changes == 'true'
         run: |
@@ -351,16 +220,13 @@ jobs:
           SANITY_STUDIO_DATASET: ${{ vars.SANITY_STUDIO_DATASET || secrets.SANITY_STUDIO_DATASET }}
           SANITY_STUDIO_API_VERSION: ${{ vars.SANITY_STUDIO_API_VERSION || secrets.SANITY_STUDIO_API_VERSION || '2023-10-17' }}
 
-      # =====================================================
-      # KROK 6: UTWORZENIE PULL REQUESTA Z LOW-RISK UPDATES
-      # =====================================================
-      
+      # GITHUB_TOKEN needs "Allow GitHub Actions to create and approve pull requests". Else use REPO_ACCESS_TOKEN (PAT).
       - name: Create Pull Request
         if: steps.check-changes.outputs.has_changes == 'true'
         id: create-pr
         uses: peter-evans/create-pull-request@v6
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.REPO_ACCESS_TOKEN || secrets.GITHUB_TOKEN }}
           commit-message: "chore: update low-risk dependencies"
           title: "🤖 Automated dependency updates (AI-assessed)"
           body: |
@@ -421,16 +287,12 @@ jobs:
             
             </details>
           branch: chore/ai-dependency-updates-${{ github.run_number }}
+          base: develop
           delete-branch: true
-          # [ACTION REQUIRED] Create these labels in repo, or remove/change to match existing labels
           labels: |
             dependencies
             automated
             ai-reviewed
-
-      # =====================================================
-      # KROK 7: UTWORZENIE ISSUE DLA MEDIUM/HIGH RISK PAKIETÓW
-      # =====================================================
 
       - name: Create issue for manual review
         if: steps.outdated.outputs.has_outdated == 'true' && steps.ai-assessment.outcome == 'success'
@@ -484,10 +346,6 @@ jobs:
               body: issueBody,
               labels: ['dependencies', 'manual-review-required']
             });
-
-      # =====================================================
-      # KROK 8: POWIADOMIENIE NA SLACKU (OPCJONALNE)
-      # =====================================================
 
       - name: Notify about updates
         if: steps.create-pr.outputs.pull-request-number != ''
