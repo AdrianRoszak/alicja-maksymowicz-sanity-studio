@@ -19,16 +19,16 @@
   },
   "keywords": ["sanity"],
   "dependencies": {
-    "@sanity/vision": "^5.1.0",
+    "@sanity/vision": "^5.11.0",
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
-    "sanity": "^5.1.0",
-    "styled-components": "^6.1.19"
+    "sanity": "^5.11.0",
+    "styled-components": "^6.3.11"
   },
   "devDependencies": {
-    "@biomejs/biome": "2.3.14",
-    "@commitlint/cli": "^20.2.0",
-    "@commitlint/config-conventional": "^20.2.0",
+    "@biomejs/biome": "2.4.4",
+    "@commitlint/cli": "^20.4.2",
+    "@commitlint/config-conventional": "^20.4.2",
     "@sanity/document-internationalization": "^4.1.1",
     "@types/react": "^19.2.14",
     "@vitest/ui": "^4.0.18",
