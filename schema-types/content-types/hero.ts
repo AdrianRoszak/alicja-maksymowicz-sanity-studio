@@ -38,6 +38,13 @@ export const hero = defineType({
         'Dodaj główne zdjęcie dla sekcji hero. To duże, widoczne zdjęcie na górze strony - wybierz coś atrakcyjnego wizualnie.',
     }),
     defineFieldWithDescription({
+      name: 'hero_image_mobile',
+      title: 'Zdjęcie na małych ekranach (opcjonalne)',
+      type: 'image_block',
+      description:
+        'Opcjonalnie dodaj zdjęcie na małych ekranach dla sekcji hero. To zdjęcie będzie widoczne na małych ekranach.',
+    }),
+    defineFieldWithDescription({
       name: 'hero_link',
       title: 'Link w sekcji hero',
       type: 'link_block',
