@@ -25,7 +25,10 @@ function isI18nArray(val: unknown): val is I18nItem[] {
 
 function findTitle(value: Record<string, unknown>, lang: string): string {
   for (const [key, val] of Object.entries(value)) {
-    if (key.endsWith('_title') && isI18nArray(val)) {
+    if (
+      (key.endsWith('_title') || key.endsWith('_title_intl')) &&
+      isI18nArray(val)
+    ) {
       const item = val.find((i) => i._key === lang)
       if (item?.value?.trim()) return item.value
     }
