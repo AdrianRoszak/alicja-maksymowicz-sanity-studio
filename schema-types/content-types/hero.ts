@@ -1,6 +1,12 @@
-import { InternationalizedArrayInput } from '@src/components'
+import {
+  InternationalizedArrayInput,
+  InternationalizedArrayTextInput,
+} from '@src/components'
 import { defineFieldWithDescription } from '@src/lib/types'
-import { validateRequiredLanguages } from '@utils/index'
+import {
+  getPreviewTitleFromI18n,
+  validateRequiredLanguages,
+} from '@utils/index'
 import { defineField, defineType } from 'sanity'
 
 export const hero = defineType({
@@ -17,29 +23,37 @@ export const hero = defineType({
     }),
     defineFieldWithDescription({
       name: 'hero_title',
-      title: 'Tytuł',
+      title: 'Tytuł (deprecated)',
       type: 'string',
-      validation: (Rule) => Rule.required().max(60),
-      description:
-        'Wpisz główny tytuł sekcji hero (max 60 znaków). To pierwsza rzecz, którą zobaczą odwiedzający - powinien być chwytliwy!',
+      description: 'DEPRECATED',
     }),
     defineField({
       name: 'hero_title_intl',
-      title: 'Tytuł (międzynarodowy)',
+      title: 'Tytuł',
       type: 'internationalizedArrayString',
-      description: 'Wpisz główny tytuł sekcji hero (międzynarodowy).',
-      validation: (rule) => validateRequiredLanguages(rule),
+      description:
+        'Wpisz główny tytuł sekcji hero (międzynarodowy) (max 60 znaków). To pierwsza rzecz, którą zobaczą odwiedzający - powinien być chwytliwy!',
+      validation: (rule) => validateRequiredLanguages(rule).max(60),
       components: {
         input: InternationalizedArrayInput,
       },
     }),
     defineFieldWithDescription({
       name: 'hero_excerpt',
-      title: 'Excerpt',
+      title: 'Excerpt (deprecated)',
       type: 'text',
-      validation: (Rule) => Rule.optional().max(150),
+      description: 'DEPRECATED',
+    }),
+    defineField({
+      name: 'hero_excerpt_intl',
+      title: 'Excerpt',
+      type: 'internationalizedArrayText',
       description:
-        'Napisz krótki opis lub podtytuł (max 150 znaków), który uzupełni główny tytuł i zachęci do zapoznania się z ofertą.',
+        'Wpisz krótki opis lub podtytuł (max 150 znaków), który uzupełni główny tytuł i zachęci do zapoznania się z ofertą.',
+      validation: (rule) => validateRequiredLanguages(rule).max(150),
+      components: {
+        input: InternationalizedArrayTextInput,
+      },
     }),
     defineFieldWithDescription({
       name: 'hero_image',
@@ -66,16 +80,16 @@ export const hero = defineType({
   ],
   preview: {
     select: {
-      title: 'hero_title',
-      language: 'hero_language',
+      title: 'hero_title_intl',
       media: 'hero_image.image_block_image',
     },
     prepare(selection) {
-      const { title, language, media } = selection
-      const langPrefix = language ? `[${String(language).toUpperCase()}] ` : ''
+      const { title, media } = selection
 
       return {
-        title: `${langPrefix}${title || 'Bez tytułu'}`,
+        title: getPreviewTitleFromI18n(
+          title as Array<{ _key: string; value?: string }>,
+        ),
         media,
       }
     },

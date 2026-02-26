@@ -1,5 +1,7 @@
+import { InternationalizedArrayInput } from '@src/components'
 import { defineFieldWithDescription } from '@src/lib/types'
-import { defineType } from 'sanity'
+import { validateRequiredLanguages } from '@utils/index'
+import { defineField, defineType } from 'sanity'
 
 const pageReferenceTypes = [
   'page_home',
@@ -15,11 +17,21 @@ export const linkBlock = defineType({
   fields: [
     defineFieldWithDescription({
       name: 'link_block_label',
-      title: 'Etykieta linku',
+      title: 'Etykieta linku (deprecated)',
       type: 'string',
       validation: (Rule) => Rule.required(),
+      description: 'DEPRECATED',
+    }),
+    defineField({
+      name: 'link_block_label_intl',
+      title: 'Etykieta linku',
+      type: 'internationalizedArrayString',
       description:
         'Wpisz tekst, który pojawi się na przycisku lub linku (np. „Zobacz więcej”).',
+      validation: (rule) => validateRequiredLanguages(rule),
+      components: {
+        input: InternationalizedArrayInput,
+      },
     }),
     defineFieldWithDescription({
       name: 'link_block_variant',
