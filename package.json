@@ -10,6 +10,7 @@
     "build": "sanity build",
     "deploy": "sanity deploy",
     "deploy-graphql": "sanity graphql deploy",
+    "backup:production": "mkdir -p backups && sanity dataset export production backups/production-$(date +%Y-%m-%d).tar.gz",
     "lint": "biome check",
     "lint:fix": "biome check --write",
     "format": "biome format --write",

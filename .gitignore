@@ -44,3 +44,6 @@ outdated.json
 
 # OS generated files
 Thumbs.db
+
+# Sanity backup files
+backups/

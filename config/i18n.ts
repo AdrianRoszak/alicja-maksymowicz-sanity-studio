@@ -12,7 +12,7 @@ export const LANGUAGES = [
 ] as const
 
 /** Language codes that must be present and non-empty for required i18n fields. */
-export const REQUIRED_LANGUAGE_IDS = ['pl', 'en'] as const
+export const REQUIRED_LANGUAGE_IDS = ['pl'] as const
 
 /** Primary language (used for slug source and preview title). */
 export const PRIMARY_LANGUAGE_ID = REQUIRED_LANGUAGE_IDS[0]
