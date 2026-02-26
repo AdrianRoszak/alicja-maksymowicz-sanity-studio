@@ -19,10 +19,13 @@
   },
   "keywords": ["sanity"],
   "dependencies": {
+    "@sanity/ui": "^3.1.13",
     "@sanity/vision": "^5.12.0",
+    "country-flag-icons": "^1.6.15",
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
     "sanity": "^5.12.0",
+    "sanity-plugin-internationalized-array": "^4.0.3",
     "styled-components": "^6.3.11"
   },
   "devDependencies": {

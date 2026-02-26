@@ -1,5 +1,7 @@
+import { InternationalizedArrayInput } from '@src/components'
 import { defineFieldWithDescription } from '@src/lib/types'
-import { defineType } from 'sanity'
+import { validateRequiredLanguages } from '@utils/index'
+import { defineField, defineType } from 'sanity'
 
 export const hero = defineType({
   name: 'hero',
@@ -21,6 +23,16 @@ export const hero = defineType({
       description:
         'Wpisz główny tytuł sekcji hero (max 60 znaków). To pierwsza rzecz, którą zobaczą odwiedzający - powinien być chwytliwy!',
     }),
+    defineField({
+      name: 'hero_title_intl',
+      title: 'Tytuł (międzynarodowy)',
+      type: 'internationalizedArrayString',
+      description: 'Wpisz główny tytuł sekcji hero (międzynarodowy).',
+      validation: (rule) => validateRequiredLanguages(rule),
+      components: {
+        input: InternationalizedArrayInput,
+      },
+    }),
     defineFieldWithDescription({
       name: 'hero_excerpt',
       title: 'Excerpt',
@@ -36,6 +48,13 @@ export const hero = defineType({
       validation: (Rule) => Rule.required(),
       description:
         'Dodaj główne zdjęcie dla sekcji hero. To duże, widoczne zdjęcie na górze strony - wybierz coś atrakcyjnego wizualnie.',
+    }),
+    defineFieldWithDescription({
+      name: 'hero_image_mobile',
+      title: 'Zdjęcie na małych ekranach (opcjonalne)',
+      type: 'image_block',
+      description:
+        'Opcjonalnie dodaj zdjęcie na małych ekranach dla sekcji hero. To zdjęcie będzie widoczne na małych ekranach.',
     }),
     defineFieldWithDescription({
       name: 'hero_link',

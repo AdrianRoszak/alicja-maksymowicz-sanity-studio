@@ -15,7 +15,10 @@
       "@src/*": ["./src/*"],
       "@lib/*": ["./lib/*"],
       "@schema/*": ["./schema-types/*"],
-      "@static/*": ["./static/*"]
+      "@static/*": ["./static/*"],
+      "@config/*": ["./config/*"],
+      "@components/*": ["./src/components/*"],
+      "@utils/*": ["./utils/*"]
     }
   },
   "include": ["**/*.ts", "**/*.tsx"],
