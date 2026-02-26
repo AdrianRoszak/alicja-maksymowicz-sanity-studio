@@ -45,3 +45,4 @@ outdated.json
 # OS generated files
 Thumbs.db
 
+pnpm-lock.yaml
