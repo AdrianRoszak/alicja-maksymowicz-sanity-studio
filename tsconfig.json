@@ -17,7 +17,8 @@
       "@schema/*": ["./schema-types/*"],
       "@static/*": ["./static/*"],
       "@config/*": ["./config/*"],
-      "@components/*": ["./src/components/*"]
+      "@components/*": ["./src/components/*"],
+      "@utils/*": ["./utils/*"]
     }
   },
   "include": ["**/*.ts", "**/*.tsx"],

@@ -1,0 +1,1 @@
+export { validateRequiredLanguages } from './validation'

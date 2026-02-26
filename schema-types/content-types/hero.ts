@@ -1,5 +1,7 @@
+import { InternationalizedArrayInput } from '@src/components'
 import { defineFieldWithDescription } from '@src/lib/types'
-import { defineType } from 'sanity'
+import { validateRequiredLanguages } from '@utils/index'
+import { defineField, defineType } from 'sanity'
 
 export const hero = defineType({
   name: 'hero',
@@ -20,6 +22,16 @@ export const hero = defineType({
       validation: (Rule) => Rule.required().max(60),
       description:
         'Wpisz główny tytuł sekcji hero (max 60 znaków). To pierwsza rzecz, którą zobaczą odwiedzający - powinien być chwytliwy!',
+    }),
+    defineField({
+      name: 'hero_title_intl',
+      title: 'Tytuł (międzynarodowy)',
+      type: 'internationalizedArrayString',
+      description: 'Wpisz główny tytuł sekcji hero (międzynarodowy).',
+      validation: (rule) => validateRequiredLanguages(rule),
+      components: {
+        input: InternationalizedArrayInput,
+      },
     }),
     defineFieldWithDescription({
       name: 'hero_excerpt',
